@@ -5,7 +5,7 @@ project_name: adaptive-plan
 hints:
   language_family: js
   team_size: solo
-  deployment_target: cloudflare-pages
+  deployment_target: vercel
   ci_provider: github-actions
   ci_default_flow: auto-deploy-on-merge
   bootstrapper_confidence: verified
@@ -26,4 +26,4 @@ hints:
 
 ## Why this stack
 
-Solo developer with a 3-week after-hours timeline building a personalized fitness training plan generator with auth and AI/LLM generation. Next.js is the direct match for the explicit preference and clears all four agent-friendly gates; bootstrapper confidence is verified, so scaffolding will be smooth. The specific library preferences — Supabase (auth + Postgres), Drizzle ORM, Zod, Vercel AI SDK, Zustand, React Hook Form — are all mainstream npm additions on the Next.js scaffold. Cloudflare Pages is the deployment target via the @cloudflare/next-on-pages adapter, with a future path to self-hosted VPS + Docker. CI runs on GitHub Actions with auto-deploy-on-merge.
+Solo developer with a 3-week after-hours timeline building a personalized fitness training plan generator with auth and AI/LLM generation. Next.js is the direct match for the explicit preference and clears all four agent-friendly gates; bootstrapper confidence is verified, so scaffolding will be smooth. The specific library preferences — Supabase (auth + Postgres), Drizzle ORM, Zod, Vercel AI SDK, Zustand, React Hook Form — are all mainstream npm additions on the Next.js scaffold. Vercel is the deployment target (Hobby plan, zero-config Next.js deployment), with a future path to self-hosted VPS + Docker. CI runs on GitHub Actions with auto-deploy-on-merge via Vercel's GitHub integration.
