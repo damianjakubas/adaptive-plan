@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Twój Plan Treningowy - Adaptive Plan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Montserrat:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-container": "#b6b5b5",
+                        "on-tertiary": "#1b343d",
+                        "on-tertiary-fixed-variant": "#324a54",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#3e4c00",
+                        "outline-variant": "#444932",
+                        "secondary-container": "#464747",
+                        "on-secondary": "#303031",
+                        "surface-tint": "#b0d500",
+                        "surface-container-highest": "#353534",
+                        "secondary-fixed": "#e4e2e2",
+                        "outline": "#8f9378",
+                        "primary": "#ffffff",
+                        "surface-bright": "#3a3939",
+                        "tertiary-fixed-dim": "#b1cad7",
+                        "surface-variant": "#353534",
+                        "on-secondary-fixed-variant": "#464747",
+                        "tertiary-container": "#cde7f3",
+                        "primary-fixed-dim": "#b0d500",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-background": "#e5e2e1",
+                        "on-primary-container": "#596c00",
+                        "inverse-on-surface": "#313030",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary-container": "#506873",
+                        "primary-container": "#caf300",
+                        "surface-container-high": "#2a2a2a",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#171e00",
+                        "on-primary": "#2a3400",
+                        "inverse-surface": "#e5e2e1",
+                        "on-surface": "#e5e2e1",
+                        "inverse-primary": "#536600",
+                        "surface": "#131313",
+                        "secondary": "#c7c6c6",
+                        "tertiary": "#ffffff",
+                        "primary-fixed": "#caf300",
+                        "background": "#131313",
+                        "on-surface-variant": "#c5c9ac",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#cde7f3",
+                        "on-tertiary-fixed": "#041e28",
+                        "surface-container": "#201f1f",
+                        "surface-dim": "#131313"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "unit": "4px",
+                        "container-margin": "24px",
+                        "gutter": "16px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-xl": ["Montserrat"],
+                        "stats-display": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-md": ["Montserrat"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "stats-display": ["40px", { "lineHeight": "40px", "fontWeight": "800" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(202, 243, 0, 0.2);
+        }
+        .neon-glow-text {
+            text-shadow: 0 0 10px rgba(202, 243, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component JSON) -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-margin h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-stack-md">
+<img alt="Adaptive Plan Logo" class="h-8 w-auto" src="data:image/png;base64,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"/>
+<span class="text-headline-md font-headline-md font-extrabold text-primary hidden md:block">Adaptive Plan</span>
+</div>
+<div class="hidden md:flex gap-stack-md text-primary-fixed">
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-primary-fixed font-bold border-b-2 border-primary-container pb-1 hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Plan Treningowy</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Postępy</a>
+</div>
+<div class="flex items-center gap-stack-sm text-primary-fixed">
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">language</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A close-up portrait of an athletic individual in a dimly lit, high-contrast gym environment. The lighting features a strong rim light with a subtle neon lime hue, emphasizing fitness and determination. The overall aesthetic is dark, modern, and intense, matching a premium fitness brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCq7JukZ66norC5h1kzF54_YO9kyARCtw3ZJumhONVqPG7PQOCbaeMi7Zgq5P0qMq1nu4_qhrjJTf85xPPG8DbTakeIWEocAFKGIPcpR3W_b551SDtt56Lx1z0FzsEw1pXqA5QeXGRe_cxiFVIKYCKa_HyzBGpcjL0OgUszy7wgw_RuqKQ9yjS-b7MRur3jXIeXRO5J58mcHc7mvooQUtaYeS4DJuEeVKcziEEFkFr0-D33W9_XDWgoVF9i5fvtI5uWtJxIV-kudMc8"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-24 pb-stack-lg px-container-margin max-w-[1280px] mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Header Section -->
+<header class="col-span-1 md:col-span-12 mb-stack-md">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-stack-md">
+<div>
+<h1 class="font-headline-xl text-headline-lg-mobile md:text-headline-xl text-primary mb-unit">Twój Plan Treningowy</h1>
+<div class="flex items-center gap-stack-sm mt-stack-sm">
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-label-md font-label-md text-on-surface-variant uppercase border border-outline-variant">Cel</span>
+<span class="text-primary-container font-headline-md text-headline-md neon-glow-text">Redukcja</span>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary font-label-md text-label-md px-6 py-3 rounded-DEFAULT hover:bg-surface-tint transition-colors flex items-center gap-2 neon-glow">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                    Rozpocznij Trening
+                </button>
+</div>
+</header>
+<!-- AI Summary Card -->
+<section class="col-span-1 md:col-span-12 bg-surface-container-low rounded-lg border border-surface-container-highest p-container-margin">
+<div class="flex items-center gap-stack-sm mb-stack-sm">
+<span class="material-symbols-outlined text-primary-container">smart_toy</span>
+<h2 class="font-headline-md text-headline-md text-primary">Podsumowanie zaleceń AI</h2>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
+                Na podstawie Twoich ostatnich wyników i celu redukcji tkanki tłuszczowej, zoptymalizowaliśmy objętość treningową. Zwiększyliśmy intensywność interwałów w dni cardio, aby zmaksymalizować wydatek energetyczny. Pamiętaj o zachowaniu deficytu kalorycznego na poziomie 300 kcal.
+            </p>
+</section>
+<!-- Weekly Schedule Grid -->
+<section class="col-span-1 md:col-span-8">
+<h3 class="font-headline-md text-headline-md text-primary mb-stack-md">Harmonogram Tygodniowy</h3>
+<div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-stack-sm">
+<!-- Poniedzialek -->
+<div class="bg-surface-container-low rounded-DEFAULT border border-primary-container p-stack-sm flex flex-col items-center justify-center min-h-[100px] relative overflow-hidden group hover:bg-surface-container-highest transition-colors cursor-pointer neon-glow">
+<div class="absolute top-0 left-0 w-full h-1 bg-primary-container"></div>
+<span class="font-label-md text-label-md text-on-surface-variant mb-1 uppercase">Pon</span>
+<span class="material-symbols-outlined text-primary-container mb-1">fitness_center</span>
+<span class="font-label-md text-label-md text-primary text-center text-[10px]">Siła GÓRA</span>
+</div>
+<!-- Wtorek -->
+<div class="bg-surface-container-low rounded-DEFAULT border border-surface-container-highest p-stack-sm flex flex-col items-center justify-center min-h-[100px] hover:bg-surface-container-highest transition-colors cursor-pointer">
+<span class="font-label-md text-label-md text-on-surface-variant mb-1 uppercase">Wto</span>
+<span class="material-symbols-outlined text-on-surface-variant mb-1">directions_run</span>
+<span class="font-label-md text-label-md text-on-surface text-center text-[10px]">Interwały</span>
+</div>
+<!-- Sroda -->
+<div class="bg-surface-container-lowest rounded-DEFAULT border border-surface-container-highest border-dashed p-stack-sm flex flex-col items-center justify-center min-h-[100px]">
+<span class="font-label-md text-label-md text-on-surface-variant mb-1 uppercase">Śro</span>
+<span class="material-symbols-outlined text-on-surface-variant mb-1 opacity-50">self_improvement</span>
+<span class="font-label-md text-label-md text-on-surface-variant text-center text-[10px] opacity-50">Regeneracja</span>
+</div>
+<!-- Czwartek -->
+<div class="bg-surface-container-low rounded-DEFAULT border border-surface-container-highest p-stack-sm flex flex-col items-center justify-center min-h-[100px] hover:bg-surface-container-highest transition-colors cursor-pointer">
+<span class="font-label-md text-label-md text-on-surface-variant mb-1 uppercase">Czw</span>
+<span class="material-symbols-outlined text-on-surface-variant mb-1">fitness_center</span>
+<span class="font-label-md text-label-md text-on-surface text-center text-[10px]">Siła DÓŁ</span>
+</div>
+<!-- Piatek -->
+<div class="bg-surface-container-low rounded-DEFAULT border border-surface-container-highest p-stack-sm flex flex-col items-center justify-center min-h-[100px] hover:bg-surface-container-highest transition-colors cursor-pointer">
+<span class="font-label-md text-label-md text-on-surface-variant mb-1 uppercase">Pią</span>
+<span class="material-symbols-outlined text-on-surface-variant mb-1">pool</span>
+<span class="font-label-md text-label-md text-on-surface text-center text-[10px]">Cardio LISS</span>
+</div>
+<!-- Sobota -->
+<div class="bg-surface-container-low rounded-DEFAULT border border-surface-container-highest p-stack-sm flex flex-col items-center justify-center min-h-[100px] hover:bg-surface-container-highest transition-colors cursor-pointer">
+<span class="font-label-md text-label-md text-on-surface-variant mb-1 uppercase">Sob</span>
+<span class="material-symbols-outlined text-on-surface-variant mb-1">sports_gymnastics</span>
+<span class="font-label-md text-label-md text-on-surface text-center text-[10px]">FBW</span>
+</div>
+<!-- Niedziela -->
+<div class="bg-surface-container-lowest rounded-DEFAULT border border-surface-container-highest border-dashed p-stack-sm flex flex-col items-center justify-center min-h-[100px]">
+<span class="font-label-md text-label-md text-on-surface-variant mb-1 uppercase">Nie</span>
+<span class="material-symbols-outlined text-on-surface-variant mb-1 opacity-50">self_improvement</span>
+<span class="font-label-md text-label-md text-on-surface-variant text-center text-[10px] opacity-50">Regeneracja</span>
+</div>
+</div>
+<!-- Today's Workout Details -->
+<div class="mt-stack-lg bg-surface-container-low rounded-lg border border-surface-container-highest p-container-margin relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[100px]">fitness_center</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-stack-md flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary-container neon-glow inline-block"></span>
+                    Trening na dziś: Siła Góra
+                </h3>
+<div class="flex flex-col gap-0 border border-surface-container-highest rounded-md overflow-hidden">
+<!-- Exercise 1 -->
+<div class="flex items-center justify-between p-stack-md border-b border-surface-container-highest bg-[#262626] hover:bg-[#222222] transition-colors group">
+<div class="flex items-center gap-stack-md">
+<div class="w-12 h-12 rounded-DEFAULT bg-surface-container-lowest flex items-center justify-center group-hover:border-primary-container group-hover:border transition-all">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary-container">front_hand</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Wyciskanie sztangi na ławce poziomej</h4>
+<span class="font-body-md text-[12px] text-on-surface-variant">Klatka piersiowa</span>
+</div>
+</div>
+<div class="flex gap-stack-md text-right">
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant">Serie</div>
+<div class="font-stats-display text-[20px] text-primary">4</div>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant">Powtórzenia</div>
+<div class="font-stats-display text-[20px] text-primary">8-10</div>
+</div>
+</div>
+</div>
+<!-- Exercise 2 -->
+<div class="flex items-center justify-between p-stack-md border-b border-surface-container-highest bg-[#262626] hover:bg-[#222222] transition-colors group">
+<div class="flex items-center gap-stack-md">
+<div class="w-12 h-12 rounded-DEFAULT bg-surface-container-lowest flex items-center justify-center group-hover:border-primary-container group-hover:border transition-all">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary-container">rowing</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Wiosłowanie hantlem w opadzie</h4>
+<span class="font-body-md text-[12px] text-on-surface-variant">Plecy</span>
+</div>
+</div>
+<div class="flex gap-stack-md text-right">
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant">Serie</div>
+<div class="font-stats-display text-[20px] text-primary">4</div>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant">Powtórzenia</div>
+<div class="font-stats-display text-[20px] text-primary">10-12</div>
+</div>
+</div>
+</div>
+<!-- Exercise 3 -->
+<div class="flex items-center justify-between p-stack-md bg-[#262626] hover:bg-[#222222] transition-colors group">
+<div class="flex items-center gap-stack-md">
+<div class="w-12 h-12 rounded-DEFAULT bg-surface-container-lowest flex items-center justify-center group-hover:border-primary-container group-hover:border transition-all">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary-container">accessibility_new</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Wznosy ramion bokiem z hantlami</h4>
+<span class="font-body-md text-[12px] text-on-surface-variant">Barki</span>
+</div>
+</div>
+<div class="flex gap-stack-md text-right">
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant">Serie</div>
+<div class="font-stats-display text-[20px] text-primary">3</div>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant">Powtórzenia</div>
+<div class="font-stats-display text-[20px] text-primary">15</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Sidebar / Diet & Secondary Info -->
+<aside class="col-span-1 md:col-span-4 flex flex-col gap-stack-md">
+<!-- Diet Tips -->
+<div class="bg-surface-container-low rounded-lg border border-surface-container-highest p-container-margin">
+<div class="flex justify-between items-center mb-stack-md">
+<h3 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">restaurant</span>
+                        Wskazówki dietetyczne
+                    </h3>
+</div>
+<ul class="flex flex-col gap-stack-sm">
+<li class="flex gap-stack-sm items-start p-3 bg-surface-container-lowest rounded-DEFAULT border border-surface-container-highest">
+<span class="material-symbols-outlined text-primary-container mt-1 text-[20px]">check_circle</span>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Białko przed treningiem</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant leading-tight mt-1">Zjedz posiłek bogaty w białko na 2h przed siłowym, aby wesprzeć anabolizm.</p>
+</div>
+</li>
+<li class="flex gap-stack-sm items-start p-3 bg-surface-container-lowest rounded-DEFAULT border border-surface-container-highest">
+<span class="material-symbols-outlined text-primary-container mt-1 text-[20px]">local_drink</span>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Nawodnienie</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant leading-tight mt-1">Wypij minimum 1 litr wody w trakcie dzisiejszej sesji treningowej.</p>
+</div>
+</li>
+<li class="flex gap-stack-sm items-start p-3 bg-surface-container-lowest rounded-DEFAULT border border-surface-container-highest">
+<span class="material-symbols-outlined text-error mt-1 text-[20px]">warning</span>
+<div>
+<h4 class="font-label-md text-label-md text-error">Uwaga kaloryczna</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant leading-tight mt-1">Trzymaj węglowodany nisko wieczorem, zgodnie z celem redukcji.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Progress Snapshot Bento -->
+<div class="bg-surface-container-low rounded-lg border border-surface-container-highest p-container-margin relative">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase mb-stack-sm">Tygodniowy Cel Cardio</h3>
+<div class="flex items-end gap-4">
+<div class="relative w-24 h-24 flex items-center justify-center">
+<!-- Pseudo Progress Ring -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="#333333" stroke-width="8"></circle>
+<circle class="neon-glow" cx="50" cy="50" fill="none" r="45" stroke="#caf300" stroke-dasharray="282.7" stroke-dashoffset="113.08" stroke-width="8"></circle>
+</svg>
+<div class="absolute font-stats-display text-headline-md text-primary">60%</div>
+</div>
+<div class="pb-2">
+<div class="font-label-md text-label-md text-on-surface-variant">Zrealizowano</div>
+<div class="font-headline-md text-headline-md text-primary-container">90 / 150 min</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer (Shared Component JSON) -->
+<footer class="w-full py-stack-lg px-container-margin flex flex-col md:flex-row justify-between items-center gap-gutter bg-surface-container-lowest border-t border-outline-variant mt-auto">
+<div class="text-label-md font-headline-md font-bold text-primary">
+            © 2024 Adaptive Plan. Precision Training.
+        </div>
+<div class="flex gap-gutter">
+<a class="text-on-secondary-container hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Privacy</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Terms</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Instagram</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Twitter</a>
+</div>
+</footer>
+</body></html>
