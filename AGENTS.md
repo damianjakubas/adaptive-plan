@@ -24,3 +24,7 @@ Next.js 16 (App Router), React 19, TypeScript 5, Tailwind CSS 4. Planned additio
 - `context/foundation/` — PRD, tech stack decisions, shape notes (read-only references)
 - `context/changes/` — change verification records
 - `context/archive/` — immutable; never write to this directory
+
+## Design
+
+App design can be located inside foundation/DESIGN.md with specific page views inside foundation/design/ folder
