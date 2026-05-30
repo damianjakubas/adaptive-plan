@@ -1,0 +1,36 @@
+{
+  "Common": {
+    "appName": "Adaptive Plan"
+  },
+  "Auth": {
+    "brandHeadline": "Zbuduj formę na nowo.",
+    "brandSubtitle": "Precyzyjne plany treningowe, analiza danych i bezkompromisowe podejście do Twoich celów.",
+    "poweredBy": "Zasilane przez Supabase",
+    "loginTab": "Zaloguj się",
+    "registerTab": "Zarejestruj się",
+    "emailLabel": "Email",
+    "emailPlaceholder": "twoj@email.com",
+    "passwordLabel": "Hasło",
+    "passwordPlaceholder": "••••••••",
+    "signInButton": "Wejdź do strefy",
+    "signUpButton": "Załóż konto",
+    "signInSuccess": "Zalogowano pomyślnie.",
+    "signUpSuccess": "Konto utworzone. Witaj!"
+  },
+  "Validation": {
+    "invalid_email": "Podaj poprawny adres email.",
+    "password_required": "Hasło jest wymagane.",
+    "password_too_short": "Hasło musi mieć co najmniej 6 znaków."
+  },
+  "AuthErrors": {
+    "invalid_credentials": "Nieprawidłowy email lub hasło.",
+    "email_exists": "Ten adres email jest już zarejestrowany.",
+    "weak_password": "Hasło jest zbyt słabe (min. 6 znaków).",
+    "generic": "Coś poszło nie tak. Spróbuj ponownie."
+  },
+  "Dashboard": {
+    "greeting": "Witaj, {email}",
+    "subtitle": "Twój panel treningowy",
+    "logout": "Wyloguj się"
+  }
+}

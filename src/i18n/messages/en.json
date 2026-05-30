@@ -1,0 +1,36 @@
+{
+  "Common": {
+    "appName": "Adaptive Plan"
+  },
+  "Auth": {
+    "brandHeadline": "Rebuild your form.",
+    "brandSubtitle": "Precise training plans, data analysis, and an uncompromising approach to your goals.",
+    "poweredBy": "Powered by Supabase",
+    "loginTab": "Sign in",
+    "registerTab": "Sign up",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "signInButton": "Enter the zone",
+    "signUpButton": "Create account",
+    "signInSuccess": "Signed in successfully.",
+    "signUpSuccess": "Account created. Welcome!"
+  },
+  "Validation": {
+    "invalid_email": "Enter a valid email address.",
+    "password_required": "Password is required.",
+    "password_too_short": "Password must be at least 6 characters."
+  },
+  "AuthErrors": {
+    "invalid_credentials": "Invalid email or password.",
+    "email_exists": "This email address is already registered.",
+    "weak_password": "Password is too weak (min. 6 characters).",
+    "generic": "Something went wrong. Please try again."
+  },
+  "Dashboard": {
+    "greeting": "Welcome, {email}",
+    "subtitle": "Your training dashboard",
+    "logout": "Sign out"
+  }
+}

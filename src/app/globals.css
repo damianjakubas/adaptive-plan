@@ -1,26 +1,248 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:is(.dark *));
+
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
 }
 
 @theme inline {
+  /* shadcn semantic tokens → CSS vars (remapped to the dark/neon palette below) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-montserrat);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* DESIGN.md design system tokens (mockup class names port directly) */
+@theme {
+  --color-surface: #131313;
+  --color-surface-dim: #131313;
+  --color-surface-bright: #3a3939;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-surface-container-low: #1c1b1b;
+  --color-surface-container: #201f1f;
+  --color-surface-container-high: #2a2a2a;
+  --color-surface-container-highest: #353534;
+  --color-surface-variant: #353534;
+  --color-on-surface: #e5e2e1;
+  --color-on-surface-variant: #c5c9ac;
+  --color-inverse-surface: #e5e2e1;
+  --color-inverse-on-surface: #313030;
+  --color-outline: #8f9378;
+  --color-outline-variant: #444932;
+  --color-surface-tint: #b0d500;
+  --color-primary-container: #caf300;
+  --color-on-primary-container: #596c00;
+  --color-inverse-primary: #536600;
+  --color-on-primary: #2a3400;
+  --color-secondary-fixed: #e4e2e2;
+  --color-secondary-fixed-dim: #c7c6c6;
+  --color-on-secondary: #303031;
+  --color-on-secondary-container: #b6b5b5;
+  --color-tertiary-container: #cde7f3;
+  --color-on-tertiary: #1b343d;
+  --color-on-tertiary-container: #506873;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+  --color-primary-fixed: #caf300;
+  --color-primary-fixed-dim: #b0d500;
+  --color-on-primary-fixed: #171e00;
+  --color-on-primary-fixed-variant: #3e4c00;
+  --color-on-background: #e5e2e1;
+
+  /* Brand fonts */
+  --font-headline-xl: var(--font-montserrat);
+  --font-headline-lg: var(--font-montserrat);
+  --font-headline-md: var(--font-montserrat);
+  --font-stats-display: var(--font-montserrat);
+  --font-body-lg: var(--font-inter);
+  --font-body-md: var(--font-inter);
+  --font-label-md: var(--font-inter);
+
+  /* Type scale (DESIGN.md typography) */
+  --text-headline-xl: 48px;
+  --text-headline-xl--line-height: 56px;
+  --text-headline-xl--font-weight: 800;
+  --text-headline-xl--letter-spacing: -0.02em;
+  --text-headline-lg: 32px;
+  --text-headline-lg--line-height: 40px;
+  --text-headline-lg--font-weight: 700;
+  --text-headline-lg--letter-spacing: -0.01em;
+  --text-headline-lg-mobile: 28px;
+  --text-headline-lg-mobile--line-height: 36px;
+  --text-headline-lg-mobile--font-weight: 700;
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 32px;
+  --text-headline-md--font-weight: 700;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-label-md: 14px;
+  --text-label-md--line-height: 20px;
+  --text-label-md--font-weight: 600;
+  --text-label-md--letter-spacing: 0.05em;
+  --text-stats-display: 40px;
+  --text-stats-display--line-height: 40px;
+  --text-stats-display--font-weight: 800;
+
+  /* Spacing rhythm (4px baseline) */
+  --spacing-unit: 4px;
+  --spacing-stack-sm: 8px;
+  --spacing-stack-md: 16px;
+  --spacing-stack-lg: 32px;
+  --spacing-gutter: 16px;
+  --spacing-container-margin: 24px;
+}
+
+/* Dark, high-contrast base — the design system is dark-only. */
+:root {
+  --background: #131313;
+  --foreground: #e5e2e1;
+  --card: #201f1f;
+  --card-foreground: #e5e2e1;
+  --popover: #201f1f;
+  --popover-foreground: #e5e2e1;
+  --primary: #caf300;
+  --primary-foreground: #171e00;
+  --secondary: #464747;
+  --secondary-foreground: #e5e2e1;
+  --muted: #201f1f;
+  --muted-foreground: #c5c9ac;
+  --accent: #2a2a2a;
+  --accent-foreground: #e5e2e1;
+  --destructive: #ffb4ab;
+  --border: #333333;
+  --input: #353534;
+  --ring: #caf300;
+  --chart-1: #caf300;
+  --chart-2: #b0d500;
+  --chart-3: #8f9378;
+  --chart-4: #536600;
+  --chart-5: #444932;
+  --radius: 0.75rem;
+  --sidebar: #201f1f;
+  --sidebar-foreground: #e5e2e1;
+  --sidebar-primary: #caf300;
+  --sidebar-primary-foreground: #171e00;
+  --sidebar-accent: #2a2a2a;
+  --sidebar-accent-foreground: #e5e2e1;
+  --sidebar-border: #333333;
+  --sidebar-ring: #caf300;
+}
+
+.dark {
+  --background: #131313;
+  --foreground: #e5e2e1;
+  --card: #201f1f;
+  --card-foreground: #e5e2e1;
+  --popover: #201f1f;
+  --popover-foreground: #e5e2e1;
+  --primary: #caf300;
+  --primary-foreground: #171e00;
+  --secondary: #464747;
+  --secondary-foreground: #e5e2e1;
+  --muted: #201f1f;
+  --muted-foreground: #c5c9ac;
+  --accent: #2a2a2a;
+  --accent-foreground: #e5e2e1;
+  --destructive: #ffb4ab;
+  --border: #333333;
+  --input: #353534;
+  --ring: #caf300;
+  --chart-1: #caf300;
+  --chart-2: #b0d500;
+  --chart-3: #8f9378;
+  --chart-4: #536600;
+  --chart-5: #444932;
+  --sidebar: #201f1f;
+  --sidebar-foreground: #e5e2e1;
+  --sidebar-primary: #caf300;
+  --sidebar-primary-foreground: #171e00;
+  --sidebar-accent: #2a2a2a;
+  --sidebar-accent-foreground: #e5e2e1;
+  --sidebar-border: #333333;
+  --sidebar-ring: #caf300;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Glassmorphism + input styling ported from logowanie_rejestracja/code.html */
+@layer components {
+  .glass-panel {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid #333333;
+  }
+
+  .input-dark {
+    background-color: #262626;
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .input-dark:focus {
+    outline: none;
+    border-bottom-color: #caf300;
+    box-shadow: 0 4px 15px -3px rgba(202, 243, 0, 0.1);
+  }
+
+  .btn-glow:hover {
+    box-shadow: 0 0 20px rgba(202, 243, 0, 0.2);
+  }
 }
