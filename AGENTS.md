@@ -28,3 +28,4 @@ Next.js 16 (App Router), React 19, TypeScript 5, Tailwind CSS 4. Planned additio
 ## Design
 
 App design can be located inside foundation/DESIGN.md with specific page views inside foundation/design/ folder
+Use shadcn components alongside with shadcn MCP servcer
