@@ -489,16 +489,16 @@ Wire the form to the generation route via `experimental_useObject`, show the abs
 
 #### Automated
 
-- [x] 4.1 Type checking passes: `npx tsc --noEmit`
-- [x] 4.2 Linting passes: `npm run lint`
-- [x] 4.3 Build succeeds: `npm run build`
-- [x] 4.4 Component tests pass: `npm run test` — `plan-view` renders weekly grid, per-day exercises on tab switch, dietary tips, cardio ring, calorie target, disclaimer from a fixture; no-plan empty state links to `/plan/new`
+- [x] 4.1 Type checking passes: `npx tsc --noEmit` — 48f22e1
+- [x] 4.2 Linting passes: `npm run lint` — 48f22e1
+- [x] 4.3 Build succeeds: `npm run build` — 48f22e1
+- [x] 4.4 Component tests pass: `npm run test` — `plan-view` renders weekly grid, per-day exercises on tab switch, dietary tips, cardio ring, calorie target, disclaimer from a fixture; no-plan empty state links to `/plan/new` — 48f22e1
 
 #### Manual
 
-- [x] 4.5 Seeded active plan renders the structured view matching design + disclaimer visible
-- [x] 4.6 No-plan empty state links to `/plan/new`
-- [x] 4.7 Plan persists across logout/login; no cross-account access
+- [x] 4.5 Seeded active plan renders the structured view matching design + disclaimer visible — 48f22e1
+- [x] 4.6 No-plan empty state links to `/plan/new` — 48f22e1
+- [x] 4.7 Plan persists across logout/login; no cross-account access — 48f22e1
 
 ### Phase 5: Streaming Generation Flow
 
