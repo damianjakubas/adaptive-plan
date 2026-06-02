@@ -3,7 +3,7 @@ project: "AdaptivePlan"
 version: 1
 status: draft
 created: 2026-05-28
-updated: 2026-05-28
+updated: 2026-06-01
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -32,7 +32,7 @@ No affordable tool generates truly personalized training plans that account for 
 | ID   | Change ID       | Outcome (user can …)                                                                     | Prerequisites | PRD refs                              | Status   |
 | ---- | --------------- | ---------------------------------------------------------------------------------------- | ------------- | ------------------------------------- | -------- |
 | S-01 | auth-flow       | register, log in, and log out                                                            | —             | FR-001, FR-002, FR-007                | ready    |
-| S-02 | plan-generation | fill in a parameter form and receive a personalized training plan with streaming display  | S-01          | US-01, FR-003, FR-004, FR-005, FR-006 | proposed |
+| S-02 | plan-generation | fill in a parameter form and receive a personalized training plan with streaming display  | S-01          | US-01, FR-003, FR-004, FR-005, FR-006 | ready    |
 | S-03 | locale-support  | switch language (PL/EN); UI and generated plan render in selected locale                 | S-02          | FR-008                                | proposed |
 
 ## Baseline
@@ -74,7 +74,7 @@ No foundations required. All technical scaffolding is introduced progressively i
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** AI prompt quality determines plan quality; streaming UX requires Vercel AI SDK + client-side state coordination; the 12-field form needs validation (Zod + RHF). Sequenced after auth because the PRD gates generation behind login and persistence requires user identity.
-- **Status:** proposed
+- **Status:** ready
 
 ### S-03: Locale support
 
@@ -94,7 +94,7 @@ No foundations required. All technical scaffolding is introduced progressively i
 | Roadmap ID | Change ID       | Suggested issue title                           | Ready for `/10x-plan` | Notes                     |
 | ---------- | --------------- | ----------------------------------------------- | --------------------- | ------------------------- |
 | S-01       | auth-flow       | Auth flow: registration, login, logout          | yes                   | Run `/10x-plan auth-flow` |
-| S-02       | plan-generation | Plan generation: form, AI, display, persistence | no                    | Requires S-01             |
+| S-02       | plan-generation | Plan generation: form, AI, display, persistence | yes                   | S-01 done; run `/10x-plan plan-generation` |
 | S-03       | locale-support  | Locale support: PL/EN for UI and generation     | no                    | Requires S-02             |
 
 ## Open Roadmap Questions
