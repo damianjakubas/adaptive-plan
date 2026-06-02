@@ -474,31 +474,31 @@ Wire the form to the generation route via `experimental_useObject`, show the abs
 
 #### Automated
 
-- [ ] 3.1 Type checking passes: `npx tsc --noEmit`
-- [ ] 3.2 Linting passes: `npm run lint`
-- [ ] 3.3 Build succeeds: `npm run build`
-- [ ] 3.4 Unit tests pass: `npm run test` — `wizard-steps` grouping matches the schema fields each step validates
+- [x] 3.1 Type checking passes: `npx tsc --noEmit` — 7ca491a
+- [x] 3.2 Linting passes: `npm run lint` — 7ca491a
+- [x] 3.3 Build succeeds: `npm run build` — 7ca491a
+- [x] 3.4 Unit tests pass: `npm run test` — `wizard-steps` grouping matches the schema fields each step validates — 7ca491a
 
 #### Manual
 
-- [ ] 3.5 `/plan/new` renders the 4-step wizard matching design; unauth redirects to `/login`
-- [ ] 3.6 Per-step validation blocks "Dalej" with localized errors; all 12 fields collect; PL/EN copy renders
-- [ ] 3.7 No uncontrolled→controlled warnings
+- [x] 3.5 `/plan/new` renders the 4-step wizard matching design; unauth redirects to `/login` — 7ca491a
+- [x] 3.6 Per-step validation blocks "Dalej" with localized errors; all 12 fields collect; PL/EN copy renders — 7ca491a
+- [x] 3.7 No uncontrolled→controlled warnings — 7ca491a
 
 ### Phase 4: Active-Plan Display View
 
 #### Automated
 
-- [ ] 4.1 Type checking passes: `npx tsc --noEmit`
-- [ ] 4.2 Linting passes: `npm run lint`
-- [ ] 4.3 Build succeeds: `npm run build`
-- [ ] 4.4 Component tests pass: `npm run test` — `plan-view` renders weekly grid, per-day exercises on tab switch, dietary tips, cardio ring, calorie target, disclaimer from a fixture; no-plan empty state links to `/plan/new`
+- [x] 4.1 Type checking passes: `npx tsc --noEmit`
+- [x] 4.2 Linting passes: `npm run lint`
+- [x] 4.3 Build succeeds: `npm run build`
+- [x] 4.4 Component tests pass: `npm run test` — `plan-view` renders weekly grid, per-day exercises on tab switch, dietary tips, cardio ring, calorie target, disclaimer from a fixture; no-plan empty state links to `/plan/new`
 
 #### Manual
 
-- [ ] 4.5 Seeded active plan renders the structured view matching design + disclaimer visible
-- [ ] 4.6 No-plan empty state links to `/plan/new`
-- [ ] 4.7 Plan persists across logout/login; no cross-account access
+- [x] 4.5 Seeded active plan renders the structured view matching design + disclaimer visible
+- [x] 4.6 No-plan empty state links to `/plan/new`
+- [x] 4.7 Plan persists across logout/login; no cross-account access
 
 ### Phase 5: Streaming Generation Flow
 

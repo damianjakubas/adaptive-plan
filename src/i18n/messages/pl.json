@@ -83,6 +83,31 @@
     "experience_advanced": "Zaawansowany",
     "emptyState": "Nie masz jeszcze aktywnego planu.",
     "emptyStateLink": "Stwórz plan",
-    "back": "Wróć"
+    "back": "Wróć",
+    "viewTitle": "Twój Plan Treningowy",
+    "viewGoalLabel": "Cel",
+    "aiSummaryTitle": "Podsumowanie zaleceń AI",
+    "weeklyScheduleTitle": "Harmonogram tygodniowy",
+    "workoutFor": "Trening: {focus}",
+    "restDayTitle": "Dzień regeneracji",
+    "restDayBody": "Dziś odpoczynek i regeneracja — brak zaplanowanych ćwiczeń.",
+    "setsLabel": "Serie",
+    "repsLabel": "Powtórzenia",
+    "dietaryTipsTitle": "Wskazówki dietetyczne",
+    "cardioGoalTitle": "Tygodniowy cel cardio",
+    "minutesValue": "{minutes} min",
+    "calorieTargetTitle": "Cel kaloryczny",
+    "kcalValue": "{kcal} kcal",
+    "progressionTitle": "Progresja",
+    "timelineTitle": "Oś czasu",
+    "timelineWeeksValue": "{weeks} tyg.",
+    "milestonesTitle": "Kamienie milowe",
+    "disclaimerTitle": "Zastrzeżenie zdrowotne",
+    "disclaimerFallback": "Ten plan został wygenerowany przez AI wyłącznie w celach informacyjnych i nie stanowi porady medycznej. Przed rozpoczęciem jakiegokolwiek programu treningowego lub dietetycznego skonsultuj się z wykwalifikowanym specjalistą."
+  },
+  "Nav": {
+    "dashboard": "Dashboard",
+    "plan": "Plan Treningowy",
+    "progress": "Postępy"
   }
 }
