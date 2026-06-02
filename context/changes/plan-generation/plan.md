@@ -458,17 +458,17 @@ Wire the form to the generation route via `experimental_useObject`, show the abs
 
 #### Automated
 
-- [x] 2.1 Type checking passes: `npx tsc --noEmit`
-- [x] 2.2 Linting passes: `npm run lint`
-- [x] 2.3 Build succeeds: `npm run build`
-- [x] 2.4 Unit tests pass: `npm run test` — input schema (i18n-key errors), output schema `safeParse`, `build-prompt` (goal/health/equipment + disclaimer instruction)
-- [x] 2.5 Integration tests pass: `npm run test` — route 401 logged-out, 400 invalid (with code), valid → one user-scoped active row; A-can't-read-B isolation
+- [x] 2.1 Type checking passes: `npx tsc --noEmit` — 959e5f3
+- [x] 2.2 Linting passes: `npm run lint` — 959e5f3
+- [x] 2.3 Build succeeds: `npm run build` — 959e5f3
+- [x] 2.4 Unit tests pass: `npm run test` — input schema (i18n-key errors), output schema `safeParse`, `build-prompt` (goal/health/equipment + disclaimer instruction) — 959e5f3
+- [x] 2.5 Integration tests pass: `npm run test` — route 401 logged-out, 400 invalid (with code), valid → one user-scoped active row; A-can't-read-B isolation — 959e5f3
 
 #### Manual
 
-- [x] 2.6 Valid POST to `/api/plan/generate` streams and persists one active row scoped to the user
-- [x] 2.7 Logged-out → 401; invalid params → 400 with localizable code
-- [x] 2.8 Interrupted request leaves no partial/active plan written
+- [x] 2.6 Valid POST to `/api/plan/generate` streams and persists one active row scoped to the user — 959e5f3
+- [x] 2.7 Logged-out → 401; invalid params → 400 with localizable code — 959e5f3
+- [x] 2.8 Interrupted request leaves no partial/active plan written — 959e5f3
 
 ### Phase 3: Parameter Form Wizard
 
