@@ -12,6 +12,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.80",
     "@ai-sdk/react": "^3.0.195",
     "@hookform/resolvers": "^5.4.0",
     "@supabase/ssr": "^0.10.3",

@@ -443,32 +443,32 @@ Wire the form to the generation route via `experimental_useObject`, show the abs
 
 #### Automated
 
-- [x] 1.1 Type checking passes: `npx tsc --noEmit`
-- [x] 1.2 Linting passes: `npm run lint`
-- [x] 1.3 Migration generates without error: `npx drizzle-kit generate`
-- [x] 1.4 Migration applies cleanly: `npx drizzle-kit migrate`
-- [x] 1.5 Tests pass: `npm run test` — two `saveActivePlan` calls leave exactly one active row; `getActivePlan` returns it (rolled-back test DB)
+- [x] 1.1 Type checking passes: `npx tsc --noEmit` — e966167
+- [x] 1.2 Linting passes: `npm run lint` — e966167
+- [x] 1.3 Migration generates without error: `npx drizzle-kit generate` — e966167
+- [x] 1.4 Migration applies cleanly: `npx drizzle-kit migrate` — e966167
+- [x] 1.5 Tests pass: `npm run test` — two `saveActivePlan` calls leave exactly one active row; `getActivePlan` returns it (rolled-back test DB) — e966167
 
 #### Manual
 
-- [x] 1.6 `plans` table exists with expected columns and index
-- [x] 1.7 Insert + `getActivePlan` round-trips against the real dev database
+- [x] 1.6 `plans` table exists with expected columns and index — e966167
+- [x] 1.7 Insert + `getActivePlan` round-trips against the real dev database — e966167
 
 ### Phase 2: Shared Schemas + AI Generation Route
 
 #### Automated
 
-- [ ] 2.1 Type checking passes: `npx tsc --noEmit`
-- [ ] 2.2 Linting passes: `npm run lint`
-- [ ] 2.3 Build succeeds: `npm run build`
-- [ ] 2.4 Unit tests pass: `npm run test` — input schema (i18n-key errors), output schema `safeParse`, `build-prompt` (goal/health/equipment + disclaimer instruction)
-- [ ] 2.5 Integration tests pass: `npm run test` — route 401 logged-out, 400 invalid (with code), valid → one user-scoped active row; A-can't-read-B isolation
+- [x] 2.1 Type checking passes: `npx tsc --noEmit`
+- [x] 2.2 Linting passes: `npm run lint`
+- [x] 2.3 Build succeeds: `npm run build`
+- [x] 2.4 Unit tests pass: `npm run test` — input schema (i18n-key errors), output schema `safeParse`, `build-prompt` (goal/health/equipment + disclaimer instruction)
+- [x] 2.5 Integration tests pass: `npm run test` — route 401 logged-out, 400 invalid (with code), valid → one user-scoped active row; A-can't-read-B isolation
 
 #### Manual
 
-- [ ] 2.6 Valid POST to `/api/plan/generate` streams and persists one active row scoped to the user
-- [ ] 2.7 Logged-out → 401; invalid params → 400 with localizable code
-- [ ] 2.8 Interrupted request leaves no partial/active plan written
+- [x] 2.6 Valid POST to `/api/plan/generate` streams and persists one active row scoped to the user
+- [x] 2.7 Logged-out → 401; invalid params → 400 with localizable code
+- [x] 2.8 Interrupted request leaves no partial/active plan written
 
 ### Phase 3: Parameter Form Wizard
 

@@ -22,8 +22,13 @@ export async function proxy(request: NextRequest) {
   );
   const isAuthRoute = pathname === AUTH_ROUTE;
 
-  // Unauthenticated request to a protected path → send to the auth route.
+  // Unauthenticated request to a protected path. API routes get a 401 JSON so
+  // fetch/streaming clients receive a clean error instead of a followed redirect to
+  // the HTML login page; page routes are sent to the auth route.
   if (!user && !isPublic) {
+    if (pathname.startsWith("/api/")) {
+      return unauthorizedPreservingCookies(response);
+    }
     return redirectPreservingCookies(request, response, AUTH_ROUTE);
   }
 
@@ -33,6 +38,15 @@ export async function proxy(request: NextRequest) {
   }
 
   return response;
+}
+
+/** Build a 401 JSON response that carries over the session-refresh `Set-Cookie` headers. */
+function unauthorizedPreservingCookies(sessionResponse: NextResponse) {
+  const unauthorized = NextResponse.json({ code: "unauthenticated" }, { status: 401 });
+  sessionResponse.cookies.getAll().forEach((cookie) => {
+    unauthorized.cookies.set(cookie);
+  });
+  return unauthorized;
 }
 
 /** Build a redirect that carries over the session-refresh `Set-Cookie` headers. */
