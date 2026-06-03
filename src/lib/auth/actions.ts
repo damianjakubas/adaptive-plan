@@ -12,7 +12,7 @@ import {
 } from "@/lib/validation/auth";
 
 /**
- * Sign in with email + password. On success redirects to the dashboard;
+ * Sign in with email + password. On success redirects to the active plan;
  * on failure returns a mapped error code the UI resolves to a localized message.
  */
 export async function signIn(values: SignInInput): Promise<AuthResult> {
@@ -31,12 +31,12 @@ export async function signIn(values: SignInInput): Promise<AuthResult> {
     return { ok: false, code: mapAuthError(error) };
   }
 
-  redirect("/dashboard");
+  redirect("/plan");
 }
 
 /**
  * Register with email + password. Auto-confirm is enabled (no email step), so a
- * successful sign-up yields an immediate session and redirects to the dashboard.
+ * successful sign-up yields an immediate session and redirects to the active plan.
  */
 export async function signUp(values: SignUpInput): Promise<AuthResult> {
   const parsed = signUpSchema.safeParse(values);
@@ -60,7 +60,7 @@ export async function signUp(values: SignUpInput): Promise<AuthResult> {
     return { ok: false, code: "email_exists" };
   }
 
-  redirect("/dashboard");
+  redirect("/plan");
 }
 
 /** Sign out and return to the auth route. */

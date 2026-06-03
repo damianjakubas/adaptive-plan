@@ -40,11 +40,6 @@
     "weak_password": "Hasło jest zbyt słabe (min. 6 znaków).",
     "generic": "Coś poszło nie tak. Spróbuj ponownie."
   },
-  "Dashboard": {
-    "greeting": "Witaj, {email}",
-    "subtitle": "Twój panel treningowy",
-    "logout": "Wyloguj się"
-  },
   "Plan": {
     "title": "Stwórz swój profil treningowy",
     "stepCount": "Krok {current} z {total}",
@@ -103,10 +98,35 @@
     "timelineWeeksValue": "{weeks} tyg.",
     "milestonesTitle": "Kamienie milowe",
     "disclaimerTitle": "Zastrzeżenie zdrowotne",
-    "disclaimerFallback": "Ten plan został wygenerowany przez AI wyłącznie w celach informacyjnych i nie stanowi porady medycznej. Przed rozpoczęciem jakiegokolwiek programu treningowego lub dietetycznego skonsultuj się z wykwalifikowanym specjalistą."
+    "disclaimerFallback": "Ten plan został wygenerowany przez AI wyłącznie w celach informacyjnych i nie stanowi porady medycznej. Przed rozpoczęciem jakiegokolwiek programu treningowego lub dietetycznego skonsultuj się z wykwalifikowanym specjalistą.",
+    "loaderTitle": "Analizujemy Twoje dane...",
+    "loaderSubtitle": "Nasz algorytm AI tworzy Twój spersonalizowany plan Adaptive Plan.",
+    "loaderStatuses": [
+      "Inicjalizacja...",
+      "Przetwarzanie biometrii...",
+      "Optymalizacja cykli treningowych...",
+      "Kalkulacja obciążeń...",
+      "Generowanie struktury planu...",
+      "Finalizacja..."
+    ],
+    "loaderQuotes": [
+      "Sukces to suma niewielkich wysiłków, powtarzanych dzień po dniu.",
+      "Twój jedyny limit to Ty.",
+      "Ból, który czujesz dzisiaj, będzie siłą, którą poczujesz jutro.",
+      "Zrób dzisiaj coś, za co Twoje przyszłe ja Ci podziękuje.",
+      "Nie ma drogi na skróty do miejsc, do których warto dojść."
+    ]
+  },
+  "PlanErrors": {
+    "generation_failed": "Nie udało się wygenerować planu. Spróbuj ponownie.",
+    "invalid_parameters": "Niektóre dane są nieprawidłowe. Sprawdź je i spróbuj ponownie.",
+    "rate_limited": "Zbyt wiele żądań w tej chwili. Odczekaj moment i spróbuj ponownie.",
+    "unauthenticated": "Twoja sesja wygasła. Zaloguj się ponownie.",
+    "generic": "Coś poszło nie tak. Spróbuj ponownie."
   },
   "Nav": {
-    "dashboard": "Dashboard",
+    "logout": "Wyloguj się",
+    "newPlan": "Nowy plan",
     "plan": "Plan Treningowy",
     "progress": "Postępy"
   }

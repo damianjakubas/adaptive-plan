@@ -53,7 +53,7 @@ describe("signIn", () => {
     expect(mocks.redirect).not.toHaveBeenCalled();
   });
 
-  it("redirects to /dashboard on success", async () => {
+  it("redirects to /plan on success", async () => {
     mocks.signInWithPassword.mockResolvedValue({ error: null });
 
     await signIn({ email: "user@example.com", password: "secret" });
@@ -62,7 +62,7 @@ describe("signIn", () => {
       email: "user@example.com",
       password: "secret",
     });
-    expect(mocks.redirect).toHaveBeenCalledWith("/dashboard");
+    expect(mocks.redirect).toHaveBeenCalledWith("/plan");
   });
 });
 
@@ -97,7 +97,7 @@ describe("signUp", () => {
     expect(mocks.redirect).not.toHaveBeenCalled();
   });
 
-  it("redirects to /dashboard on a fresh successful signup", async () => {
+  it("redirects to /plan on a fresh successful signup", async () => {
     mocks.signUp.mockResolvedValue({
       data: { user: { id: "u1", identities: [{ id: "i1" }] }, session: {} },
       error: null,
@@ -105,7 +105,7 @@ describe("signUp", () => {
 
     await signUp({ email: "new@example.com", password: "secret" });
 
-    expect(mocks.redirect).toHaveBeenCalledWith("/dashboard");
+    expect(mocks.redirect).toHaveBeenCalledWith("/plan");
   });
 });
 

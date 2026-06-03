@@ -3,11 +3,13 @@ import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { LocaleToggle } from "@/components/locale-toggle";
+import { Button } from "@/components/ui/button";
+import { signOut } from "@/lib/auth/actions";
 
 /**
  * Authenticated shell for the `(app)` route group. Mounts the brand mark, the app
- * nav, and the PL/EN locale toggle. Only routes that exist this slice are linked;
- * "Progress" is shown as a placeholder until its slice lands.
+ * nav, the PL/EN locale toggle, and the sign-out control. Only routes that exist
+ * this slice are linked; "Progress" is shown as a placeholder until its slice lands.
  */
 export default async function AppLayout({ children }: { children: ReactNode }) {
   const t = await getTranslations("Nav");
@@ -21,23 +23,30 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
           </span>
           <nav className="hidden items-center gap-stack-md md:flex">
             <Link
-              href="/dashboard"
-              className="font-label-md text-label-md text-on-surface-variant transition-colors hover:text-primary-container"
-            >
-              {t("dashboard")}
-            </Link>
-            <Link
               href="/plan"
               className="font-label-md text-label-md text-on-surface-variant transition-colors hover:text-primary-container"
             >
               {t("plan")}
+            </Link>
+            <Link
+              href="/plan/new"
+              className="font-label-md text-label-md text-on-surface-variant transition-colors hover:text-primary-container"
+            >
+              {t("newPlan")}
             </Link>
             <span className="font-label-md text-label-md text-on-surface-variant opacity-40">
               {t("progress")}
             </span>
           </nav>
         </div>
-        <LocaleToggle />
+        <div className="flex items-center gap-stack-md">
+          <LocaleToggle />
+          <form action={signOut}>
+            <Button type="submit" variant="outline">
+              {t("logout")}
+            </Button>
+          </form>
+        </div>
       </header>
       <main className="flex flex-1 flex-col">{children}</main>
     </div>
