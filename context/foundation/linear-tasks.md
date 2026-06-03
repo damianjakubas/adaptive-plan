@@ -30,7 +30,7 @@ team: Adaptive-plan
 ### ADA-6 — [S-02] Plan generation: form, AI, display, persistence
 
 - **URL:** https://linear.app/adaptive-plan/issue/ADA-6/s-02-plan-generation-form-ai-display-persistence
-- **Status:** Backlog
+- **Status:** Done
 - **Priority:** Urgent
 - **Labels:** Slice, Feature
 - **PRD refs:** US-01, FR-003, FR-004, FR-005, FR-006

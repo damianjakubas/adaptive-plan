@@ -504,14 +504,14 @@ Wire the form to the generation route via `experimental_useObject`, show the abs
 
 #### Automated
 
-- [ ] 5.1 Type checking passes: `npx tsc --noEmit`
-- [ ] 5.2 Linting passes: `npm run lint`
-- [ ] 5.3 Build succeeds: `npm run build`
-- [ ] 5.4 Component tests pass: `npm run test` — `plan-generator` shows loader while loading, renders `plan-view` from the final `object` on finish (no navigation), maps `error` → toast with form preserved
+- [x] 5.1 Type checking passes: `npx tsc --noEmit` — ef529c9
+- [x] 5.2 Linting passes: `npm run lint` — ef529c9
+- [x] 5.3 Build succeeds: `npm run build` — ef529c9
+- [x] 5.4 Component tests pass: `npm run test` — `plan-generator` shows loader while loading, renders `plan-view` from the final `object` on finish (no navigation), maps `error` → toast with form preserved — ef529c9
 
 #### Manual
 
-- [ ] 5.5 Submit → loader within ~2s → plan rendered from streamed result (no DB-read race); references goal/health/equipment; direct `/plan` load shows same persisted plan
-- [ ] 5.6 Re-generating replaces the active plan (view updates; one active row)
-- [ ] 5.7 Forced failure → localized toast + preserved inputs + no partial persisted
-- [ ] 5.8 Continuous visible progress throughout generation (NFR)
+- [x] 5.5 Submit → loader within ~2s → plan rendered from streamed result (no DB-read race); references goal/health/equipment; direct `/plan` load shows same persisted plan — ef529c9
+- [x] 5.6 Re-generating replaces the active plan (view updates; one active row) — ef529c9
+- [x] 5.7 Forced failure → localized toast + preserved inputs + no partial persisted — ef529c9
+- [x] 5.8 Continuous visible progress throughout generation (NFR) — ef529c9
