@@ -24,7 +24,7 @@ function PlanView({ plan }: Props) {
   const t = useTranslations("Plan");
 
   return (
-    <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-stack-md px-container-margin py-stack-lg">
+    <div className="mx-auto flex w-full max-w-400 flex-col gap-stack-md px-container-margin py-stack-lg">
       <header>
         <h1 className="font-headline-xl text-headline-lg-mobile text-primary md:text-headline-xl">
           {t("viewTitle")}
@@ -34,20 +34,23 @@ function PlanView({ plan }: Props) {
 
       <AiSummary summary={plan.summary} />
 
-      <div className="grid grid-cols-1 gap-gutter md:grid-cols-12">
-        <div className="md:col-span-8">
-          <WeeklySchedule days={plan.weeklySchedule} />
-        </div>
-        <aside className="flex flex-col gap-stack-md md:col-span-4">
-          <CalorieTarget kcal={plan.calorieTarget.kcal} note={plan.calorieTarget.note} />
-          <DietaryTips tips={plan.dietaryTips} />
-          <CardioRing note={plan.cardioGoal.note} targetMinutes={plan.cardioGoal.targetMinutes} />
-          <ProgressionTimeline
-            milestones={plan.milestones}
-            progression={plan.progression}
-            timelineWeeks={plan.timelineWeeks}
-          />
-        </aside>
+      <WeeklySchedule days={plan.weeklySchedule} />
+
+      <div className="grid grid-cols-1 gap-gutter md:grid-cols-2">
+        <CalorieTarget
+          kcal={plan.calorieTarget.kcal}
+          note={plan.calorieTarget.note}
+        />
+        <DietaryTips tips={plan.dietaryTips} />
+        <CardioRing
+          note={plan.cardioGoal.note}
+          targetMinutes={plan.cardioGoal.targetMinutes}
+        />
+        <ProgressionTimeline
+          milestones={plan.milestones}
+          progression={plan.progression}
+          timelineWeeks={plan.timelineWeeks}
+        />
       </div>
 
       <PlanDisclaimer disclaimer={plan.disclaimer} />

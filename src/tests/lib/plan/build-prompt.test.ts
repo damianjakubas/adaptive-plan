@@ -39,8 +39,9 @@ describe("buildPlanPrompt", () => {
     expect(prompt).toContain("none reported");
   });
 
-  it("appends a locale instruction only when a locale is provided", () => {
-    expect(buildPlanPrompt(baseInput)).not.toContain("Respond in locale");
-    expect(buildPlanPrompt(baseInput, "pl")).toContain("Respond in locale: pl");
+  it("forces the output language to match the locale (defaulting to English)", () => {
+    expect(buildPlanPrompt(baseInput, "pl")).toContain("Write ALL natural-language text in Polish");
+    expect(buildPlanPrompt(baseInput, "en")).toContain("Write ALL natural-language text in English");
+    expect(buildPlanPrompt(baseInput)).toContain("Write ALL natural-language text in English");
   });
 });

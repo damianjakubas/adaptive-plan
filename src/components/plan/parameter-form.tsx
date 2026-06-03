@@ -5,19 +5,19 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { planInputSchema, type PlanInput } from "@/lib/validation/plan-schema";
+import OptionToggleItem from "./option-toggle-item";
 import { WIZARD_STEPS } from "./wizard-steps";
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { ToggleGroup } from "@/components/ui/toggle-group";
 
-function ParameterForm({ onGenerate }: Props) {
+function ParameterForm({ initialValues, onGenerate }: Props) {
   const tPlan = useTranslations("Plan");
   const tValidation = useTranslations("Validation");
 
@@ -39,6 +39,7 @@ function ParameterForm({ onGenerate }: Props) {
       frequency: 3,
       timePerSession: 60,
       experience: "beginner",
+      ...initialValues,
     },
   });
 
@@ -67,9 +68,9 @@ function ParameterForm({ onGenerate }: Props) {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
             {currentStep.id === "basics" && (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <FormField
                   control={form.control}
                   name="age"
@@ -95,9 +96,9 @@ function ParameterForm({ onGenerate }: Props) {
                     <FormItem>
                       <FormLabel>{tPlan("sex")}</FormLabel>
                       <FormControl>
-                        <ToggleGroup type="single" value={field.value} onValueChange={(val) => val && field.onChange(val)} className="justify-start">
-                          <ToggleGroupItem value="male">{tPlan("sex_male")}</ToggleGroupItem>
-                          <ToggleGroupItem value="female">{tPlan("sex_female")}</ToggleGroupItem>
+                        <ToggleGroup type="single" value={field.value} onValueChange={(val) => val && field.onChange(val)} className="flex-wrap justify-start">
+                          <OptionToggleItem value="male">{tPlan("sex_male")}</OptionToggleItem>
+                          <OptionToggleItem value="female">{tPlan("sex_female")}</OptionToggleItem>
                         </ToggleGroup>
                       </FormControl>
                       <FormMessage>{form.formState.errors.sex?.message && tValidation(form.formState.errors.sex.message as never)}</FormMessage>
@@ -144,7 +145,7 @@ function ParameterForm({ onGenerate }: Props) {
             )}
 
             {currentStep.id === "lifestyle" && (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <FormField
                   control={form.control}
                   name="workMode"
@@ -152,9 +153,9 @@ function ParameterForm({ onGenerate }: Props) {
                     <FormItem>
                       <FormLabel>{tPlan("workMode")}</FormLabel>
                       <FormControl>
-                        <ToggleGroup type="single" value={field.value} onValueChange={(val) => val && field.onChange(val)} className="justify-start">
-                          <ToggleGroupItem value="sedentary">{tPlan("workMode_sedentary")}</ToggleGroupItem>
-                          <ToggleGroupItem value="active">{tPlan("workMode_active")}</ToggleGroupItem>
+                        <ToggleGroup type="single" value={field.value} onValueChange={(val) => val && field.onChange(val)} className="flex-wrap justify-start">
+                          <OptionToggleItem value="sedentary">{tPlan("workMode_sedentary")}</OptionToggleItem>
+                          <OptionToggleItem value="active">{tPlan("workMode_active")}</OptionToggleItem>
                         </ToggleGroup>
                       </FormControl>
                       <FormMessage>{form.formState.errors.workMode?.message && tValidation(form.formState.errors.workMode.message as never)}</FormMessage>
@@ -183,26 +184,21 @@ function ParameterForm({ onGenerate }: Props) {
             )}
 
             {currentStep.id === "health" && (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <FormField
                   control={form.control}
                   name="goal"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>{tPlan("goal")}</FormLabel>
-                      <Select value={field.value} onValueChange={field.onChange}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="weight-loss">{tPlan("goal_weight-loss")}</SelectItem>
-                          <SelectItem value="muscle">{tPlan("goal_muscle")}</SelectItem>
-                          <SelectItem value="strength">{tPlan("goal_strength")}</SelectItem>
-                          <SelectItem value="health-relief">{tPlan("goal_health-relief")}</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <ToggleGroup type="single" value={field.value} onValueChange={(val) => val && field.onChange(val)} className="flex-wrap justify-start">
+                          <OptionToggleItem value="weight-loss">{tPlan("goal_weight-loss")}</OptionToggleItem>
+                          <OptionToggleItem value="muscle">{tPlan("goal_muscle")}</OptionToggleItem>
+                          <OptionToggleItem value="strength">{tPlan("goal_strength")}</OptionToggleItem>
+                          <OptionToggleItem value="health-relief">{tPlan("goal_health-relief")}</OptionToggleItem>
+                        </ToggleGroup>
+                      </FormControl>
                       <FormMessage>{form.formState.errors.goal?.message && tValidation(form.formState.errors.goal.message as never)}</FormMessage>
                     </FormItem>
                   )}
@@ -228,25 +224,20 @@ function ParameterForm({ onGenerate }: Props) {
             )}
 
             {currentStep.id === "preferences" && (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <FormField
                   control={form.control}
                   name="equipment"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>{tPlan("equipment")}</FormLabel>
-                      <Select value={field.value} onValueChange={field.onChange}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="none">{tPlan("equipment_none")}</SelectItem>
-                          <SelectItem value="home">{tPlan("equipment_home")}</SelectItem>
-                          <SelectItem value="gym">{tPlan("equipment_gym")}</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <ToggleGroup type="single" value={field.value} onValueChange={(val) => val && field.onChange(val)} className="flex-wrap justify-start">
+                          <OptionToggleItem value="none">{tPlan("equipment_none")}</OptionToggleItem>
+                          <OptionToggleItem value="home">{tPlan("equipment_home")}</OptionToggleItem>
+                          <OptionToggleItem value="gym">{tPlan("equipment_gym")}</OptionToggleItem>
+                        </ToggleGroup>
+                      </FormControl>
                       <FormMessage>{form.formState.errors.equipment?.message && tValidation(form.formState.errors.equipment.message as never)}</FormMessage>
                     </FormItem>
                   )}
@@ -294,18 +285,13 @@ function ParameterForm({ onGenerate }: Props) {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>{tPlan("experience")}</FormLabel>
-                      <Select value={field.value} onValueChange={field.onChange}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="beginner">{tPlan("experience_beginner")}</SelectItem>
-                          <SelectItem value="intermediate">{tPlan("experience_intermediate")}</SelectItem>
-                          <SelectItem value="advanced">{tPlan("experience_advanced")}</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <ToggleGroup type="single" value={field.value} onValueChange={(val) => val && field.onChange(val)} className="flex-wrap justify-start">
+                          <OptionToggleItem value="beginner">{tPlan("experience_beginner")}</OptionToggleItem>
+                          <OptionToggleItem value="intermediate">{tPlan("experience_intermediate")}</OptionToggleItem>
+                          <OptionToggleItem value="advanced">{tPlan("experience_advanced")}</OptionToggleItem>
+                        </ToggleGroup>
+                      </FormControl>
                       <FormMessage>{form.formState.errors.experience?.message && tValidation(form.formState.errors.experience.message as never)}</FormMessage>
                     </FormItem>
                   )}
@@ -332,6 +318,7 @@ function ParameterForm({ onGenerate }: Props) {
 }
 
 interface Props {
+  initialValues?: Partial<PlanInput>;
   onGenerate: (values: PlanInput) => void;
 }
 

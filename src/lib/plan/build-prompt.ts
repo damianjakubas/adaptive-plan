@@ -3,8 +3,8 @@ import type { PlanInput } from "@/lib/validation/plan-schema";
 /**
  * Pure function turning validated parameter-form inputs into the generation prompt.
  * Kept out of the route per the helpers-in-separate-files rule. Accepts an optional
- * `locale` for S-03 readiness (output-locale selection is a later slice); for now it
- * only annotates the requested response language without changing the default.
+ * `locale` (the active UI locale) and maps it to a language name so the model writes
+ * every free-text field in the user's selected language.
  *
  * The prompt instructs the model to honor the user's health constraints, equipment,
  * training frequency, and goal, to reference the user's specific inputs, and to
@@ -15,7 +15,8 @@ function buildPlanPrompt(input: PlanInput, locale?: string): string {
     ? input.healthIssues.trim()
     : "none reported";
 
-  const localeLine = locale ? `\nRespond in locale: ${locale}.` : "";
+  const language = locale === "pl" ? "Polish" : "English";
+  const localeLine = `\n\nLanguage requirement: Write ALL natural-language text in ${language} — the summary, the goal label, day names, focus labels, exercise names and notes, dietary tip titles and bodies, progression steps, milestones, the calorie note, the cardio note, and the disclaimer. Do not use any other language for any human-readable text. Keep the structural/enum-like values unchanged: numbers (kcal, minutes, sets, reps, weeks), the isRest booleans, and the JSON field names stay exactly as specified.`;
 
   return `You are an expert personal trainer and nutrition coach. Generate a personalized training plan tailored to this individual. Reference their specific inputs in your recommendations — do not produce a generic plan.
 

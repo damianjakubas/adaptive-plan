@@ -24,6 +24,12 @@ vi.mock("@ai-sdk/google", () => ({
   google: vi.fn(() => "mock-model"),
 }));
 
+// The route reads the active UI locale server-side; outside a Next.js request
+// scope (vitest) the real implementation throws, so stub it to the default.
+vi.mock("next-intl/server", () => ({
+  getLocale: vi.fn(async () => "pl"),
+}));
+
 vi.mock("ai", () => ({
   Output: { object: vi.fn(() => ({})) },
   streamText: (opts: { onFinish: () => Promise<void> }) => {

@@ -28,7 +28,7 @@ function WeeklySchedule({ days }: Props) {
       <h3 className="mb-stack-md font-headline-md text-headline-md text-primary">
         {t("weeklyScheduleTitle")}
       </h3>
-      <div className="grid grid-cols-2 gap-stack-sm sm:grid-cols-4 md:grid-cols-7">
+      <div className="grid grid-cols-2 gap-stack-md sm:grid-cols-4 md:grid-cols-7">
         {days.map((day, index) => (
           <button
             key={`${day.day}-${index}`}

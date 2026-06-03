@@ -1,5 +1,6 @@
 import { google } from "@ai-sdk/google";
 import { Output, streamText } from "ai";
+import { getLocale } from "next-intl/server";
 
 import { saveActivePlan } from "@/db/plans";
 import buildPlanPrompt from "@/lib/plan/build-prompt";
@@ -54,6 +55,7 @@ export async function POST(req: Request): Promise<Response> {
     return errorResponse("invalid_parameters", 400);
   }
   const input = parsed.data;
+  const locale = await getLocale();
 
   try {
     const result = streamText({
@@ -78,7 +80,7 @@ export async function POST(req: Request): Promise<Response> {
         }
       },
       output: Output.object({ schema: planOutputSchema }),
-      prompt: buildPlanPrompt(input),
+      prompt: buildPlanPrompt(input, locale),
     });
 
     return result.toTextStreamResponse();
