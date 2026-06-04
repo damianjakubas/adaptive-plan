@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 
 const AUTH_ROUTE = "/login";
-const DEFAULT_PROTECTED = "/dashboard";
+const DEFAULT_PROTECTED = "/plan";
 
 /** Routes that do NOT require authentication. Everything else is protected. */
 const PUBLIC_ROUTES = ["/", "/login"];
@@ -22,17 +22,31 @@ export async function proxy(request: NextRequest) {
   );
   const isAuthRoute = pathname === AUTH_ROUTE;
 
-  // Unauthenticated request to a protected path → send to the auth route.
+  // Unauthenticated request to a protected path. API routes get a 401 JSON so
+  // fetch/streaming clients receive a clean error instead of a followed redirect to
+  // the HTML login page; page routes are sent to the auth route.
   if (!user && !isPublic) {
+    if (pathname.startsWith("/api/")) {
+      return unauthorizedPreservingCookies(response);
+    }
     return redirectPreservingCookies(request, response, AUTH_ROUTE);
   }
 
-  // Authenticated request to the auth route → send to the dashboard.
+  // Authenticated request to the auth route → send to the active plan.
   if (user && isAuthRoute) {
     return redirectPreservingCookies(request, response, DEFAULT_PROTECTED);
   }
 
   return response;
+}
+
+/** Build a 401 JSON response that carries over the session-refresh `Set-Cookie` headers. */
+function unauthorizedPreservingCookies(sessionResponse: NextResponse) {
+  const unauthorized = NextResponse.json({ code: "unauthenticated" }, { status: 401 });
+  sessionResponse.cookies.getAll().forEach((cookie) => {
+    unauthorized.cookies.set(cookie);
+  });
+  return unauthorized;
 }
 
 /** Build a redirect that carries over the session-refresh `Set-Cookie` headers. */

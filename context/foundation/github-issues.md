@@ -28,7 +28,8 @@ repo: damianjakubas/adaptive-plan
 ### #4 — [S-02] Plan generation: form, AI, display, persistence
 
 - **URL:** https://github.com/damianjakubas/adaptive-plan/issues/4
-- **Labels:** `slice`, `proposed`
+- **State:** Closed (delivered 2026-06-03)
+- **Labels:** `slice`, `ready`
 - **PRD refs:** US-01, FR-003, FR-004, FR-005, FR-006
 - **Prerequisites:** Depends on #3
 - **Linear mirror:** ADA-6
