@@ -39,6 +39,14 @@ describe("buildPlanPrompt", () => {
     expect(prompt).toContain("none reported");
   });
 
+  // Deterministic half of Risk #2's health-respect contract: the prompt must carry
+  // an instruction to honor the stated constraints. (Whether the generated plan
+  // actually honors them is eval-shaped and deferred — see test-plan §6.6.)
+  it("instructs the model to honor the stated health issues", () => {
+    const prompt = buildPlanPrompt(baseInput).toLowerCase();
+    expect(prompt).toContain("honor the stated health issues");
+  });
+
   it("forces the output language to match the locale (defaulting to English)", () => {
     expect(buildPlanPrompt(baseInput, "pl")).toContain("Write ALL natural-language text in Polish");
     expect(buildPlanPrompt(baseInput, "en")).toContain("Write ALL natural-language text in English");
