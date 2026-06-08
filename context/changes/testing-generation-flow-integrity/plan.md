@@ -489,10 +489,10 @@ wired into CI.
 
 #### Automated
 
-- [x] 5.1 Full suite green: `npm test`
-- [x] 5.2 Linting passes: `npm run lint`
-- [x] 5.3 Final selective mutation run completes: `npx stryker run --mutate "src/lib/plan/errors.ts"`
+- [x] 5.1 Full suite green: `npm test` — 3369feb
+- [x] 5.2 Linting passes: `npm run lint` — 3369feb
+- [x] 5.3 Final selective mutation run completes: `npx stryker run --mutate "src/lib/plan/errors.ts"` — 3369feb
 
 #### Manual
 
-- [ ] 5.4 A reader can write a new corrupted-output test from §6.2 without reading the route test
+- [x] 5.4 A reader can write a new corrupted-output test from §6.2 without reading the route test
