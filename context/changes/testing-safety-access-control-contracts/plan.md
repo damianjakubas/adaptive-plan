@@ -281,9 +281,9 @@ None — no schema or runtime code changes; this phase adds and extends tests pl
 
 #### Manual
 
-- [ ] 1.5 Fallback test fails if `plan-disclaimer.tsx:14` is mutated to drop the fallback
-- [ ] 1.6 Title assertion is independent of the LLM-supplied body
-- [ ] 1.7 No assertion references the prompt builder string
+- [x] 1.5 Fallback test fails if `plan-disclaimer.tsx:14` is mutated to drop the fallback
+- [x] 1.6 Title assertion is independent of the LLM-supplied body
+- [x] 1.7 No assertion references the prompt builder string
 
 ### Phase 2: Risk #3 — Proxy Deny-by-Default Gating (Hermetic)
 
@@ -296,9 +296,9 @@ None — no schema or runtime code changes; this phase adds and extends tests pl
 
 #### Manual
 
-- [ ] 2.5 Test fails if `PUBLIC_ROUTES` becomes a protected-prefix list
-- [ ] 2.6 Test fails if the `/api/*` branch stops returning 401 JSON
-- [ ] 2.7 The unlisted-route assertion exercises a route absent from `PUBLIC_ROUTES`
+- [x] 2.5 Test fails if `PUBLIC_ROUTES` becomes a protected-prefix list
+- [x] 2.6 Test fails if the `/api/*` branch stops returning 401 JSON
+- [x] 2.7 The unlisted-route assertion exercises a route absent from `PUBLIC_ROUTES`
 
 #### Addendum (landed in e3b1edc with Phase 3)
 
@@ -317,20 +317,20 @@ None — no schema or runtime code changes; this phase adds and extends tests pl
 
 #### Manual
 
-- [ ] 3.6 Dropping `eq(plans.userId, …)` makes the new test fail (existing test alone may not)
-- [ ] 3.7 Cleanup leaves no rows for either throwaway user
+- [x] 3.6 Dropping `eq(plans.userId, …)` makes the new test fail (existing test alone may not)
+- [x] 3.7 Cleanup leaves no rows for either throwaway user
 
 ### Phase 4: Cookbook + Test-Plan Sync + Residual-Risk Note
 
 #### Automated
 
-- [x] 4.1 `test-plan.md` §6.3 no longer contains "TBD" for access control
-- [x] 4.2 Full suite green: `npm test`
-- [x] 4.3 Type checking passes: `npx tsc --noEmit`
-- [x] 4.4 Linting passes: `npm run lint`
+- [x] 4.1 `test-plan.md` §6.3 no longer contains "TBD" for access control — c94b91e
+- [x] 4.2 Full suite green: `npm test` — c94b91e
+- [x] 4.3 Type checking passes: `npx tsc --noEmit` — c94b91e
+- [x] 4.4 Linting passes: `npm run lint` — c94b91e
 
 #### Manual
 
-- [ ] 4.5 §6.6 records the deferred health eval as residual risk
-- [ ] 4.6 §3 Phase 2 status matches the Progress section state
-- [ ] 4.7 Cookbook patterns are accurate enough for a new contributor to copy
+- [x] 4.5 §6.6 records the deferred health eval as residual risk
+- [x] 4.6 §3 Phase 2 status matches the Progress section state
+- [x] 4.7 Cookbook patterns are accurate enough for a new contributor to copy
