@@ -289,10 +289,10 @@ None — no schema or runtime code changes; this phase adds and extends tests pl
 
 #### Automated
 
-- [x] 2.1 New proxy test file exists: `src/tests/proxy.test.ts`
-- [x] 2.2 Unit tests pass with no DB/network: `npm test`
-- [x] 2.3 Type checking passes: `npx tsc --noEmit`
-- [x] 2.4 Linting passes: `npm run lint`
+- [x] 2.1 New proxy test file exists: `src/tests/proxy.test.ts` — f26101b
+- [x] 2.2 Unit tests pass with no DB/network: `npm test` — f26101b
+- [x] 2.3 Type checking passes: `npx tsc --noEmit` — f26101b
+- [x] 2.4 Linting passes: `npm run lint` — f26101b
 
 #### Manual
 
@@ -304,11 +304,11 @@ None — no schema or runtime code changes; this phase adds and extends tests pl
 
 #### Automated
 
-- [ ] 3.1 Extended test present in `src/tests/db/plans.test.ts`
-- [ ] 3.2 With a DB: `DATABASE_URL=… npm test src/tests/db/plans.test.ts` passes
-- [ ] 3.3 Without a DB: suite self-skips, `npm test` stays green
-- [ ] 3.4 Type checking passes: `npx tsc --noEmit`
-- [ ] 3.5 Linting passes: `npm run lint`
+- [x] 3.1 Extended test present in `src/tests/db/plans.test.ts`
+- [x] 3.2 With a DB: `DATABASE_URL=… npm test src/tests/db/plans.test.ts` passes
+- [x] 3.3 Without a DB: suite self-skips, `npm test` stays green
+- [x] 3.4 Type checking passes: `npx tsc --noEmit`
+- [x] 3.5 Linting passes: `npm run lint`
 
 #### Manual
 

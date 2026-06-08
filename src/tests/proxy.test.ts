@@ -59,12 +59,14 @@ describe("proxy", () => {
     it("passes through / without redirect", async () => {
       const res = await proxy(makeRequest("/"));
 
+      expect(res.status).toBe(200);
       expect(res.headers.get("location")).toBeNull();
     });
 
     it("passes through /login without redirect", async () => {
       const res = await proxy(makeRequest("/login"));
 
+      expect(res.status).toBe(200);
       expect(res.headers.get("location")).toBeNull();
     });
   });
@@ -79,6 +81,13 @@ describe("proxy", () => {
 
       expect(res.status).toBe(307);
       expect(new URL(res.headers.get("location")!).pathname).toBe("/plan");
+    });
+
+    it("passes through /plan for an authenticated user", async () => {
+      const res = await proxy(makeRequest("/plan"));
+
+      expect(res.status).toBe(200);
+      expect(res.headers.get("location")).toBeNull();
     });
   });
 
