@@ -274,10 +274,10 @@ None — no schema or runtime code changes; this phase adds and extends tests pl
 
 #### Automated
 
-- [x] 1.1 New disclaimer test file exists: `src/tests/components/plan/plan-disclaimer.test.tsx`
-- [x] 1.2 Unit tests pass: `npm test`
-- [x] 1.3 Type checking passes: `npx tsc --noEmit`
-- [x] 1.4 Linting passes: `npm run lint`
+- [x] 1.1 New disclaimer test file exists: `src/tests/components/plan/plan-disclaimer.test.tsx` — ec34e56
+- [x] 1.2 Unit tests pass: `npm test` — ec34e56
+- [x] 1.3 Type checking passes: `npx tsc --noEmit` — ec34e56
+- [x] 1.4 Linting passes: `npm run lint` — ec34e56
 
 #### Manual
 
@@ -289,10 +289,10 @@ None — no schema or runtime code changes; this phase adds and extends tests pl
 
 #### Automated
 
-- [ ] 2.1 New proxy test file exists: `src/tests/proxy.test.ts`
-- [ ] 2.2 Unit tests pass with no DB/network: `npm test`
-- [ ] 2.3 Type checking passes: `npx tsc --noEmit`
-- [ ] 2.4 Linting passes: `npm run lint`
+- [x] 2.1 New proxy test file exists: `src/tests/proxy.test.ts`
+- [x] 2.2 Unit tests pass with no DB/network: `npm test`
+- [x] 2.3 Type checking passes: `npx tsc --noEmit`
+- [x] 2.4 Linting passes: `npm run lint`
 
 #### Manual
 
