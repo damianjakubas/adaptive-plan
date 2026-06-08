@@ -114,6 +114,7 @@ describe.skipIf(!hasDb)("active-plan helpers", () => {
       expect(theirs?.userId).toBe(otherUserId);
     } finally {
       await db.delete(plans).where(eq(plans.userId, otherUserId));
+      // userId rows cleaned by afterEach
     }
   });
 });

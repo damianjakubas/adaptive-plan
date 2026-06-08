@@ -78,7 +78,7 @@ orchestrator updates Status as artifacts appear on disk.
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|------------|-----------------|----------------|------------|--------|----------------|
 | 1 | Generation-flow integrity | Audit and re-oracle the untrusted generation tests; prove every corrupted-output face fails safe | #1 | hermetic stub + unit | complete | context/changes/testing-generation-flow-integrity/ |
-| 2 | Safety & access-control contracts | Prove the disclaimer reaches the user and another user's data is denied (IDOR + unauth) | #2, #3 | component + integration | change opened | context/changes/testing-safety-access-control-contracts/ |
+| 2 | Safety & access-control contracts | Prove the disclaimer reaches the user and another user's data is denied (IDOR + unauth) | #2, #3 | component + integration | complete | context/changes/testing-safety-access-control-contracts/ |
 | 3 | UX resilience & locale | Prove stuck/error states are handled and output renders in the selected locale | #4, #5 | component + eval/contract | not started | — |
 
 **Status vocabulary** (fixed — parser literals):
@@ -104,7 +104,7 @@ The classic test base for this project. AI-native tools (if any) carry a
 | DOM matchers | @testing-library/jest-dom | 6.9.1 | imported in setup |
 | user interaction | @testing-library/user-event | 14.6.1 | for form/interaction tests |
 | AI client stubbing | (in-repo, hermetic) | n/a | Vercel AI SDK (`ai`, `@ai-sdk/google`) — stub the model/client to force corrupted-output faces; see Phase 1 |
-| integration DB | Postgres (Supabase) | postgres 3.4.9 / drizzle-orm 0.45.2 | real-DB path needed for IDOR/ownership (Risk #3); setup TBD — see §3 Phase 2 |
+| integration DB | Postgres (Supabase) | postgres 3.4.9 / drizzle-orm 0.45.2 | real-DB path needed for IDOR/ownership (Risk #3); self-skip on missing `DATABASE_URL` (see §6.3) |
 | e2e | none yet | — | not required by current risks; out of Lesson 2 scope |
 | accessibility | none yet | — | not in current risk map |
 
@@ -225,9 +225,108 @@ Listening to one channel only silently drops the other face. Assert both.
 (server seam full example), `src/tests/components/plan/plan-generator.test.tsx`
 (client seam full example).
 
-### 6.3 Testing access control / ownership (integration)
+### 6.3 Testing access control / ownership
 
-- TBD — see §3 Phase 2. Will document the real-DB setup and the IDOR/ownership assertion pattern.
+Two patterns cover Risk #3: a real-DB integration test for ownership isolation and a hermetic test for the proxy deny-by-default gate.
+
+#### Real-DB ownership (integration)
+
+Run only when `DATABASE_URL` points at a reachable Postgres (Supabase pooler). The suite self-skips in CI via `describe.skipIf(!hasDb)`.
+
+**Bootstrap** — load env before the skip decision:
+
+```typescript
+import { loadEnv } from "vite";
+Object.assign(process.env, loadEnv("development", process.cwd(), ""));
+const hasDb = Boolean(process.env.DATABASE_URL);
+```
+
+`vite`'s `loadEnv` (not `@next/env`) is used here because Vitest sets `NODE_ENV=test`, which causes `@next/env` to skip `.env.local` / `.env.development.local`.
+
+**Harness — throwaway IDs + scoped cleanup:**
+
+```typescript
+describe.skipIf(!hasDb)("active-plan helpers", () => {
+  const userId = crypto.randomUUID();
+
+  afterEach(async () => {
+    const { db } = await import("@/db");
+    const { plans } = await import("@/db/schema");
+    const { eq } = await import("drizzle-orm");
+    await db.delete(plans).where(eq(plans.userId, userId));
+  });
+
+  it("isolates users both directions when both have active plans", async () => {
+    const { getActivePlan, saveActivePlan } = await import("@/db/plans");
+    const { db } = await import("@/db");
+    const { plans } = await import("@/db/schema");
+    const { eq } = await import("drizzle-orm");
+    const otherUserId = crypto.randomUUID();
+
+    try {
+      await saveActivePlan({ /* ... */ userId });
+      await saveActivePlan({ /* ... */ userId: otherUserId });
+
+      const mine = await getActivePlan(userId);
+      const theirs = await getActivePlan(otherUserId);
+
+      expect(mine?.userId).toBe(userId);
+      expect(theirs?.userId).toBe(otherUserId);
+    } finally {
+      await db.delete(plans).where(eq(plans.userId, otherUserId));
+      // userId rows cleaned by afterEach
+    }
+  });
+});
+```
+
+The **both-directions** assertion is the ownership mutation-killer: it pins the
+`eq(plans.userId, ...)` filter against the `orderBy desc / limit 1` ordering so
+a dropped filter is caught even when the querying user also has an active row.
+Extra users are created inside individual tests and cleaned in `finally`; the
+primary `userId` is cleaned by `afterEach`.
+
+**Run:** `DATABASE_URL=<pooler-url> npm test src/tests/db/plans.test.ts` — or
+just `npm test` (self-skips without a DB).
+
+**Reference:** `src/tests/db/plans.test.ts`.
+
+#### Proxy deny-by-default (hermetic)
+
+Control auth state by mocking the `updateSession` seam from
+`@/lib/supabase/middleware` — no DB, no network.
+
+**Seam mock:**
+
+```typescript
+const updateSessionMock = vi.hoisted(() => vi.fn());
+
+vi.mock("@/lib/supabase/middleware", () => ({
+  updateSession: updateSessionMock,
+}));
+
+import { proxy } from "@/proxy";
+
+function makeSession(user: { id: string } | null, cookies: [string, string][] = []) {
+  const response = NextResponse.next();
+  cookies.forEach(([name, value]) => response.cookies.set(name, value));
+  return { response, user };
+}
+```
+
+**Key contracts to assert:**
+- `null` user + gated page → 307, `Location` ends `/login`
+- `null` user + `/api/*` → 401, body `{ code: "unauthenticated" }`
+- `null` user + **unlisted** route → 307 → `/login` (deny-by-default regression guard)
+- `null` user + public routes (`/`, `/login`) → 200, no redirect
+- authed user + `/login` → 307 → `/plan`
+- `Set-Cookie` headers from `updateSession` are preserved on redirect and 401 responses
+
+The **unlisted-route** assertion (a route absent from `PUBLIC_ROUTES`) is the
+regression guard against reverting to a protected-prefix allowlist (see
+`lessons.md` deny-by-default rule).
+
+**Reference:** `src/tests/proxy.test.ts`.
 
 ### 6.4 Testing the generator UI states (component)
 
@@ -262,6 +361,30 @@ Listening to one channel only silently drops the other face. Assert both.
   without coupling tests to print format or requiring a real logger.
 - Stryker on `errors.ts` killed all meaningful mutants; a `statusCode: 500` assertion was
   added after the first run surfaced one survivor (the else-branch for non-429 codes).
+
+**Phase 2 — Safety & access-control contracts (`testing-safety-access-control-contracts`, 2026-06-08):**
+- **Disclaimer fallback** (`src/tests/components/plan/plan-disclaimer.test.tsx`): the
+  load-bearing safety net is `plan-disclaimer.tsx:14` — the static i18n fallback when the
+  LLM omits or empties the disclaimer field. The existing `plan-view` test covered only the
+  happy path; the new test covers `undefined`, `""`, and `"   "` via `it.each`, plus the
+  always-static title. Oracle: i18n message value from the `next-intl` provider — never the
+  prompt string (anti-pattern per §2 Risk #2).
+- **Proxy deny-by-default** (`src/tests/proxy.test.ts`): `src/proxy.ts` had zero tests.
+  The hermetic suite mocks `updateSession` from `@/lib/supabase/middleware` (the auth seam),
+  drives every gating branch, and includes the **unlisted-route assertion** — a route absent
+  from `PUBLIC_ROUTES` is denied — which guards against regressing to a protected-prefix
+  list (see `lessons.md`). `Set-Cookie` preservation is also asserted; an addendum added
+  `status: 200` assertions to pass-through tests and a new authed pass-through branch
+  (`/plan` for an authenticated user).
+- **Ownership hardening** (`src/tests/db/plans.test.ts`): the both-users-active test was
+  added so a dropped `eq(plans.userId, …)` is caught even when the querying user also has
+  an active row (the prior test seeded only the other user, masking that gap).
+- **Residual risk — health eval deferred:** Risk #2 has two faces. The deterministic face
+  (prompt carries the health input + honor instruction) is covered by
+  `src/tests/lib/plan/build-prompt.test.ts`. The behavioural face ("the generated plan
+  actually respects the stated health issues") has no deterministic oracle and requires an
+  LLM-judge eval. This was intentionally deferred out of Phase 2 scope and remains an
+  unproven residual risk. Do **not** treat Risk #2 as fully closed after Phase 2.
 
 ## 7. What We Deliberately Don't Test
 

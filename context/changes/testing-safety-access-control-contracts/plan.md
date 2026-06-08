@@ -300,15 +300,20 @@ None — no schema or runtime code changes; this phase adds and extends tests pl
 - [ ] 2.6 Test fails if the `/api/*` branch stops returning 401 JSON
 - [ ] 2.7 The unlisted-route assertion exercises a route absent from `PUBLIC_ROUTES`
 
+#### Addendum (landed in e3b1edc with Phase 3)
+
+- `status: 200` assertions added to the "passes through /" and "passes through /login" pass-through tests
+- New test: "passes through /plan for an authenticated user" — closes the missing authed pass-through branch
+
 ### Phase 3: Risk #3 — Ownership Both-Users-Active Hardening (Integration DB)
 
 #### Automated
 
-- [x] 3.1 Extended test present in `src/tests/db/plans.test.ts`
-- [x] 3.2 With a DB: `DATABASE_URL=… npm test src/tests/db/plans.test.ts` passes
-- [x] 3.3 Without a DB: suite self-skips, `npm test` stays green
-- [x] 3.4 Type checking passes: `npx tsc --noEmit`
-- [x] 3.5 Linting passes: `npm run lint`
+- [x] 3.1 Extended test present in `src/tests/db/plans.test.ts` — e3b1edc
+- [x] 3.2 With a DB: `DATABASE_URL=… npm test src/tests/db/plans.test.ts` passes — e3b1edc
+- [x] 3.3 Without a DB: suite self-skips, `npm test` stays green — e3b1edc
+- [x] 3.4 Type checking passes: `npx tsc --noEmit` — e3b1edc
+- [x] 3.5 Linting passes: `npm run lint` — e3b1edc
 
 #### Manual
 
@@ -319,10 +324,10 @@ None — no schema or runtime code changes; this phase adds and extends tests pl
 
 #### Automated
 
-- [ ] 4.1 `test-plan.md` §6.3 no longer contains "TBD" for access control
-- [ ] 4.2 Full suite green: `npm test`
-- [ ] 4.3 Type checking passes: `npx tsc --noEmit`
-- [ ] 4.4 Linting passes: `npm run lint`
+- [x] 4.1 `test-plan.md` §6.3 no longer contains "TBD" for access control
+- [x] 4.2 Full suite green: `npm test`
+- [x] 4.3 Type checking passes: `npx tsc --noEmit`
+- [x] 4.4 Linting passes: `npm run lint`
 
 #### Manual
 
