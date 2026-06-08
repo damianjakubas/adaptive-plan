@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Stryker working sandbox — created on each run, not a source file:
+    ".stryker-tmp/**",
   ]),
 ]);
 

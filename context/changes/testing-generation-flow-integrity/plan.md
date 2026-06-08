@@ -450,14 +450,14 @@ wired into CI.
 
 #### Automated
 
-- [x] 2.1 New unit tests pass: `npm test`
-- [x] 2.2 Type checking passes: `npx tsc --noEmit`
-- [x] 2.3 Linting passes: `npm run lint`
-- [x] 2.4 Selective mutation run completes: `npx stryker run --mutate "src/lib/plan/errors.ts"`
+- [x] 2.1 New unit tests pass: `npm test` — 6bfee88
+- [x] 2.2 Type checking passes: `npx tsc --noEmit` — 6bfee88
+- [x] 2.3 Linting passes: `npm run lint` — 6bfee88
+- [x] 2.4 Selective mutation run completes: `npx stryker run --mutate "src/lib/plan/errors.ts"` — 6bfee88
 
 #### Manual
 
-- [x] 2.5 Stryker report reviewed; every survived mutant on `errors.ts` killed or consciously ignored
+- [x] 2.5 Stryker report reviewed; every survived mutant on `errors.ts` killed or consciously ignored — 6bfee88
 
 ### Phase 3: Server contract — hermetic face matrix + observability fix
 

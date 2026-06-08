@@ -1,7 +1,7 @@
 ---
 change_id: testing-generation-flow-integrity
 title: Testing generation flow integrity
-status: implementing
+status: impl_reviewed
 created: 2026-06-04
 updated: 2026-06-08
 

@@ -8,8 +8,12 @@ import type { GeneratedPlan } from "@/lib/validation/plan-schema";
 export function createStreamTextMock(ctrl: StreamTextController) {
   return {
     Output: { object: vi.fn(() => ({})) },
-    streamText: (opts: { onError?: (error: unknown) => void; onFinish: () => Promise<void> }) => {
+    streamText: (opts: {
+      onError?: (event: { error: unknown }) => void;
+      onFinish: () => Promise<void>;
+    }) => {
       ctrl.streamText(opts);
+      ctrl.capturedOnError = opts.onError ?? null;
       ctrl.capturedOnFinish = opts.onFinish;
       return {
         output: ctrl.outputPromise,
@@ -60,6 +64,7 @@ export const schemaViolatingPlan = { summary: "incomplete" };
 
 // Controller shapes — instantiate these in vi.hoisted in each consuming test.
 export type StreamTextController = {
+  capturedOnError: ((event: { error: unknown }) => void) | null;
   capturedOnFinish: null | (() => Promise<void>);
   outputPromise: Promise<unknown>;
   streamText: ReturnType<typeof vi.fn>;

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 
 import {
   planInputSchema,
@@ -6,21 +6,6 @@ import {
   type GeneratedPlan,
   type PlanInput,
 } from "@/lib/validation/plan-schema";
-
-/** Collect the first error message per field from a failed safeParse result. */
-function fieldErrors(result: {
-  success: false;
-  error: { issues: { path: PropertyKey[]; message: string }[] };
-}) {
-  const map: Record<string, string> = {};
-  for (const issue of result.error.issues) {
-    const key = String(issue.path[0]);
-    if (!(key in map)) {
-      map[key] = issue.message;
-    }
-  }
-  return map;
-}
 
 const validInput: PlanInput = {
   age: 30,
@@ -71,36 +56,28 @@ describe("planInputSchema", () => {
 
   it("rejects an out-of-range weight with the invalid_weight key", () => {
     const result = planInputSchema.safeParse({ ...validInput, weight: 5 });
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(fieldErrors(result).weight).toBe("invalid_weight");
-    }
+    assert(!result.success);
+    expect(fieldErrors(result).weight).toBe("invalid_weight");
   });
 
   it("rejects an invalid goal enum with the invalid_goal key", () => {
     const result = planInputSchema.safeParse({ ...validInput, goal: "teleport" });
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(fieldErrors(result).goal).toBe("invalid_goal");
-    }
+    assert(!result.success);
+    expect(fieldErrors(result).goal).toBe("invalid_goal");
   });
 
   it("rejects a missing required enum field with its i18n key", () => {
     const { sex, ...rest } = validInput;
     void sex;
     const result = planInputSchema.safeParse(rest);
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(fieldErrors(result).sex).toBe("invalid_sex");
-    }
+    assert(!result.success);
+    expect(fieldErrors(result).sex).toBe("invalid_sex");
   });
 
   it("rejects a frequency above 7 days with the invalid_frequency key", () => {
     const result = planInputSchema.safeParse({ ...validInput, frequency: 9 });
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(fieldErrors(result).frequency).toBe("invalid_frequency");
-    }
+    assert(!result.success);
+    expect(fieldErrors(result).frequency).toBe("invalid_frequency");
   });
 });
 
@@ -156,3 +133,18 @@ describe("planOutputSchema", () => {
     expect(planOutputSchema.safeParse(withExtras).success).toBe(true);
   });
 });
+
+/** Collect the first error message per field from a failed safeParse result. */
+function fieldErrors(result: {
+  success: false;
+  error: { issues: { path: PropertyKey[]; message: string }[] };
+}) {
+  const map: Record<string, string> = {};
+  for (const issue of result.error.issues) {
+    const key = String(issue.path[0]);
+    if (!(key in map)) {
+      map[key] = issue.message;
+    }
+  }
+  return map;
+}

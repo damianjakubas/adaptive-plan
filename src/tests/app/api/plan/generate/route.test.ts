@@ -5,14 +5,21 @@ import type { StreamTextController } from "@/tests/helpers/ai-stub";
 
 // Hoisted so the vi.mock factories below can reference them before imports resolve.
 const ctrl = vi.hoisted((): StreamTextController => ({
+  capturedOnError: null,
   capturedOnFinish: null,
   outputPromise: Promise.resolve<unknown>(null),
   streamText: vi.fn(),
 }));
 
+const logMock = vi.hoisted(() => ({ logGenerationError: vi.fn() }));
+
 const serverMocks = vi.hoisted(() => ({
   getUser: vi.fn(),
   saveActivePlan: vi.fn(),
+}));
+
+vi.mock("@/lib/plan/log-generation-error", () => ({
+  logGenerationError: logMock.logGenerationError,
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
@@ -66,6 +73,7 @@ function postRequest(body: unknown, raw = false): Request {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  ctrl.capturedOnError = null;
   ctrl.capturedOnFinish = null;
   ctrl.outputPromise = Promise.resolve(validPlan);
   serverMocks.getUser.mockResolvedValue({ data: { user: { id: "user-1" } } });
@@ -116,6 +124,7 @@ describe("POST /api/plan/generate", () => {
       plan: validPlan,
       userId: "user-1",
     });
+    expect(logMock.logGenerationError).not.toHaveBeenCalled();
   });
 
   it("scopes the write to the authenticated user, ignoring any client-supplied id", async () => {
@@ -135,6 +144,7 @@ describe("POST /api/plan/generate", () => {
     await ctrl.capturedOnFinish?.();
 
     expect(serverMocks.saveActivePlan).not.toHaveBeenCalled();
+    expect(logMock.logGenerationError).toHaveBeenCalledTimes(1);
   });
 
   it("does not persist when the output promise rejects", async () => {
@@ -144,5 +154,61 @@ describe("POST /api/plan/generate", () => {
     await expect(ctrl.capturedOnFinish?.()).resolves.toBeUndefined();
 
     expect(serverMocks.saveActivePlan).not.toHaveBeenCalled();
+    expect(logMock.logGenerationError).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not persist when the generated output is empty {}", async () => {
+    ctrl.outputPromise = Promise.resolve({});
+
+    await POST(postRequest(validInput));
+    await ctrl.capturedOnFinish?.();
+
+    expect(serverMocks.saveActivePlan).not.toHaveBeenCalled();
+    expect(logMock.logGenerationError).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not persist when the generated output is null", async () => {
+    ctrl.outputPromise = Promise.resolve(null);
+
+    await POST(postRequest(validInput));
+    await ctrl.capturedOnFinish?.();
+
+    expect(serverMocks.saveActivePlan).not.toHaveBeenCalled();
+    expect(logMock.logGenerationError).toHaveBeenCalledTimes(1);
+  });
+
+  it("catches saveActivePlan throw, does not crash, does not persist, logs once", async () => {
+    serverMocks.saveActivePlan.mockRejectedValue(new Error("DB error"));
+
+    await POST(postRequest(validInput));
+    await expect(ctrl.capturedOnFinish?.()).resolves.toBeUndefined();
+
+    expect(serverMocks.saveActivePlan).toHaveBeenCalledTimes(1);
+    expect(logMock.logGenerationError).toHaveBeenCalledTimes(1);
+  });
+
+  it("returns 500 with mapped error code and logs once on synchronous streamText throw", async () => {
+    ctrl.streamText.mockImplementation(() => {
+      throw new Error("model unavailable");
+    });
+
+    const res = await POST(postRequest(validInput));
+
+    expect(res.status).toBe(500);
+    expect(await res.json()).toEqual({ code: "generation_failed" });
+    expect(logMock.logGenerationError).toHaveBeenCalledTimes(1);
+  });
+
+  it("returns 500 with rate_limited code when streamText throws a 429 error", async () => {
+    const rateLimitError = Object.assign(new Error("quota exceeded"), { statusCode: 429 });
+    ctrl.streamText.mockImplementation(() => {
+      throw rateLimitError;
+    });
+
+    const res = await POST(postRequest(validInput));
+
+    expect(res.status).toBe(500);
+    expect(await res.json()).toEqual({ code: "rate_limited" });
+    expect(logMock.logGenerationError).toHaveBeenCalledTimes(1);
   });
 });
