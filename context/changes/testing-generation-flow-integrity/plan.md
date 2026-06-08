@@ -476,22 +476,22 @@ wired into CI.
 
 #### Automated
 
-- [x] 4.1 All component tests pass: `npm test`
-- [x] 4.2 Type checking passes: `npx tsc --noEmit`
-- [x] 4.3 Linting passes: `npm run lint`
+- [x] 4.1 All component tests pass: `npm test` — 38143a8
+- [x] 4.2 Type checking passes: `npx tsc --noEmit` — 38143a8
+- [x] 4.3 Linting passes: `npm run lint` — 38143a8
 
 #### Manual
 
-- [x] 4.4 Finished-but-invalid stream shows a toast and returns to the form (no silent drop)
-- [x] 4.5 Simulated dropped stream surfaces an error, not an infinite spinner
+- [x] 4.4 Finished-but-invalid stream shows a toast and returns to the form (no silent drop) — 38143a8
+- [x] 4.5 Simulated dropped stream surfaces an error, not an infinite spinner — 38143a8
 
 ### Phase 5: Cookbook + test-plan sync
 
 #### Automated
 
-- [ ] 5.1 Full suite green: `npm test`
-- [ ] 5.2 Linting passes: `npm run lint`
-- [ ] 5.3 Final selective mutation run completes: `npx stryker run --mutate "src/lib/plan/errors.ts"`
+- [x] 5.1 Full suite green: `npm test`
+- [x] 5.2 Linting passes: `npm run lint`
+- [x] 5.3 Final selective mutation run completes: `npx stryker run --mutate "src/lib/plan/errors.ts"`
 
 #### Manual
 

@@ -3,7 +3,7 @@ change_id: testing-generation-flow-integrity
 title: Testing generation flow integrity
 status: impl_reviewed
 created: 2026-06-04
-updated: 2026-06-09
+updated: 2026-06-08
 
 archived_at: null
 ---

@@ -52,6 +52,7 @@
 
 ### F4 — output-rejection logs with stage "persist" instead of "output"
 
+
 - **Severity**: OBSERVATION
 - **Impact**: 🏃 LOW — quick decision; fix is obvious and narrowly scoped
 - **Dimension**: Safety & Quality
@@ -59,3 +60,7 @@
 - **Detail**: A single try/catch in onFinish caught both `await result.output` rejection (LLM/SDK failure) and `saveActivePlan` throw under stage: "persist" — misleading for on-call debugging.
 - **Fix**: Split into two try/catch blocks: inner for `await result.output` logs stage: "output"; outer for `saveActivePlan` logs stage: "persist". All 13 route tests pass.
 - **Decision**: FIXED
+
+## Addendum — commit history note
+
+F1, F3, and F4 code changes were committed in the Phase 4 commit (38143a8), not in the Phase 3 commit (df03f97). They were triaged after df03f97 landed and bundled with Phase 4 work. The decisions above are accurate; the implementation landed one commit later.

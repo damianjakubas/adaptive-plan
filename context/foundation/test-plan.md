@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-06-04
+> Last updated: 2026-06-08
 
 ## 1. Strategy
 
@@ -126,7 +126,7 @@ docs/search to infer code failure anchors; those belong in per-phase
 | lint + typecheck | local + CI | required | syntactic / type drift (`npm run lint`, `npx tsc --noEmit`) |
 | unit + integration | local + CI | required after §3 Phase 1 | logic regressions in the generation flow |
 | integration (real DB) | local (ad hoc) | required after §3 Phase 2 | authorization / ownership regressions; run ad hoc — local Supabase is expensive |
-| mutation testing (Stryker) | local (selective) | optional, after a risk phase | tests that execute code but assert nothing meaningful; narrow scope to the changed module |
+| mutation testing (Stryker) | local (selective) | optional, after a risk phase | tests that execute code but assert nothing meaningful; narrow scope to the changed module; Phase 1 first run: `--mutate "src/lib/plan/errors.ts"` |
 
 ## 6. Cookbook Patterns
 
@@ -142,7 +142,88 @@ relevant rollout phase ships; before that, it reads "TBD — see §3 Phase N."
 
 ### 6.2 Testing the generation flow (hermetic AI stub)
 
-- TBD — see §3 Phase 1. Will document how to stub the Vercel AI SDK client to force each corrupted-output face (malformed/truncated JSON, schema violation, provider error, empty output) and assert fail-safe behaviour.
+The shared stub helper lives at `src/tests/helpers/ai-stub.ts`. It exports two
+controller factory functions — one for the server seam (`streamText`) and one
+for the client seam (`experimental_useObject`) — plus canonical fixtures.
+
+**Critical constraint — `vi.mock` hoisting.** `vi.mock` factories are hoisted
+above module imports by Vitest; they cannot close over ordinary module-scope
+variables. Every consuming test must therefore instantiate the controller inside
+`vi.hoisted(...)` and pass it into the factory. The helper centralises the
+*shape and behaviour*; the test owns the hoisted instance.
+
+**Server seam (`streamText`):**
+
+```typescript
+import type { StreamTextController } from "@/tests/helpers/ai-stub";
+import { validPlan } from "@/tests/helpers/ai-stub";
+
+// Step 1 — hoist the controller (MUST be hoisted, not module-scope)
+const ctrl = vi.hoisted((): StreamTextController => ({
+  capturedOnError: null,
+  capturedOnFinish: null,
+  outputPromise: Promise.resolve(validPlan),
+  streamText: vi.fn(),
+}));
+
+// Step 2 — wire the mock using the factory
+vi.mock("ai", async () => {
+  const { createStreamTextMock } = await import("@/tests/helpers/ai-stub");
+  return createStreamTextMock(ctrl);
+});
+
+// Step 3 — in tests, mutate ctrl before POST and drive onFinish explicitly
+it("does not persist when output is empty", async () => {
+  ctrl.outputPromise = Promise.resolve({});
+  await POST(request);
+  await ctrl.capturedOnFinish?.();   // drive the post-stream callback
+  expect(saveActivePlan).not.toHaveBeenCalled();
+});
+```
+
+`ctrl.capturedOnError` captures the `onError` handler — call it to simulate a
+mid-stream transport error. `ctrl.capturedOnFinish` captures the `onFinish`
+callback — call it after `POST(...)` to exercise the validate→persist gate.
+
+**Client seam (`experimental_useObject`):**
+
+```typescript
+import type { UseObjectController } from "@/tests/helpers/ai-stub";
+
+const useObjectCtrl = vi.hoisted((): UseObjectController => ({
+  capturedOnFinish: undefined,
+  error: undefined,
+  isLoading: false,
+  object: undefined,
+  submit: vi.fn(),
+}));
+
+vi.mock("@ai-sdk/react", async () => {
+  const { createUseObjectMock } = await import("@/tests/helpers/ai-stub");
+  return createUseObjectMock(useObjectCtrl);
+});
+
+// Drive finish with no valid object (schema-validation failure face):
+act(() => {
+  useObjectCtrl.capturedOnFinish?.({
+    error: new Error("Output validation failed"),
+    object: undefined,
+  });
+});
+```
+
+**`useObject` two-channel error semantics (resolved in Phase 1):**
+- `onFinish({ object: undefined, error })` — fires when the *assembled* object
+  fails schema validation. `object` is `undefined`; `error` is set.
+- The hook's returned `error` *state* — fires only on transport / fetch failure.
+Listening to one channel only silently drops the other face. Assert both.
+
+**Key exports:** `validPlan` (canonical valid `GeneratedPlan`), `schemaViolatingPlan`
+(missing required fields), `StreamTextController`, `UseObjectController`.
+
+**Reference implementations:** `src/tests/app/api/plan/generate/route.test.ts`
+(server seam full example), `src/tests/components/plan/plan-generator.test.tsx`
+(client seam full example).
 
 ### 6.3 Testing access control / ownership (integration)
 
@@ -150,7 +231,20 @@ relevant rollout phase ships; before that, it reads "TBD — see §3 Phase N."
 
 ### 6.4 Testing the generator UI states (component)
 
-- TBD — see §3 Phase 3. Will document asserting pending/streaming/error states and the dropped-stream path.
+- **Seam**: the `UseObjectController` from `src/tests/helpers/ai-stub.ts` (see
+  §6.2). Set `isLoading`, `error`, and `object` on the controller *before*
+  `render`; drive `capturedOnFinish` inside `act(...)` to simulate stream
+  completion.
+- **State contract oracle**: after any terminal event (`onFinish` or `error`)
+  the component must show exactly one of: (a) a rendered plan, (b) a toast +
+  form (retry path), or (c) a loader — never a spinner without a terminal path
+  out. This "no spinner-forever" invariant is the key assertion.
+- **Covered so far** (Phase 1 of the rollout): `isLoading=true` → loader shown;
+  `onFinish` with valid object → plan rendered; transport `error` state → toast
+  + form; `onFinish` with `object: undefined` (schema-validation face) → toast
+  + form. See `src/tests/components/plan/plan-generator.test.tsx`.
+- **Phase 3 (§3)**: this section will be extended when Risk #4
+  (dropped-stream / no-progress) is covered in the UX-resilience rollout phase.
 
 ### 6.5 Asserting locale-correct output
 
@@ -158,8 +252,16 @@ relevant rollout phase ships; before that, it reads "TBD — see §3 Phase N."
 
 ### 6.6 Per-rollout-phase notes
 
-(Optional. After each phase lands, the implementing skill appends a 2–3
-line note here capturing anything surprising the phase taught.)
+**Phase 1 — Generation-flow integrity (`testing-generation-flow-integrity`, 2026-06-08):**
+- `useObject` exposes *two* error channels that must both be handled: `onFinish.error`
+  fires on Zod schema-validation failure (the assembled object didn't match); the hook's
+  returned `error` state fires only on transport failure. Listening to only one silently
+  drops the other face — this was the root of the silent-fallback bug fixed in Phase 4.
+- The route was swallowing both `streamText.onError` and the `onFinish` catch silently.
+  Introducing `logGenerationError` as a dedicated, spy-able seam proved observability
+  without coupling tests to print format or requiring a real logger.
+- Stryker on `errors.ts` killed all meaningful mutants; a `statusCode: 500` assertion was
+  added after the first run surfaced one survivor (the else-branch for non-429 codes).
 
 ## 7. What We Deliberately Don't Test
 
@@ -171,7 +273,7 @@ contributors should respect these unless the underlying assumption changes.
 
 ## 8. Freshness Ledger
 
-- Strategy (§1–§5) last reviewed: 2026-06-04
+- Strategy (§1–§5) last reviewed: 2026-06-08
 - Stack versions last verified: 2026-06-04
 - AI-native tool references last verified: 2026-06-04
 

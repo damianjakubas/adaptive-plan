@@ -99,6 +99,7 @@ describe("PlanGenerator", () => {
     renderGenerator();
 
     expect(toastError).toHaveBeenCalledWith(enMessages.PlanErrors.generation_failed);
+    expect(toastError).toHaveBeenCalledTimes(1);
     // The form remains in place for retry with inputs preserved.
     expect(screen.getByText(enMessages.Plan.next)).toBeInTheDocument();
   });
@@ -111,6 +112,7 @@ describe("PlanGenerator", () => {
     });
 
     expect(toastError).toHaveBeenCalledWith(enMessages.PlanErrors.generation_failed);
+    expect(toastError).toHaveBeenCalledTimes(1);
     // Form is shown — not a spinner-forever state.
     expect(screen.getByText(enMessages.Plan.next)).toBeInTheDocument();
     expect(screen.queryByText(enMessages.Plan.loaderTitle)).not.toBeInTheDocument();
