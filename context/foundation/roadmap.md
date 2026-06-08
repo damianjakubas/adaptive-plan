@@ -29,11 +29,11 @@ No affordable tool generates truly personalized training plans that account for 
 
 ## At a glance
 
-| ID   | Change ID       | Outcome (user can …)                                                                     | Prerequisites | PRD refs                              | Status   |
-| ---- | --------------- | ---------------------------------------------------------------------------------------- | ------------- | ------------------------------------- | -------- |
-| S-01 | auth-flow       | register, log in, and log out                                                            | —             | FR-001, FR-002, FR-007                | ready    |
-| S-02 | plan-generation | fill in a parameter form and receive a personalized training plan with streaming display  | S-01          | US-01, FR-003, FR-004, FR-005, FR-006 | done     |
-| S-03 | locale-support  | switch language (PL/EN); UI and generated plan render in selected locale                 | S-02          | FR-008                                | proposed |
+| ID   | Change ID       | Outcome (user can …)                                                                     | Prerequisites | PRD refs                              | Status |
+| ---- | --------------- | ---------------------------------------------------------------------------------------- | ------------- | ------------------------------------- | ------ |
+| S-01 | auth-flow       | register, log in, and log out                                                            | —             | FR-001, FR-002, FR-007                | ready  |
+| S-02 | plan-generation | fill in a parameter form and receive a personalized training plan with streaming display | S-01          | US-01, FR-003, FR-004, FR-005, FR-006 | done   |
+| S-03 | locale-support  | switch language (PL/EN); UI and generated plan render in selected locale                 | S-02          | FR-008                                | done   |
 
 ## Baseline
 
@@ -85,17 +85,17 @@ No foundations required. All technical scaffolding is introduced progressively i
 - **Parallel with:** —
 - **Blockers:** —
 - **Unknowns:**
-  - Which i18n approach for Next.js App Router — URL-based routing (`/pl/...`, `/en/...`) vs client-side locale state? — Owner: user. Block: no.
+  - Which i18n approach for Next.js App Router — URL-based routing (`/pl/...`, `/en/...`) vs client-side locale state? — Owner: user. Block: no. **Resolved:** cookie-based (`NEXT_LOCALE`), no URL prefix.
 - **Risk:** i18n in Next.js App Router requires choosing a routing strategy; the change touches all existing UI pages plus the generation prompt template. Sequenced last because it's a cross-cutting modification easier to apply once pages and generation pipeline exist.
-- **Status:** proposed
+- **Status:** done — delivered incidentally by S-01 (UI i18n + `LocaleToggle`) and S-02 (locale-aware `buildPlanPrompt`); no dedicated implementation needed. See `context/changes/locale-support/change.md`. Accepted limitation: an already-generated plan does not retranslate when the locale is switched after generation.
 
 ## Backlog Handoff
 
-| Roadmap ID | Change ID       | Suggested issue title                           | Ready for `/10x-plan` | Notes                     |
-| ---------- | --------------- | ----------------------------------------------- | --------------------- | ------------------------- |
-| S-01       | auth-flow       | Auth flow: registration, login, logout          | yes                   | Run `/10x-plan auth-flow` |
-| S-02       | plan-generation | Plan generation: form, AI, display, persistence | yes                   | S-01 done; run `/10x-plan plan-generation` |
-| S-03       | locale-support  | Locale support: PL/EN for UI and generation     | no                    | Requires S-02             |
+| Roadmap ID | Change ID       | Suggested issue title                           | Ready for `/10x-plan` | Notes                                              |
+| ---------- | --------------- | ----------------------------------------------- | --------------------- | -------------------------------------------------- |
+| S-01       | auth-flow       | Auth flow: registration, login, logout          | yes                   | Run `/10x-plan auth-flow`                          |
+| S-02       | plan-generation | Plan generation: form, AI, display, persistence | done                  | Delivered (GitHub #4 closed)                       |
+| S-03       | locale-support  | Locale support: PL/EN for UI and generation     | done                  | Delivered via S-01 + S-02; closed administratively |
 
 ## Open Roadmap Questions
 
@@ -114,4 +114,4 @@ Design decision recorded during roadmap generation: **AI model generates trainin
 
 ## Done
 
-(Empty on first generation. `/10x-archive` appends entries here when a change is archived.)
+- **S-03: Locale support** (`locale-support`) — closed 2026-06-03. Outcome delivered incidentally by S-01 (UI i18n + `LocaleToggle`, cookie-based `NEXT_LOCALE`) and S-02 (locale-aware `buildPlanPrompt`); no dedicated implementation. GitHub #5 closed, Linear ADA-7 Done. Accepted limitation: a generated plan is not retranslated when the locale is switched after generation. See `context/changes/locale-support/change.md`.

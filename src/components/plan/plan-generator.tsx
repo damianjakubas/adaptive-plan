@@ -35,8 +35,10 @@ function PlanGenerator() {
   const { error, isLoading, submit } = useObject({
     api: "/api/plan/generate",
     onFinish: ({ error: finishError, object }) => {
-      if (object && !finishError) {
+      if (object) {
         setFinalPlan(object);
+      } else {
+        toast.error(tErrors(mapPlanError(finishError)));
       }
     },
     schema: planOutputSchema,

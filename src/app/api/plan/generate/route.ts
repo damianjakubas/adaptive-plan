@@ -5,6 +5,7 @@ import { getLocale } from "next-intl/server";
 import { saveActivePlan } from "@/db/plans";
 import buildPlanPrompt from "@/lib/plan/build-prompt";
 import { mapPlanError, type PlanErrorCode } from "@/lib/plan/errors";
+import { logGenerationError } from "@/lib/plan/log-generation-error";
 import { createClient } from "@/lib/supabase/server";
 import { planInputSchema, planOutputSchema } from "@/lib/validation/plan-schema";
 
@@ -61,22 +62,31 @@ export async function POST(req: Request): Promise<Response> {
     const result = streamText({
       abortSignal: req.signal,
       model: google(MODEL_ID),
+      onError: ({ error }) => {
+        logGenerationError({ error, stage: "stream" });
+      },
       onFinish: async () => {
+        let generated: unknown;
         try {
-          const generated = await result.output;
-          const validated = planOutputSchema.safeParse(generated);
-          if (!validated.success) {
-            return;
-          }
+          generated = await result.output;
+        } catch (error) {
+          logGenerationError({ error, stage: "output" });
+          return;
+        }
+        const validated = planOutputSchema.safeParse(generated);
+        if (!validated.success) {
+          logGenerationError({ error: validated.error, stage: "validation" });
+          return;
+        }
+        try {
           await saveActivePlan({
             model: MODEL_ID,
             parameters: input,
             plan: validated.data,
             userId: user.id,
           });
-        } catch {
-          // output rejection / parse failure / DB error — never persist a partial
-          // plan and never mutate the active plan. The client surfaces the error.
+        } catch (error) {
+          logGenerationError({ error, stage: "persist" });
         }
       },
       output: Output.object({ schema: planOutputSchema }),
@@ -85,6 +95,7 @@ export async function POST(req: Request): Promise<Response> {
 
     return result.toTextStreamResponse();
   } catch (error) {
+    logGenerationError({ error, stage: "setup" });
     return errorResponse(mapPlanError(error), 500);
   }
 }

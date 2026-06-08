@@ -2,26 +2,22 @@ import { NextIntlClientProvider } from "next-intl";
 import { act, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import type { UseObjectController } from "@/tests/helpers/ai-stub";
 import type { GeneratedPlan } from "@/lib/validation/plan-schema";
 
-// --- Mocks ----------------------------------------------------------------
-// Control `experimental_useObject`'s return value per render and capture the
-// `onFinish` callback so the test can drive the "stream finished" transition.
-type FinishEvent = { error: Error | undefined; object: GeneratedPlan | undefined };
-
-const submitMock = vi.fn();
-const mockState: { error: Error | undefined; isLoading: boolean } = {
+// Hoisted so the vi.mock factory below can reference it before imports resolve.
+const useObjectCtrl = vi.hoisted((): UseObjectController => ({
+  capturedOnFinish: undefined,
   error: undefined,
   isLoading: false,
-};
-let capturedOnFinish: ((event: FinishEvent) => void) | undefined;
-
-vi.mock("@ai-sdk/react", () => ({
-  experimental_useObject: ({ onFinish }: { onFinish: (event: FinishEvent) => void }) => {
-    capturedOnFinish = onFinish;
-    return { error: mockState.error, isLoading: mockState.isLoading, object: undefined, submit: submitMock };
-  },
+  object: undefined,
+  submit: vi.fn(),
 }));
+
+vi.mock("@ai-sdk/react", async () => {
+  const { createUseObjectMock } = await import("@/tests/helpers/ai-stub");
+  return createUseObjectMock(useObjectCtrl);
+});
 
 const toastError = vi.fn();
 vi.mock("sonner", () => ({ toast: { error: (...args: unknown[]) => toastError(...args) } }));
@@ -29,6 +25,7 @@ vi.mock("sonner", () => ({ toast: { error: (...args: unknown[]) => toastError(..
 import PlanGenerator from "@/components/plan/plan-generator";
 import enMessages from "@/i18n/messages/en.json";
 
+// Component-specific fixture with text strings asserted in UI tests.
 const fixture: GeneratedPlan = {
   calorieTarget: { kcal: 2200, note: "Maintain a moderate deficit." },
   cardioGoal: { note: "Steady-state cardio.", targetMinutes: 150 },
@@ -58,10 +55,11 @@ function renderGenerator() {
 }
 
 beforeEach(() => {
-  mockState.error = undefined;
-  mockState.isLoading = false;
-  capturedOnFinish = undefined;
-  submitMock.mockClear();
+  useObjectCtrl.capturedOnFinish = undefined;
+  useObjectCtrl.error = undefined;
+  useObjectCtrl.isLoading = false;
+  useObjectCtrl.object = undefined;
+  useObjectCtrl.submit.mockClear();
   toastError.mockClear();
 });
 
@@ -71,7 +69,7 @@ afterEach(() => {
 
 describe("PlanGenerator", () => {
   it("shows the abstract loader while the stream is loading", () => {
-    mockState.isLoading = true;
+    useObjectCtrl.isLoading = true;
     renderGenerator();
 
     expect(screen.getByText(enMessages.Plan.loaderTitle)).toBeInTheDocument();
@@ -87,7 +85,7 @@ describe("PlanGenerator", () => {
 
     // Simulate the stream finishing with a complete, schema-valid object.
     act(() => {
-      capturedOnFinish?.({ error: undefined, object: fixture });
+      useObjectCtrl.capturedOnFinish?.({ error: undefined, object: fixture });
     });
 
     expect(screen.getByText(fixture.summary)).toBeInTheDocument();
@@ -97,11 +95,36 @@ describe("PlanGenerator", () => {
   });
 
   it("maps a stream error to a localized toast while keeping the form", () => {
-    mockState.error = new Error("boom");
+    useObjectCtrl.error = new Error("boom");
     renderGenerator();
 
     expect(toastError).toHaveBeenCalledWith(enMessages.PlanErrors.generation_failed);
+    expect(toastError).toHaveBeenCalledTimes(1);
     // The form remains in place for retry with inputs preserved.
     expect(screen.getByText(enMessages.Plan.next)).toBeInTheDocument();
+  });
+
+  it("fires a toast and keeps the form when onFinish delivers no valid object (schema-validation failure)", () => {
+    renderGenerator();
+
+    act(() => {
+      useObjectCtrl.capturedOnFinish?.({ error: new Error("Output validation failed"), object: undefined });
+    });
+
+    expect(toastError).toHaveBeenCalledWith(enMessages.PlanErrors.generation_failed);
+    expect(toastError).toHaveBeenCalledTimes(1);
+    // Form is shown — not a spinner-forever state.
+    expect(screen.getByText(enMessages.Plan.next)).toBeInTheDocument();
+    expect(screen.queryByText(enMessages.Plan.loaderTitle)).not.toBeInTheDocument();
+  });
+
+  it("does not show the loader when isLoading is false and a terminal transport error is set (no spinner-forever)", () => {
+    useObjectCtrl.isLoading = false;
+    useObjectCtrl.error = new Error("network failure");
+    renderGenerator();
+
+    expect(screen.queryByText(enMessages.Plan.loaderTitle)).not.toBeInTheDocument();
+    expect(screen.getByText(enMessages.Plan.next)).toBeInTheDocument();
+    expect(toastError).toHaveBeenCalledWith(enMessages.PlanErrors.generation_failed);
   });
 });
