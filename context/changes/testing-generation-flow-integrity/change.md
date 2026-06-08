@@ -4,6 +4,7 @@ title: Testing generation flow integrity
 status: implementing
 created: 2026-06-04
 updated: 2026-06-08
+
 archived_at: null
 ---
 

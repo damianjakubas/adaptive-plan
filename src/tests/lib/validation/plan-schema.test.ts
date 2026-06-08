@@ -122,4 +122,37 @@ describe("planOutputSchema", () => {
     };
     expect(planOutputSchema.safeParse(broken).success).toBe(false);
   });
+
+  const rejectionCases: Array<[string, unknown]> = [
+    ["empty object", {}],
+    ["null", null],
+    ["kcal as string", { ...validPlan, calorieTarget: { kcal: "2400", note: "slight surplus" } }],
+    [
+      "sets as string in exercise",
+      {
+        ...validPlan,
+        weeklySchedule: [
+          {
+            day: "Monday",
+            exercises: [{ muscleGroup: "chest", name: "Bench press", note: "controlled", reps: "8-12", sets: "4" }],
+            focus: "Upper",
+            isRest: false,
+          },
+        ],
+      },
+    ],
+    ["missing targetMinutes in cardioGoal", { ...validPlan, cardioGoal: { note: "zone 2" } }],
+    ["weeklySchedule as string", { ...validPlan, weeklySchedule: "invalid" }],
+    ["dietaryTips as string", { ...validPlan, dietaryTips: "invalid" }],
+    ["milestones as string", { ...validPlan, milestones: "invalid" }],
+  ];
+
+  it.each(rejectionCases)("rejects %s", (_label, input) => {
+    expect(planOutputSchema.safeParse(input).success).toBe(false);
+  });
+
+  it("tolerates extra unknown fields (Zod strips by default)", () => {
+    const withExtras = { ...validPlan, unknownField: "should-be-stripped" };
+    expect(planOutputSchema.safeParse(withExtras).success).toBe(true);
+  });
 });

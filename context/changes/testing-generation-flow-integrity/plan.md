@@ -438,26 +438,26 @@ wired into CI.
 
 #### Automated
 
-- [x] 1.1 Existing suite still green: `npm test`
-- [x] 1.2 Type checking passes: `npx tsc --noEmit`
-- [x] 1.3 Linting passes: `npm run lint`
+- [x] 1.1 Existing suite still green: `npm test` — 1483d7a
+- [x] 1.2 Type checking passes: `npx tsc --noEmit` — 1483d7a
+- [x] 1.3 Linting passes: `npm run lint` — 1483d7a
 
 #### Manual
 
-- [x] 1.4 Helper genuinely reused (no residual duplicated stub bodies)
+- [x] 1.4 Helper genuinely reused (no residual duplicated stub bodies) — 1483d7a
 
 ### Phase 2: Pure-unit coverage — mapPlanError + output-schema violation matrix
 
 #### Automated
 
-- [ ] 2.1 New unit tests pass: `npm test`
-- [ ] 2.2 Type checking passes: `npx tsc --noEmit`
-- [ ] 2.3 Linting passes: `npm run lint`
-- [ ] 2.4 Selective mutation run completes: `npx stryker run --mutate "src/lib/plan/errors.ts"`
+- [x] 2.1 New unit tests pass: `npm test`
+- [x] 2.2 Type checking passes: `npx tsc --noEmit`
+- [x] 2.3 Linting passes: `npm run lint`
+- [x] 2.4 Selective mutation run completes: `npx stryker run --mutate "src/lib/plan/errors.ts"`
 
 #### Manual
 
-- [ ] 2.5 Stryker report reviewed; every survived mutant on `errors.ts` killed or consciously ignored
+- [x] 2.5 Stryker report reviewed; every survived mutant on `errors.ts` killed or consciously ignored
 
 ### Phase 3: Server contract — hermetic face matrix + observability fix
 
