@@ -73,6 +73,7 @@ function postRequest(body: unknown, raw = false): Request {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  ctrl.streamText.mockReset();
   ctrl.capturedOnError = null;
   ctrl.capturedOnFinish = null;
   ctrl.outputPromise = Promise.resolve(validPlan);
@@ -210,5 +211,15 @@ describe("POST /api/plan/generate", () => {
     expect(res.status).toBe(500);
     expect(await res.json()).toEqual({ code: "rate_limited" });
     expect(logMock.logGenerationError).toHaveBeenCalledTimes(1);
+  });
+
+  it("fires logGenerationError once via onError on a stream transport error", async () => {
+    await POST(postRequest(validInput));
+    ctrl.capturedOnError?.({ error: new Error("transport failure") });
+
+    expect(logMock.logGenerationError).toHaveBeenCalledTimes(1);
+    expect(logMock.logGenerationError).toHaveBeenCalledWith(
+      expect.objectContaining({ stage: "stream" })
+    );
   });
 });

@@ -453,37 +453,37 @@ wired into CI.
 - [x] 2.1 New unit tests pass: `npm test` — 6bfee88
 - [x] 2.2 Type checking passes: `npx tsc --noEmit` — 6bfee88
 - [x] 2.3 Linting passes: `npm run lint` — 6bfee88
-- [x] 2.4 Selective mutation run completes: `npx stryker run --mutate "src/lib/plan/errors.ts"` — 6bfee88
+- [x] 2.4 Selective mutation run completes: `npx stryker run --mutate "src/lib/plan/errors.ts"` — 6bfee88 (run used CLI --mutate flag; `mutate` field baked into stryker.config.mjs in df03f97)
 
 #### Manual
 
-- [x] 2.5 Stryker report reviewed; every survived mutant on `errors.ts` killed or consciously ignored — 6bfee88
+- [x] 2.5 Stryker report reviewed; every survived mutant on `errors.ts` killed or consciously ignored — 6bfee88 (errors.test.ts refined and statusCode 500 case added in df03f97)
 
 ### Phase 3: Server contract — hermetic face matrix + observability fix
 
 #### Automated
 
-- [ ] 3.1 All route tests pass: `npm test`
-- [ ] 3.2 Type checking passes: `npx tsc --noEmit`
-- [ ] 3.3 Linting passes: `npm run lint`
+- [x] 3.1 All route tests pass: `npm test` — df03f97
+- [x] 3.2 Type checking passes: `npx tsc --noEmit` — df03f97
+- [x] 3.3 Linting passes: `npm run lint` — df03f97
 
 #### Manual
 
-- [ ] 3.4 Forced server failure produces a log entry; happy path does not
-- [ ] 3.5 No regression in persist-exactly-one-active-plan behaviour
+- [x] 3.4 Forced server failure produces a log entry; happy path does not — df03f97
+- [x] 3.5 No regression in persist-exactly-one-active-plan behaviour — df03f97
 
 ### Phase 4: Client — silent-fallback fix + generator UX states
 
 #### Automated
 
-- [ ] 4.1 All component tests pass: `npm test`
-- [ ] 4.2 Type checking passes: `npx tsc --noEmit`
-- [ ] 4.3 Linting passes: `npm run lint`
+- [x] 4.1 All component tests pass: `npm test`
+- [x] 4.2 Type checking passes: `npx tsc --noEmit`
+- [x] 4.3 Linting passes: `npm run lint`
 
 #### Manual
 
-- [ ] 4.4 Finished-but-invalid stream shows a toast and returns to the form (no silent drop)
-- [ ] 4.5 Simulated dropped stream surfaces an error, not an infinite spinner
+- [x] 4.4 Finished-but-invalid stream shows a toast and returns to the form (no silent drop)
+- [x] 4.5 Simulated dropped stream surfaces an error, not an infinite spinner
 
 ### Phase 5: Cookbook + test-plan sync
 

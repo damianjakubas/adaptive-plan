@@ -102,4 +102,27 @@ describe("PlanGenerator", () => {
     // The form remains in place for retry with inputs preserved.
     expect(screen.getByText(enMessages.Plan.next)).toBeInTheDocument();
   });
+
+  it("fires a toast and keeps the form when onFinish delivers no valid object (schema-validation failure)", () => {
+    renderGenerator();
+
+    act(() => {
+      useObjectCtrl.capturedOnFinish?.({ error: new Error("Output validation failed"), object: undefined });
+    });
+
+    expect(toastError).toHaveBeenCalledWith(enMessages.PlanErrors.generation_failed);
+    // Form is shown — not a spinner-forever state.
+    expect(screen.getByText(enMessages.Plan.next)).toBeInTheDocument();
+    expect(screen.queryByText(enMessages.Plan.loaderTitle)).not.toBeInTheDocument();
+  });
+
+  it("does not show the loader when isLoading is false and a terminal transport error is set (no spinner-forever)", () => {
+    useObjectCtrl.isLoading = false;
+    useObjectCtrl.error = new Error("network failure");
+    renderGenerator();
+
+    expect(screen.queryByText(enMessages.Plan.loaderTitle)).not.toBeInTheDocument();
+    expect(screen.getByText(enMessages.Plan.next)).toBeInTheDocument();
+    expect(toastError).toHaveBeenCalledWith(enMessages.PlanErrors.generation_failed);
+  });
 });

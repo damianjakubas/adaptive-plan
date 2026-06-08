@@ -66,13 +66,19 @@ export async function POST(req: Request): Promise<Response> {
         logGenerationError({ error, stage: "stream" });
       },
       onFinish: async () => {
+        let generated: unknown;
         try {
-          const generated = await result.output;
-          const validated = planOutputSchema.safeParse(generated);
-          if (!validated.success) {
-            logGenerationError({ error: validated.error, stage: "validation" });
-            return;
-          }
+          generated = await result.output;
+        } catch (error) {
+          logGenerationError({ error, stage: "output" });
+          return;
+        }
+        const validated = planOutputSchema.safeParse(generated);
+        if (!validated.success) {
+          logGenerationError({ error: validated.error, stage: "validation" });
+          return;
+        }
+        try {
           await saveActivePlan({
             model: MODEL_ID,
             parameters: input,

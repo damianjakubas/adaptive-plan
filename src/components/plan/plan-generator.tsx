@@ -37,6 +37,8 @@ function PlanGenerator() {
     onFinish: ({ error: finishError, object }) => {
       if (object && !finishError) {
         setFinalPlan(object);
+      } else {
+        toast.error(tErrors(mapPlanError(finishError)));
       }
     },
     schema: planOutputSchema,
