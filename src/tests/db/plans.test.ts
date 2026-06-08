@@ -20,6 +20,7 @@ Object.assign(process.env, loadEnv("development", process.cwd(), ""));
 const hasDb = Boolean(process.env.DATABASE_URL);
 
 describe.skipIf(!hasDb)("active-plan helpers", () => {
+  // Evaluated once per process — UUID uniqueness prevents cross-run conflicts; afterEach scopes all writes.
   const userId = crypto.randomUUID();
 
   afterEach(async () => {

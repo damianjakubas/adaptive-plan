@@ -26,6 +26,9 @@ describe("buildPlanPrompt", () => {
     expect(prompt).toContain("home");
   });
 
+  // Checks prompt-template contract only (not user-visible output).
+  // User-visible disclaimer is covered by plan-disclaimer.test.tsx.
+  // See test-plan §6.6 for the deterministic/eval split rationale.
   it("includes a not-medical-advice disclaimer instruction", () => {
     const prompt = buildPlanPrompt(baseInput).toLowerCase();
     expect(prompt).toContain("disclaimer");
