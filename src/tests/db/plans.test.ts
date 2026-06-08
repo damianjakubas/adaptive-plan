@@ -20,6 +20,7 @@ Object.assign(process.env, loadEnv("development", process.cwd(), ""));
 const hasDb = Boolean(process.env.DATABASE_URL);
 
 describe.skipIf(!hasDb)("active-plan helpers", () => {
+  // Evaluated once per process — UUID uniqueness prevents cross-run conflicts; afterEach scopes all writes.
   const userId = crypto.randomUUID();
 
   afterEach(async () => {
@@ -80,6 +81,41 @@ describe.skipIf(!hasDb)("active-plan helpers", () => {
       expect((await getActivePlan(otherUserId))?.plan).toEqual({ summary: "theirs" });
     } finally {
       await db.delete(plans).where(eq(plans.userId, otherUserId));
+    }
+  });
+
+  it("isolates users both directions when both have active plans — pins eq(userId) against orderBy/limit", async () => {
+    const { getActivePlan, saveActivePlan } = await import("@/db/plans");
+    const { db } = await import("@/db");
+    const { plans } = await import("@/db/schema");
+    const { eq } = await import("drizzle-orm");
+    const otherUserId = crypto.randomUUID();
+
+    try {
+      await saveActivePlan({
+        model: "test-model",
+        parameters: {},
+        plan: { summary: "mine" },
+        userId,
+      });
+
+      await saveActivePlan({
+        model: "test-model",
+        parameters: {},
+        plan: { summary: "theirs" },
+        userId: otherUserId,
+      });
+
+      const mine = await getActivePlan(userId);
+      const theirs = await getActivePlan(otherUserId);
+
+      expect(mine?.plan).toEqual({ summary: "mine" });
+      expect(mine?.userId).toBe(userId);
+      expect(theirs?.plan).toEqual({ summary: "theirs" });
+      expect(theirs?.userId).toBe(otherUserId);
+    } finally {
+      await db.delete(plans).where(eq(plans.userId, otherUserId));
+      // userId rows cleaned by afterEach
     }
   });
 });

@@ -26,6 +26,9 @@ describe("buildPlanPrompt", () => {
     expect(prompt).toContain("home");
   });
 
+  // Checks prompt-template contract only (not user-visible output).
+  // User-visible disclaimer is covered by plan-disclaimer.test.tsx.
+  // See test-plan §6.6 for the deterministic/eval split rationale.
   it("includes a not-medical-advice disclaimer instruction", () => {
     const prompt = buildPlanPrompt(baseInput).toLowerCase();
     expect(prompt).toContain("disclaimer");
@@ -37,6 +40,14 @@ describe("buildPlanPrompt", () => {
     void healthIssues;
     const prompt = buildPlanPrompt(rest);
     expect(prompt).toContain("none reported");
+  });
+
+  // Deterministic half of Risk #2's health-respect contract: the prompt must carry
+  // an instruction to honor the stated constraints. (Whether the generated plan
+  // actually honors them is eval-shaped and deferred — see test-plan §6.6.)
+  it("instructs the model to honor the stated health issues", () => {
+    const prompt = buildPlanPrompt(baseInput).toLowerCase();
+    expect(prompt).toContain("honor the stated health issues");
   });
 
   it("forces the output language to match the locale (defaulting to English)", () => {
