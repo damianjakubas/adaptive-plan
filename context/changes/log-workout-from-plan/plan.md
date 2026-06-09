@@ -557,9 +557,9 @@ None — purely additive UI + one read-only query helper. No schema or data chan
 
 #### Automated
 
-- [ ] 2.1 Type check passes: `npx tsc --noEmit`
-- [ ] 2.2 Lint passes: `npm run lint`
-- [ ] 2.3 Action tests + full suite pass: `npx vitest run`
+- [x] 2.1 Type check passes: `npx tsc --noEmit`
+- [x] 2.2 Lint passes: `npm run lint`
+- [x] 2.3 Action tests + full suite pass: `npx vitest run`
 
 ### Phase 3: Shared Workout-Session Editor
 
