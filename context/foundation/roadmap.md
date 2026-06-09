@@ -29,7 +29,7 @@ The shipped MVP generates a personalized training plan and then stops — there 
 
 | ID   | Change ID                     | Outcome (user can …)                                              | Prerequisites | PRD refs                                       | Status   |
 | ---- | ----------------------------- | ---------------------------------------------------------------- | ------------- | ---------------------------------------------- | -------- |
-| F-01 | workout-session-snapshot-store | (foundation) plan-decoupled, per-account snapshot store exists   | —             | FR-024                                         | ready    |
+| F-01 | workout-session-snapshot-store | (foundation) plan-decoupled, per-account snapshot store exists   | —             | FR-024                                         | done     |
 | S-01 | log-workout-from-plan         | log a workout pre-filled from the active plan, then save it      | F-01          | US-01, FR-011, FR-012, FR-014, FR-015, FR-016, FR-017, FR-025 | proposed |
 | S-02 | view-workout-history          | view past logged sessions, newest first                          | F-01, S-01    | US-02, FR-018, FR-025                          | proposed |
 | S-03 | curate-workout-history        | edit or delete a logged session from history                     | S-01, S-02    | US-02, FR-020, FR-021                          | proposed |
@@ -73,7 +73,7 @@ Routes present: `/plan` (view), `/plan/new` (generate). Routes absent: dashboard
 - **Unknowns:**
   - Store the session as a normalized set of tables (session / exercise / set) or as a single JSONB snapshot document mirroring the existing `plans.plan` pattern? — Owner: team. Block: no (a planning-time choice; either satisfies the snapshot guarantee).
 - **Risk:** Sequenced first because no slice can persist a workout without a place to put it. The load-bearing requirement is that a saved session holds no live reference to the active plan, so plan regeneration never alters or orphans history. Risk is over-modeling — keep it minimal; durability + isolation are the only properties that must be right here.
-- **Status:** ready
+- **Status:** done
 
 ## Slices
 
@@ -164,4 +164,4 @@ None. The PRD closed with zero Open Questions (`quality_check_status: accepted`)
 
 ## Done
 
-(Empty on first generation. `/10x-archive` appends an entry here and flips the item's `Status` to `done` when a change whose `Change ID` matches a roadmap item is archived. Do NOT pre-populate.)
+- **F-01: (foundation) a per-account-isolated, plan-decoupled persistence store for logged workout sessions exists — schema, migration, and `user_id`-scoped data access — ready for logging to write and history to read. No user-visible surface on its own.** — Archived 2026-06-09 → `context/archive/2026-06-09-workout-session-snapshot-store/`. Lesson: —.
