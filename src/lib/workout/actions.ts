@@ -28,7 +28,13 @@ export async function saveWorkoutSession(
     return { ok: false, code: "unauthenticated" };
   }
 
-  const activePlan = await getActivePlan(user.id);
+  let activePlan;
+  try {
+    activePlan = await getActivePlan(user.id);
+  } catch (error) {
+    logWorkoutError({ error, stage: "active-plan-check" });
+    return { ok: false, code: "save_failed" };
+  }
   if (!activePlan) {
     return { ok: false, code: "no_active_plan" };
   }

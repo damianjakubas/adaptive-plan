@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock fns are declared via vi.hoisted so they exist before the hoisted vi.mock calls run.
 const mocks = vi.hoisted(() => ({
-  createSession: vi.fn(),
+  createSession: vi.fn<(input: CreateSessionInput) => Promise<string>>(),
   getActivePlan: vi.fn(),
   getUser: vi.fn(),
   logWorkoutError: vi.fn(),
@@ -26,6 +26,7 @@ vi.mock("@/lib/workout/log-workout-error", () => ({
   logWorkoutError: mocks.logWorkoutError,
 }));
 
+import { type CreateSessionInput } from "@/db/workout-sessions";
 import { type WorkoutSessionFormValues } from "@/lib/validation/workout-session-form-schema";
 import { saveWorkoutSession } from "@/lib/workout/actions";
 
@@ -130,5 +131,16 @@ describe("saveWorkoutSession", () => {
 
     expect(result).toEqual({ ok: false, code: "save_failed" });
     expect(mocks.logWorkoutError).toHaveBeenCalledTimes(1);
+  });
+
+  it("returns save_failed and logs the error when the active-plan gating read throws", async () => {
+    authenticatedUser();
+    mocks.getActivePlan.mockRejectedValue(new Error("db down"));
+
+    const result = await saveWorkoutSession(validValues);
+
+    expect(result).toEqual({ ok: false, code: "save_failed" });
+    expect(mocks.logWorkoutError).toHaveBeenCalledTimes(1);
+    expect(mocks.createSession).not.toHaveBeenCalled();
   });
 });
