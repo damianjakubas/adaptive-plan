@@ -565,9 +565,9 @@ None — purely additive UI + one read-only query helper. No schema or data chan
 
 #### Automated
 
-- [ ] 3.1 Type check passes: `npx tsc --noEmit`
-- [ ] 3.2 Lint passes: `npm run lint`
-- [ ] 3.3 Editor tests + full suite pass: `npx vitest run`
+- [x] 3.1 Type check passes: `npx tsc --noEmit`
+- [x] 3.2 Lint passes: `npm run lint`
+- [x] 3.3 Editor tests + full suite pass: `npx vitest run`
 
 ### Phase 4: Route, Day Picker & Navbar Wiring
 
