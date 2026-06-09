@@ -502,28 +502,28 @@ extended. No production code changes in any phase.
 
 #### Automated
 
-- [x] 3.1 Tests pass: `npm test src/tests/components/plan/plan-view.test.tsx`
-- [x] 3.2 Type checking passes: `npx tsc --noEmit`
-- [x] 3.3 Linting passes: `npm run lint`
+- [x] 3.1 Tests pass: `npm test src/tests/components/plan/plan-view.test.tsx` — 181f5e5
+- [x] 3.2 Type checking passes: `npx tsc --noEmit` — 181f5e5
+- [x] 3.3 Linting passes: `npm run lint` — 181f5e5
 
 #### Manual
 
-- [x] 3.4 Asserted label is static chrome (`viewTitle`), not fixture content
-- [x] 3.5 Pointing the PL render at `enMessages` makes the PL assertion fail
+- [x] 3.4 Asserted label is static chrome (`viewTitle`), not fixture content — 181f5e5
+- [x] 3.5 Pointing the PL render at `enMessages` makes the PL assertion fail — 181f5e5
 
 ### Phase 4: Risk #5 — LocaleToggle Cookie Behavior + Mutation Gate
 
 #### Automated
 
-- [ ] 4.1 New test passes: `npm test src/tests/components/locale-toggle.test.tsx`
-- [ ] 4.2 Type checking passes: `npx tsc --noEmit`
-- [ ] 4.3 Linting passes: `npm run lint`
-- [ ] 4.4 Selective mutation run executed: `npx stryker run --mutate "src/components/locale-toggle.tsx"`
+- [x] 4.1 New test passes: `npm test src/tests/components/locale-toggle.test.tsx`
+- [x] 4.2 Type checking passes: `npx tsc --noEmit`
+- [x] 4.3 Linting passes: `npm run lint`
+- [x] 4.4 Selective mutation run executed: `npx stryker run --mutate "src/components/locale-toggle.tsx"`
 
 #### Manual
 
-- [ ] 4.5 Stryker survivors reviewed; guard + cookie-write mutants killed, others consciously ignored
-- [ ] 4.6 Removing the `:16` guard makes the no-op test fail
+- [x] 4.5 Stryker survivors reviewed; guard + cookie-write mutants killed, others consciously ignored
+- [x] 4.6 Removing the `:16` guard makes the no-op test fail
 
 ### Phase 5: Risk #5 — Threading Assertion + Docs & Residual Risk
 
