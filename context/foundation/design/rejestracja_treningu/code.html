@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zarejestruj swój trening - Adaptive Plan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Montserrat:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed-variant": "#324a54",
+                        "tertiary-container": "#cde7f3",
+                        "surface-container": "#201f1f",
+                        "secondary-container": "#464747",
+                        "surface-container-high": "#2a2a2a",
+                        "on-error": "#690005",
+                        "secondary": "#c7c6c6",
+                        "on-background": "#e5e2e1",
+                        "inverse-surface": "#e5e2e1",
+                        "on-surface-variant": "#c5c9ac",
+                        "tertiary": "#ffffff",
+                        "surface-dim": "#131313",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "surface-variant": "#353534",
+                        "on-secondary-container": "#b6b5b5",
+                        "on-tertiary-container": "#506873",
+                        "on-surface": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#b0d500",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#1b343d",
+                        "on-secondary": "#303031",
+                        "on-primary-container": "#596c00",
+                        "tertiary-fixed": "#cde7f3",
+                        "on-primary-fixed": "#171e00",
+                        "outline-variant": "#444932",
+                        "on-secondary-fixed-variant": "#464747",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-fixed": "#041e28",
+                        "background": "#131313",
+                        "secondary-fixed": "#e4e2e2",
+                        "primary-fixed": "#caf300",
+                        "surface-container-low": "#1c1b1b",
+                        "primary-container": "#caf300",
+                        "primary": "#ffffff",
+                        "primary-fixed-dim": "#b0d500",
+                        "outline": "#8f9378",
+                        "on-primary-fixed-variant": "#3e4c00",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#b1cad7",
+                        "surface-container-highest": "#353534",
+                        "surface": "#131313",
+                        "on-primary": "#2a3400",
+                        "surface-bright": "#3a3939",
+                        "inverse-primary": "#536600",
+                        "on-secondary-fixed": "#1b1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "container-margin": "24px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "stats-display": ["Montserrat"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "stats-display": ["40px", { "lineHeight": "40px", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neon-glow:focus-within {
+            box-shadow: 0 0 20px 0 rgba(202, 243, 0, 0.2);
+            border-bottom-color: #caf300;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #131313; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #353534; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #464747; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col custom-scrollbar">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-margin h-16 bg-surface/80 backdrop-blur-xl border-b border-secondary-container">
+<div class="flex items-center gap-4">
+<button aria-label="Menu" class="text-primary hover:bg-surface-container-high transition-colors duration-200 p-2 rounded-full active:scale-95 transition-transform md:hidden">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<a class="flex items-center" href="#">
+<img alt="Adaptive Plan Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLuq9L7YxnGyKMo3RKPQ85Vq-KPMBeU4cEucBaZNVfoicOeccTtDbAR4R3bZChXGR4Rf-rLyfBlA_OdjAe9O-r2n-jUVndt0VUMdCNAUuNDjezYIaUsZHobYtmutOgAIr_EKDFiaAnOtxG1lPD2hWPOAXq6a9cSMCTLzd_eHpotv5Z-V4Mxjs7BZQMaxTp5HvDOtS0iLE21MGnAR8lu9IAygBThCAf8iWYEZZRtuBaSLXDlfHKTALXaLjVI"/>
+</a>
+</div>
+<nav class="hidden md:flex gap-8">
+<a class="text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 px-3 py-2 rounded-md active:scale-95 transition-transform text-label-md font-label-md" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 px-3 py-2 rounded-md active:scale-95 transition-transform text-label-md font-label-md" href="#">Plans</a>
+<a class="text-primary font-bold hover:bg-surface-container-high transition-colors duration-200 px-3 py-2 rounded-md active:scale-95 transition-transform text-label-md font-label-md" href="#">Log Workout</a>
+</nav>
+<div class="flex items-center gap-2">
+<button aria-label="Language" class="text-primary hover:bg-surface-container-high transition-colors duration-200 p-2 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined">language</span>
+</button>
+<button aria-label="Account" class="text-primary hover:bg-surface-container-high transition-colors duration-200 p-2 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow pt-[88px] pb-stack-lg px-gutter md:px-container-margin max-w-[800px] w-full mx-auto flex flex-col gap-stack-lg">
+<header>
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile md:text-headline-lg md:font-headline-lg text-primary mb-2">Zarejestruj swój trening</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Śledź swoje postępy i buduj formę. Wprowadź dane z dzisiejszej sesji.</p>
+</header>
+<!-- Exercise Card 1 -->
+<section class="bg-surface-container rounded-lg border border-surface-variant p-6 flex flex-col gap-stack-md">
+<div class="flex justify-between items-start">
+<div>
+<span class="bg-surface-variant text-secondary text-xs uppercase px-2 py-1 rounded-full font-label-md tracking-wider mb-2 inline-block">STRENGTH</span>
+<h2 class="text-headline-md font-headline-md text-primary">Wyciskanie hantli</h2>
+</div>
+<button aria-label="Remove exercise" class="text-secondary hover:text-error transition-colors p-2 active:scale-95">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<!-- Set Table -->
+<div class="flex flex-col gap-2">
+<div class="grid grid-cols-4 gap-4 text-label-md font-label-md text-secondary border-b border-surface-variant pb-2 px-2">
+<div>Seria</div>
+<div>Powtórzenia</div>
+<div>Ciężar (kg)</div>
+<div class="text-right">Akcja</div>
+</div>
+<!-- Set Row 1 -->
+<div class="grid grid-cols-4 gap-4 items-center bg-[#222222] p-2 rounded-md hover:bg-surface-container-high transition-colors">
+<div class="text-body-md font-body-md text-on-surface font-semibold pl-2">1</div>
+<div class="neon-glow border-b-2 border-surface-variant rounded-t-md bg-[#262626] transition-all">
+<input class="w-full bg-transparent border-none text-on-surface focus:ring-0 text-center py-2 h-full text-body-md font-body-md" type="number" value="12"/>
+</div>
+<div class="neon-glow border-b-2 border-surface-variant rounded-t-md bg-[#262626] transition-all">
+<input class="w-full bg-transparent border-none text-on-surface focus:ring-0 text-center py-2 h-full text-body-md font-body-md" type="number" value="20"/>
+</div>
+<div class="text-right pr-2">
+<button class="text-primary-container hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+</div>
+</div>
+<!-- Set Row 2 -->
+<div class="grid grid-cols-4 gap-4 items-center p-2 rounded-md hover:bg-surface-container-high transition-colors">
+<div class="text-body-md font-body-md text-on-surface font-semibold pl-2">2</div>
+<div class="neon-glow border-b-2 border-surface-variant rounded-t-md bg-[#262626] transition-all">
+<input class="w-full bg-transparent border-none text-on-surface focus:ring-0 text-center py-2 h-full text-body-md font-body-md" type="number" value="10"/>
+</div>
+<div class="neon-glow border-b-2 border-surface-variant rounded-t-md bg-[#262626] transition-all">
+<input class="w-full bg-transparent border-none text-on-surface focus:ring-0 text-center py-2 h-full text-body-md font-body-md" type="number" value="22.5"/>
+</div>
+<div class="text-right pr-2">
+<button class="text-secondary hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined">radio_button_unchecked</span>
+</button>
+</div>
+</div>
+</div>
+<button class="flex items-center justify-center gap-2 text-primary-container hover:bg-surface-container-high py-2 rounded-md transition-colors mt-2 font-label-md text-label-md active:scale-95">
+<span class="material-symbols-outlined">add</span>
+                Dodaj serię
+            </button>
+</section>
+<!-- Exercise Card 2 -->
+<section class="bg-surface-container rounded-lg border border-surface-variant p-6 flex flex-col gap-stack-md">
+<div class="flex justify-between items-start">
+<div>
+<span class="bg-surface-variant text-secondary text-xs uppercase px-2 py-1 rounded-full font-label-md tracking-wider mb-2 inline-block">STRENGTH</span>
+<h2 class="text-headline-md font-headline-md text-primary">Martwy ciąg</h2>
+</div>
+<button aria-label="Remove exercise" class="text-secondary hover:text-error transition-colors p-2 active:scale-95">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<!-- Set Table -->
+<div class="flex flex-col gap-2">
+<div class="grid grid-cols-4 gap-4 text-label-md font-label-md text-secondary border-b border-surface-variant pb-2 px-2">
+<div>Seria</div>
+<div>Powtórzenia</div>
+<div>Ciężar (kg)</div>
+<div class="text-right">Akcja</div>
+</div>
+<!-- Set Row 1 -->
+<div class="grid grid-cols-4 gap-4 items-center p-2 rounded-md hover:bg-surface-container-high transition-colors">
+<div class="text-body-md font-body-md text-on-surface font-semibold pl-2">1</div>
+<div class="neon-glow border-b-2 border-surface-variant rounded-t-md bg-[#262626] transition-all">
+<input class="w-full bg-transparent border-none text-on-surface focus:ring-0 text-center py-2 h-full text-body-md font-body-md" type="number" value="8"/>
+</div>
+<div class="neon-glow border-b-2 border-surface-variant rounded-t-md bg-[#262626] transition-all">
+<input class="w-full bg-transparent border-none text-on-surface focus:ring-0 text-center py-2 h-full text-body-md font-body-md" type="number" value="60"/>
+</div>
+<div class="text-right pr-2">
+<button class="text-secondary hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined">radio_button_unchecked</span>
+</button>
+</div>
+</div>
+</div>
+<button class="flex items-center justify-center gap-2 text-primary-container hover:bg-surface-container-high py-2 rounded-md transition-colors mt-2 font-label-md text-label-md active:scale-95">
+<span class="material-symbols-outlined">add</span>
+                Dodaj serię
+            </button>
+</section>
+<!-- Add Exercise Button -->
+<button class="border-2 border-dashed border-surface-variant text-secondary hover:text-primary hover:border-secondary hover:bg-surface-container-low transition-all py-4 rounded-lg flex flex-col items-center justify-center gap-2 active:scale-[0.98]">
+<span class="material-symbols-outlined text-3xl">add_circle</span>
+<span class="text-label-md font-label-md">Dodaj kolejne ćwiczenie</span>
+</button>
+<!-- Notes Section -->
+<section class="flex flex-col gap-stack-sm">
+<label class="text-label-md font-label-md text-secondary" for="workout-notes">Notatki z treningu</label>
+<div class="neon-glow border-b-2 border-surface-variant rounded-t-md bg-[#262626] transition-all">
+<textarea class="w-full bg-transparent border-none text-on-surface focus:ring-0 p-4 text-body-md font-body-md resize-none" id="workout-notes" placeholder="Jak się dzisiaj czułeś? Zmiany w ustawieniach sprzętu?" rows="3"></textarea>
+</div>
+</section>
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+<button class="w-full sm:w-auto px-8 py-4 bg-primary-container text-[#000000] rounded-md text-label-md font-label-md font-bold hover:bg-primary transition-colors shadow-[0_0_20px_rgba(202,243,0,0.2)] active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">done_all</span>
+                Zapisz trening i zakończ
+            </button>
+<button class="w-full sm:w-auto px-8 py-4 border border-surface-variant text-primary rounded-md text-label-md font-label-md hover:bg-surface-container-high transition-colors active:scale-95">
+                Odrzuć zmiany
+            </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-container-margin flex flex-col md:flex-row justify-between items-center gap-stack-md bg-surface-container-lowest border-t border-secondary-container mt-auto">
+<div class="text-label-md font-headline-md text-on-surface">
+            Adaptive Plan
+        </div>
+<div class="flex flex-wrap justify-center gap-4">
+<a class="text-secondary hover:text-primary transition-colors text-label-md font-label-md" href="#">Terms of Service</a>
+<a class="text-secondary hover:text-primary transition-colors text-label-md font-label-md" href="#">Privacy Policy</a>
+<a class="text-secondary hover:text-primary transition-colors text-label-md font-label-md" href="#">Instagram</a>
+<a class="text-secondary hover:text-primary transition-colors text-label-md font-label-md" href="#">Twitter</a>
+</div>
+<div class="text-secondary text-body-md font-body-md">
+            © 2024 Adaptive Plan. All rights reserved.
+        </div>
+</footer>
+</body></html>
