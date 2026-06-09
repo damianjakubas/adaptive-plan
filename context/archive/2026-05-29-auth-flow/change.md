@@ -1,10 +1,10 @@
 ---
 change_id: auth-flow
 title: "Auth flow: registration, login, and logout"
-status: impl_reviewed
+status: archived
 created: 2026-05-29
-updated: 2026-05-30
-archived_at: null
+updated: 2026-06-09
+archived_at: 2026-06-09T18:09:42Z
 ---
 
 ## Notes
