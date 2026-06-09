@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 import PlanEmptyState from "@/components/plan/plan-empty-state";
 import PlanView from "@/components/plan/plan-view";
 import enMessages from "@/i18n/messages/en.json";
+import plMessages from "@/i18n/messages/pl.json";
 import type { GeneratedPlan } from "@/lib/validation/plan-schema";
 
 const fixture: GeneratedPlan = {
@@ -79,6 +80,26 @@ describe("PlanView", () => {
 
     expect(screen.getByText(enMessages.Plan.disclaimerTitle)).toBeInTheDocument();
     expect(screen.getByText(fixture.disclaimer)).toBeInTheDocument();
+  });
+
+  it("renders Plan.viewTitle in the active EN locale", () => {
+    renderView();
+
+    expect(screen.getByText(enMessages.Plan.viewTitle)).toBeInTheDocument();
+  });
+
+  it("renders Plan.viewTitle in the active PL locale and differs from EN", () => {
+    // Proves locale-driven rendering of static chrome (h1), not fixture-content passthrough.
+    // If the catalogs ever collapse to the same string, this assertion catches it.
+    expect(plMessages.Plan.viewTitle).not.toBe(enMessages.Plan.viewTitle);
+
+    render(
+      <NextIntlClientProvider locale="pl" messages={plMessages}>
+        <PlanView plan={fixture} />
+      </NextIntlClientProvider>,
+    );
+
+    expect(screen.getByText(plMessages.Plan.viewTitle)).toBeInTheDocument();
   });
 });
 

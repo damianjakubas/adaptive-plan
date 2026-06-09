@@ -489,27 +489,27 @@ extended. No production code changes in any phase.
 
 #### Automated
 
-- [x] 2.1 New test passes: `npm test src/tests/i18n/catalog-parity.test.ts`
-- [x] 2.2 Type checking passes: `npx tsc --noEmit`
-- [x] 2.3 Linting passes: `npm run lint`
+- [x] 2.1 New test passes: `npm test src/tests/i18n/catalog-parity.test.ts` — 2094bda
+- [x] 2.2 Type checking passes: `npx tsc --noEmit` — 2094bda
+- [x] 2.3 Linting passes: `npm run lint` — 2094bda
 
 #### Manual
 
-- [x] 2.4 Deleting/renaming a key in one catalog makes the test fail
-- [x] 2.5 Shortening `Plan.loaderStatuses` in one catalog fails the test
+- [x] 2.4 Deleting/renaming a key in one catalog makes the test fail — 2094bda
+- [x] 2.5 Shortening `Plan.loaderStatuses` in one catalog fails the test — 2094bda
 
 ### Phase 3: Risk #5 — UI-String Locale Render
 
 #### Automated
 
-- [ ] 3.1 Tests pass: `npm test src/tests/components/plan/plan-view.test.tsx`
-- [ ] 3.2 Type checking passes: `npx tsc --noEmit`
-- [ ] 3.3 Linting passes: `npm run lint`
+- [x] 3.1 Tests pass: `npm test src/tests/components/plan/plan-view.test.tsx`
+- [x] 3.2 Type checking passes: `npx tsc --noEmit`
+- [x] 3.3 Linting passes: `npm run lint`
 
 #### Manual
 
-- [ ] 3.4 Asserted label is static chrome (`viewTitle`), not fixture content
-- [ ] 3.5 Pointing the PL render at `enMessages` makes the PL assertion fail
+- [x] 3.4 Asserted label is static chrome (`viewTitle`), not fixture content
+- [x] 3.5 Pointing the PL render at `enMessages` makes the PL assertion fail
 
 ### Phase 4: Risk #5 — LocaleToggle Cookie Behavior + Mutation Gate
 
