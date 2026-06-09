@@ -264,7 +264,7 @@ writes) to provide every operation S-01/S-02/S-03 need against the three-table a
   round-trip is undefined and the Phase 4 ordering assertion flakes).
 - `updateSession(userId, sessionId, input)` — validate input; in one transaction verify ownership
   (scoped), update session metadata, **replace-all** children (delete exercises → cascade clears sets,
-  re-insert from input). No-op/`null` if the session isn't owned by `userId`.
+  re-insert from input). Returns `false` (no-op) if the session isn't owned by `userId`, `true` when updated.
 - `deleteSession(userId, sessionId)` — single delete `where id = sessionId AND user_id = userId`;
   cascade removes children. Returns whether a row was deleted.
 - Export functions + the input interface(s) in a single barrel block (per convention).
@@ -302,8 +302,9 @@ deleted). Oracle is the PRD/roadmap, not the implementation.
 **Contract** — cover at minimum:
 - **create + read round-trip**: `createSession` then `getSessionById` returns the full tree with
   exercises/sets in `position` order, metadata intact.
-- **per-account isolation**: user B's `getSessionById`/`updateSession`/`deleteSession` on user A's
-  session returns null / deletes nothing; `listSessions(B)` never shows A's sessions.
+- **per-account isolation**: user B's `getSessionById` on user A's session returns `null`, and
+  `updateSession`/`deleteSession` return `false` (no-op / deletes nothing); `listSessions(B)` never
+  shows A's sessions.
 - **newest-first ordering**: `listSessions` orders by `performed_at` desc; derived `muscleGroups`
   reflects the session's exercises.
 - **cascade delete**: `deleteSession` removes the session and its exercises + sets (no orphans).
@@ -400,8 +401,8 @@ tables without touching plan/account data.
 
 #### Automated
 
-- [x] 3.1 Type-check passes: `npx tsc --noEmit`
-- [x] 3.2 Lint passes: `npm run lint`
+- [x] 3.1 Type-check passes: `npx tsc --noEmit` — c8d811e
+- [x] 3.2 Lint passes: `npm run lint` — c8d811e
 
 ### Phase 4: Integration Tests
 

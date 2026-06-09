@@ -1,7 +1,7 @@
 ---
 change_id: workout-session-snapshot-store
 title: "Workout-session snapshot store (normalized)"
-status: impl_reviewed
+status: implementing
 created: 2026-06-09
 updated: 2026-06-09
 archived_at: null
