@@ -32,7 +32,12 @@
     "invalid_sex": "Wybierz płeć.",
     "invalid_time_per_session": "Podaj czas (10-240 min).",
     "invalid_weight": "Podaj wagę (30-300 kg).",
-    "invalid_work_mode": "Wybierz tryb pracy."
+    "invalid_work_mode": "Wybierz tryb pracy.",
+    "invalid_reps": "Podaj powtórzenia.",
+    "invalid_exercise_name": "Podaj nazwę ćwiczenia.",
+    "invalid_duration": "Podaj czas trwania w minutach.",
+    "min_one_exercise": "Dodaj co najmniej jedno ćwiczenie.",
+    "min_one_set": "Każde ćwiczenie musi mieć co najmniej jedną serię."
   },
   "AuthErrors": {
     "invalid_credentials": "Nieprawidłowy email lub hasło.",
@@ -126,8 +131,46 @@
   },
   "Nav": {
     "logout": "Wyloguj się",
+    "logWorkout": "Zarejestruj trening",
     "newPlan": "Nowy plan",
     "plan": "Plan Treningowy",
     "progress": "Postępy"
+  },
+  "LogWorkout": {
+    "title": "Zarejestruj swój trening",
+    "subtitle": "Śledź swoje postępy i buduj formę. Wprowadź dane z dzisiejszej sesji.",
+    "dayPickerHeading": "Który trening wykonałeś?",
+    "exerciseCount": "{count, plural, one {# ćwiczenie} few {# ćwiczenia} other {# ćwiczeń}}",
+    "setHeader": "Seria",
+    "repsHeader": "Powtórzenia",
+    "weightHeader": "Ciężar (kg)",
+    "actionHeader": "Akcja",
+    "addSet": "Dodaj serię",
+    "addExercise": "Dodaj kolejne ćwiczenie",
+    "removeSet": "Usuń serię",
+    "removeExercise": "Usuń ćwiczenie",
+    "exerciseNameLabel": "Nazwa ćwiczenia",
+    "exerciseNamePlaceholder": "Np. wyciskanie hantli",
+    "durationLabel": "Czas trwania (minuty)",
+    "durationPlaceholder": "Np. 60",
+    "notesLabel": "Notatki z treningu",
+    "notesPlaceholder": "Jak się dzisiaj czułeś? Zmiany w ustawieniach sprzętu?",
+    "save": "Zapisz trening i zakończ",
+    "discard": "Odrzuć zmiany",
+    "discardDialogTitle": "Odrzucić zmiany?",
+    "discardDialogBody": "Masz niezapisane zmiany. Jeśli je odrzucisz, ta sesja nie zostanie zapisana.",
+    "discardDialogConfirm": "Odrzuć",
+    "discardDialogCancel": "Wróć do edycji",
+    "noPlanTitle": "Brak aktywnego planu",
+    "noPlanBody": "Aby zarejestrować trening, najpierw wygeneruj plan treningowy.",
+    "noPlanCta": "Stwórz plan",
+    "noLoggableDays": "Twój plan nie zawiera dni treningowych z ćwiczeniami do zarejestrowania.",
+    "saveSuccess": "Trening zapisany."
+  },
+  "WorkoutErrors": {
+    "unauthenticated": "Twoja sesja wygasła. Zaloguj się ponownie.",
+    "no_active_plan": "Nie masz aktywnego planu treningowego.",
+    "invalid_input": "Niektóre dane sesji są nieprawidłowe. Sprawdź je i spróbuj ponownie.",
+    "save_failed": "Nie udało się zapisać treningu. Spróbuj ponownie."
   }
 }
