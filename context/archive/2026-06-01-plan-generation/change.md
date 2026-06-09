@@ -1,10 +1,10 @@
 ---
 change_id: plan-generation
 title: Plan generation — parameter form, AI generation, streaming display, persistence
-status: implemented
+status: archived
 created: 2026-06-01
-updated: 2026-06-03
-archived_at: null
+updated: 2026-06-09
+archived_at: 2026-06-09T18:09:42Z
 ---
 
 ## Notes

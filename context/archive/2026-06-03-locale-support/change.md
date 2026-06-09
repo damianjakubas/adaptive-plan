@@ -1,10 +1,10 @@
 ---
 change_id: locale-support
 title: "Locale support: PL/EN for UI and generation"
-status: done
+status: archived
 created: 2026-06-03
-updated: 2026-06-03
-archived_at: null
+updated: 2026-06-09
+archived_at: 2026-06-09T18:09:42Z
 ---
 
 ## Notes

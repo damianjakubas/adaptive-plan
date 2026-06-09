@@ -1,10 +1,10 @@
 ---
 change_id: testing-safety-access-control-contracts
 title: Safety & access-control contracts (test rollout Phase 2)
-status: implemented
+status: archived
 created: 2026-06-08
-updated: 2026-06-08
-archived_at: null
+updated: 2026-06-09
+archived_at: 2026-06-09T18:09:42Z
 ---
 
 ## Notes
