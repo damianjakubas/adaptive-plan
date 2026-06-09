@@ -70,11 +70,29 @@ repo: damianjakubas/adaptive-plan
 
 - **URL:** https://github.com/damianjakubas/adaptive-plan/issues/13
 - **Labels:** `test`, `ready`
-- **Status:** Open
+- **Status:** Closed (delivered)
 - **PRD refs:** FR-008 (locale) — Risk #4 (UX resilience / dropped-stream) + Risk #5 (locale output correctness)
 - **Prerequisites:** Builds on #11 (T-02, delivered)
 - **Plan:** context/changes/testing-ux-resilience-locale/
 - **Linear mirror:** ADA-10
+- **Residual risks (do not treat as fully closed):**
+  - Risk #4 hung-stream gap is **pinned, not fixed** — needs client-side timeout/abort wiring (see follow-up below)
+  - Risk #5 generated-content language is eval-deferred (no deterministic oracle)
+
+### [T-03-followup] Fix hung-stream: add client-side timeout / AbortController (Risk #4)
+
+- **URL:** *(stub — issue not yet created on GitHub)*
+- **Labels:** `bug`, `proposed`
+- **PRD refs:** FR-004 (generation visible progress / no infinite spinner) — Risk #4
+- **Scope:** `src/components/plan/plan-generator.tsx` — wire a client-side
+  `AbortController` or idle-timeout that calls `stop()` and surfaces an error
+  when the stream opens but delivers no bytes within a threshold. Currently
+  `experimental_useObject` flips `isLoading` false only in `close()` or `catch()`;
+  a hung-but-open stream reaches neither.
+- **Lesson scope:** Lesson 5 (bug-fix slice); out of scope for Lesson 2 test rollout.
+- **Regression test:** the Phase 3 hung-stream pin (`plan-generator.test.tsx`) must
+  be updated once the gap is fixed — the assertion must flip from "loader stuck" to
+  "error/toast surfaces."
 
 ## Dependency Chain
 

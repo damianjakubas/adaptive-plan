@@ -515,28 +515,28 @@ extended. No production code changes in any phase.
 
 #### Automated
 
-- [x] 4.1 New test passes: `npm test src/tests/components/locale-toggle.test.tsx`
-- [x] 4.2 Type checking passes: `npx tsc --noEmit`
-- [x] 4.3 Linting passes: `npm run lint`
-- [x] 4.4 Selective mutation run executed: `npx stryker run --mutate "src/components/locale-toggle.tsx"`
+- [x] 4.1 New test passes: `npm test src/tests/components/locale-toggle.test.tsx` — 3d1bfac
+- [x] 4.2 Type checking passes: `npx tsc --noEmit` — 3d1bfac
+- [x] 4.3 Linting passes: `npm run lint` — 3d1bfac
+- [x] 4.4 Selective mutation run executed: `npx stryker run --mutate "src/components/locale-toggle.tsx"` — 3d1bfac
 
 #### Manual
 
-- [x] 4.5 Stryker survivors reviewed; guard + cookie-write mutants killed, others consciously ignored
-- [x] 4.6 Removing the `:16` guard makes the no-op test fail
+- [x] 4.5 Stryker survivors reviewed; guard + cookie-write mutants killed, others consciously ignored — 3d1bfac
+- [x] 4.6 Removing the `:16` guard makes the no-op test fail — 3d1bfac
 
 ### Phase 5: Risk #5 — Threading Assertion + Docs & Residual Risk
 
 #### Automated
 
-- [ ] 5.1 build-prompt test passes and no longer contains the verbatim instruction: `npm test src/tests/lib/plan/build-prompt.test.ts`
-- [ ] 5.2 Full suite passes: `npm test`
-- [ ] 5.3 Type checking passes: `npx tsc --noEmit`
-- [ ] 5.4 Linting passes: `npm run lint`
+- [x] 5.1 build-prompt test passes and no longer contains the verbatim instruction: `npm test src/tests/lib/plan/build-prompt.test.ts`
+- [x] 5.2 Full suite passes: `npm test`
+- [x] 5.3 Type checking passes: `npx tsc --noEmit`
+- [x] 5.4 Linting passes: `npm run lint`
 
 #### Manual
 
-- [ ] 5.5 Threading test comment makes clear it proves threading, not output language
-- [ ] 5.6 §6.5 no longer "TBD"; §6.6 has a Phase 3 entry with both residual risks
-- [ ] 5.7 `github-issues.md` carries the Phase 3 stub and hung-stream follow-up
-- [ ] 5.8 test-plan §3 Phase 3 Status matches the Progress section
+- [x] 5.5 Threading test comment makes clear it proves threading, not output language
+- [x] 5.6 §6.5 no longer "TBD"; §6.6 has a Phase 3 entry with both residual risks
+- [x] 5.7 `github-issues.md` carries the Phase 3 stub and hung-stream follow-up
+- [x] 5.8 test-plan §3 Phase 3 Status matches the Progress section
