@@ -378,23 +378,23 @@ tables without touching plan/account data.
 
 #### Automated
 
-- [x] 1.1 Migration generates: one new `00xx_*.sql` + updated `meta` via `npm run db:generate`
-- [x] 1.2 Generated SQL has internal cascade FKs and no foreign key referencing `plans`
-- [x] 1.3 Type-check passes: `npx tsc --noEmit`
-- [x] 1.4 Lint passes: `npm run lint`
-- [x] 1.5 Migration applies cleanly: `npm run db:migrate`
+- [x] 1.1 Migration generates: one new `00xx_*.sql` + updated `meta` via `npm run db:generate` — e3429ff
+- [x] 1.2 Generated SQL has internal cascade FKs and no foreign key referencing `plans` — e3429ff
+- [x] 1.3 Type-check passes: `npx tsc --noEmit` — e3429ff
+- [x] 1.4 Lint passes: `npm run lint` — e3429ff
+- [x] 1.5 Migration applies cleanly: `npm run db:migrate` — e3429ff
 
 #### Manual
 
-- [x] 1.6 Tables exist with expected columns; deleting a session cascades to exercises and sets
+- [x] 1.6 Tables exist with expected columns; deleting a session cascades to exercises and sets — e3429ff
 
 ### Phase 2: Zod Write-Contract
 
 #### Automated
 
-- [ ] 2.1 Type-check passes: `npx tsc --noEmit`
-- [ ] 2.2 Lint passes: `npm run lint`
-- [ ] 2.3 Schema unit tests pass: valid parses; missing `sessionName` / negative duration / set without `reps` / empty `exercises` / empty `sets` rejected
+- [x] 2.1 Type-check passes: `npx tsc --noEmit`
+- [x] 2.2 Lint passes: `npm run lint`
+- [x] 2.3 Schema unit tests pass: valid parses; missing `sessionName` / negative duration / set without `reps` / empty `exercises` / empty `sets` rejected
 
 ### Phase 3: Data-Access CRUD
 
