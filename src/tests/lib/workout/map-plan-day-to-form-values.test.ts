@@ -61,6 +61,19 @@ describe("mapPlanDayToFormValues", () => {
     expect(values.exercises[0].sets).toEqual([{ reps: "60s", weight: undefined }]);
   });
 
+  it("clamps an outsized sets count to 20 rows and truncates non-integers", () => {
+    const values = mapPlanDayToFormValues({
+      ...trainingDay,
+      exercises: [
+        { name: "Burpees", reps: "10", sets: 100_000 },
+        { name: "Rows", reps: "8", sets: 2.5 },
+      ],
+    });
+
+    expect(values.exercises[0].sets).toHaveLength(20);
+    expect(values.exercises[1].sets).toHaveLength(2);
+  });
+
   it("maps sessionName from the day's focus and sessionType from the day label", () => {
     const values = mapPlanDayToFormValues(trainingDay);
 
@@ -72,6 +85,12 @@ describe("mapPlanDayToFormValues", () => {
     const values = mapPlanDayToFormValues({ ...trainingDay, focus: "" });
 
     expect(values.sessionName).toBe("Monday");
+  });
+
+  it("falls back to the literal \"Workout\" when both focus and the day label are empty", () => {
+    const values = mapPlanDayToFormValues({ ...trainingDay, day: "", focus: "" });
+
+    expect(values.sessionName).toBe("Workout");
   });
 
   it("maps a day without exercises to an empty list instead of throwing", () => {

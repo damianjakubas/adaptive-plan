@@ -61,6 +61,7 @@ describe("workoutSessionFormSchema", () => {
     ["a NaN duration (empty valueAsNumber input)", { ...validValues, durationMinutes: Number.NaN }, "invalid_duration"],
     ["a negative duration", { ...validValues, durationMinutes: -1 }, "invalid_duration"],
     ["a non-integer duration", { ...validValues, durationMinutes: 45.5 }, "invalid_duration"],
+    ["a duration above 1440 minutes", { ...validValues, durationMinutes: 1441 }, "invalid_duration"],
     ["zero exercises", { ...validValues, exercises: [] }, "min_one_exercise"],
     [
       "an exercise with zero sets",
@@ -69,6 +70,22 @@ describe("workoutSessionFormSchema", () => {
         exercises: [{ name: "Bench press", sets: [] }],
       },
       "min_one_set",
+    ],
+    [
+      "a non-numeric weight string (defensive branch)",
+      {
+        ...validValues,
+        exercises: [{ name: "Bench press", sets: [{ reps: "8", weight: "abc" }] }],
+      },
+      "invalid_weight",
+    ],
+    [
+      "a negative weight",
+      {
+        ...validValues,
+        exercises: [{ name: "Bench press", sets: [{ reps: "8", weight: -60 }] }],
+      },
+      "invalid_weight",
     ],
   ];
 

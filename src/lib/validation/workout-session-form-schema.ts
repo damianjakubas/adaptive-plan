@@ -28,7 +28,10 @@ const setFormSchema = z.object({
   reps: z.string().min(1, { message: "invalid_reps" }),
   weight: z.preprocess(
     emptyNumericInputToUndefined,
-    z.coerce.number({ message: "invalid_weight" }).optional()
+    z.coerce
+      .number({ message: "invalid_weight" })
+      .min(0, { message: "invalid_weight" })
+      .optional()
   ),
 });
 
@@ -50,6 +53,7 @@ export const workoutSessionFormSchema = z.object({
       .number({ message: "invalid_duration" })
       .int({ message: "invalid_duration" })
       .min(0, { message: "invalid_duration" })
+      .max(1440, { message: "invalid_duration" })
   ),
   exercises: z.array(exerciseFormSchema).min(1, { message: "min_one_exercise" }),
   note: z.string().optional(),

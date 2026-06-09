@@ -549,9 +549,9 @@ None — purely additive UI + one read-only query helper. No schema or data chan
 
 #### Automated
 
-- [x] 1.1 Type check passes: `npx tsc --noEmit`
-- [x] 1.2 Lint passes: `npm run lint`
-- [x] 1.3 New unit tests + existing suite pass (incl. catalog parity): `npx vitest run`
+- [x] 1.1 Type check passes: `npx tsc --noEmit` — 94e2b3e
+- [x] 1.2 Lint passes: `npm run lint` — 94e2b3e
+- [x] 1.3 New unit tests + existing suite pass (incl. catalog parity): `npx vitest run` — 94e2b3e
 
 ### Phase 2: Save Server Action
 
