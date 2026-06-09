@@ -79,7 +79,7 @@ orchestrator updates Status as artifacts appear on disk.
 |---|------------|-----------------|----------------|------------|--------|----------------|
 | 1 | Generation-flow integrity | Audit and re-oracle the untrusted generation tests; prove every corrupted-output face fails safe | #1 | hermetic stub + unit | complete | context/changes/testing-generation-flow-integrity/ |
 | 2 | Safety & access-control contracts | Prove the disclaimer reaches the user and another user's data is denied (IDOR + unauth) | #2, #3 | component + integration | complete | context/changes/testing-safety-access-control-contracts/ |
-| 3 | UX resilience & locale | Prove stuck/error states are handled and output renders in the selected locale | #4, #5 | component + eval/contract | not started | — |
+| 3 | UX resilience & locale | Prove stuck/error states are handled and output renders in the selected locale | #4, #5 | component + eval/contract | complete | context/changes/testing-ux-resilience-locale/ |
 
 **Status vocabulary** (fixed — parser literals):
 
@@ -338,16 +338,55 @@ regression guard against reverting to a protected-prefix allowlist (see
   the component must show exactly one of: (a) a rendered plan, (b) a toast +
   form (retry path), or (c) a loader — never a spinner without a terminal path
   out. This "no spinner-forever" invariant is the key assertion.
-- **Covered so far** (Phase 1 of the rollout): `isLoading=true` → loader shown;
-  `onFinish` with valid object → plan rendered; transport `error` state → toast
-  + form; `onFinish` with `object: undefined` (schema-validation face) → toast
-  + form. See `src/tests/components/plan/plan-generator.test.tsx`.
-- **Phase 3 (§3)**: this section will be extended when Risk #4
-  (dropped-stream / no-progress) is covered in the UX-resilience rollout phase.
+- **Covered (Phase 1)**: `isLoading=true` → loader shown; `onFinish` with valid
+  object → plan rendered; transport `error` state → toast + form; `onFinish`
+  with `object: undefined` (schema-validation face) → toast + form. See
+  `src/tests/components/plan/plan-generator.test.tsx`.
+- **Phase 3 — hung-stream pin (gap caveat)**: The `isLoading=true` / no
+  `onFinish` / no `error` face (stream open but delivering no bytes and never
+  closing) is **pinned as a documented gap**, not a recovery path. The test
+  asserts the *current* behavior: loader present, no toast, form absent. This
+  is intentional — `experimental_useObject` has no client-side timeout or
+  `AbortController`; the stream never reaches the `close()` callback that would
+  flip `isLoading` false. See §6.6 Phase 3 residual risks and the hung-stream
+  follow-up in `context/foundation/github-issues.md` (#13).
 
 ### 6.5 Asserting locale-correct output
 
-- TBD — see §3 Phase 3. Will document whether output-locale is checked deterministically or via an eval.
+Three deterministic patterns cover the assertable faces of Risk #5; generated-content
+language remains eval-deferred (see §6.6 Phase 3).
+
+**1. Catalog deep-parity (unit test)**
+- Oracle: the *opposite* catalog is the expected shape — never a hard-coded key list.
+- Assert: key sets equal both directions (no key in one and not the other); leaf
+  `typeof` matches; `Array.isArray` matches; array lengths match.
+- Explicitly covers the consumed arrays `Plan.loaderStatuses` (length 6) and
+  `Plan.loaderQuotes` (length 5) which `generation-loader.tsx` reads via `t.raw(...)`.
+- Reference: `src/tests/i18n/catalog-parity.test.ts`.
+
+**2. UI-string locale render (component test)**
+- Oracle: the `Plan.viewTitle` value from the active locale's catalog (static chrome,
+  not generated content).
+- Pattern: render `<PlanView>` inside `<NextIntlClientProvider locale="pl" messages={plMessages}>`,
+  assert `screen.getByText(plMessages.Plan.viewTitle)`; repeat for EN. Add
+  `expect(plMessages.Plan.viewTitle).not.toBe(enMessages.Plan.viewTitle)` to guard
+  against catalogs collapsing to one string.
+- Reference: `src/tests/components/plan/plan-view.test.tsx`.
+
+**3. LocaleToggle cookie / guard / aria-pressed (component test)**
+- Mocks: `next-intl` `useLocale`; `next/navigation` `useRouter`; spy on `setLocaleCookie`
+  from `@/i18n/config`. `startTransition` runs synchronously in tests.
+- Three assertions: (a) inactive-locale click → `setLocaleCookie("<other>")` called +
+  `router.refresh()` called; (b) active-locale click → no-op (guard at `:16`); (c)
+  active button has `aria-pressed="true"`, other `"false"`.
+- Reference: `src/tests/components/locale-toggle.test.tsx`.
+
+**Prompt-level locale assertions prove threading only.**
+`buildPlanPrompt(input,"pl") !== buildPlanPrompt(input,"en")` confirms the locale
+argument changes the prompt; it does **not** prove the LLM obeyed the instruction.
+Rendered-output language (whether `summary`, `disclaimer`, tips, etc. actually come
+back in the selected language) is eval-shaped and has no deterministic oracle —
+deferred as a residual risk (§6.6 Phase 3).
 
 ### 6.6 Per-rollout-phase notes
 
@@ -385,6 +424,32 @@ regression guard against reverting to a protected-prefix allowlist (see
   actually respects the stated health issues") has no deterministic oracle and requires an
   LLM-judge eval. This was intentionally deferred out of Phase 2 scope and remains an
   unproven residual risk. Do **not** treat Risk #2 as fully closed after Phase 2.
+
+**Phase 3 — UX resilience & locale (`testing-ux-resilience-locale`, 2026-06-09):**
+
+Five tests shipped across two risks:
+- `src/tests/components/plan/plan-generator.test.tsx` — hung-stream pin (Risk #4)
+- `src/tests/i18n/catalog-parity.test.ts` — catalog pl/en deep parity (Risk #5)
+- `src/tests/components/plan/plan-view.test.tsx` — UI-string locale render, PL + EN (Risk #5)
+- `src/tests/components/locale-toggle.test.tsx` — cookie write, no-op guard, `aria-pressed` (Risk #5)
+- `src/tests/lib/plan/build-prompt.test.ts` — locale threading assertion, mirror replaced (Risk #5)
+
+Residual risks — do **not** treat Risk #4 or Risk #5 as fully closed after Phase 3:
+
+1. **Risk #4 hung-stream is an unhandled gap (pinned, not fixed).** A 200-OK stream
+   that opens then delivers no bytes and never closes leaves `isLoading` stuck `true`
+   forever. `experimental_useObject` flips `isLoading` false only in `close()` or
+   `catch()`; a hung-but-open stream reaches neither. The client has no timeout or
+   `AbortController`. The Phase 3 test pins this current (gap) behavior; it does NOT
+   prove a recovery path. Fixing this requires client-side timeout/abort wiring — a
+   future bug-fix slice (Lesson 5). See `context/foundation/github-issues.md` #13 for
+   the follow-up stub.
+
+2. **Risk #5 generated-content language is eval-deferred.** Whether the LLM's
+   free-text fields (`summary`, `disclaimer`, notes, tips, etc.) actually come back
+   in the selected language is LLM-judge / language-detection territory and has no
+   deterministic oracle. The prompt-level threading assertion (`pl ≠ en`) does NOT
+   prove the model obeyed the instruction.
 
 ## 7. What We Deliberately Don't Test
 

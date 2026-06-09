@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { planOutputSchema } from "@/lib/validation/plan-schema";
 import { validPlan } from "@/tests/helpers/ai-stub";
 import type { StreamTextController } from "@/tests/helpers/ai-stub";
 
@@ -7,6 +8,7 @@ import type { StreamTextController } from "@/tests/helpers/ai-stub";
 const ctrl = vi.hoisted((): StreamTextController => ({
   capturedOnError: null,
   capturedOnFinish: null,
+  capturedOutputObjectSchema: null,
   outputPromise: Promise.resolve<unknown>(null),
   streamText: vi.fn(),
 }));
@@ -76,6 +78,7 @@ beforeEach(() => {
   ctrl.streamText.mockReset();
   ctrl.capturedOnError = null;
   ctrl.capturedOnFinish = null;
+  ctrl.capturedOutputObjectSchema = null;
   ctrl.outputPromise = Promise.resolve(validPlan);
   serverMocks.getUser.mockResolvedValue({ data: { user: { id: "user-1" } } });
   serverMocks.saveActivePlan.mockResolvedValue({});
@@ -108,6 +111,9 @@ describe("POST /api/plan/generate", () => {
     expect(res.status).toBe(400);
     expect(await res.json()).toEqual({ code: "invalid_parameters" });
   });
+  // Stryker survivor (equivalent mutant): removing the catch body at line ~50 still
+  // returns 400 — `body` becomes undefined, planInputSchema.safeParse(undefined) fails
+  // and triggers the same 400 path. No kill needed; behaviour is identical.
 
   it("streams on valid input and persists exactly one user-scoped active plan", async () => {
     const res = await POST(postRequest(validInput));
@@ -148,6 +154,12 @@ describe("POST /api/plan/generate", () => {
     expect(logMock.logGenerationError).toHaveBeenCalledTimes(1);
   });
 
+  // Stryker survivors (consciously ignored):
+  //   - BlockStatement: emptying the output-catch body still prevents persistence because
+  //     `generated` stays undefined and safeParse(undefined) fails — equivalent mutant.
+  //   - ObjectLiteral / StringLiteral on all logGenerationError calls: blanking the
+  //     `stage` label or stripping args is observability-only; no user or business impact.
+  //     Killing them requires asserting internal telemetry strings — a mirror-test pattern.
   it("does not persist when the output promise rejects", async () => {
     ctrl.outputPromise = Promise.reject(new Error("generation failed"));
 
@@ -221,5 +233,15 @@ describe("POST /api/plan/generate", () => {
     expect(logMock.logGenerationError).toHaveBeenCalledWith(
       expect.objectContaining({ stage: "stream" })
     );
+  });
+
+  // Oracle: plan-schema.ts declares planOutputSchema as "single source of truth...
+  // imported by both the generation route (Output.object) and the streaming client
+  // (useObject)". Without the schema, the AI SDK generates unstructured output,
+  // breaking the client's streaming contract for every user (US-01).
+  it("passes planOutputSchema as the structured-output schema to the AI SDK", async () => {
+    await POST(postRequest(validInput));
+
+    expect(ctrl.capturedOutputObjectSchema).toBe(planOutputSchema);
   });
 });

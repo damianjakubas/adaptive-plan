@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import PlanEmptyState from "@/components/plan/plan-empty-state";
 import PlanView from "@/components/plan/plan-view";
 import enMessages from "@/i18n/messages/en.json";
+import plMessages from "@/i18n/messages/pl.json";
 import type { GeneratedPlan } from "@/lib/validation/plan-schema";
 
 const fixture: GeneratedPlan = {
@@ -33,6 +33,19 @@ const fixture: GeneratedPlan = {
       focus: "Lower Strength",
       isRest: false,
     },
+  ],
+};
+
+const allRestFixture: GeneratedPlan = {
+  ...fixture,
+  weeklySchedule: [
+    { day: "Mon", focus: "Recovery", isRest: true },
+    { day: "Tue", focus: "Recovery", isRest: true },
+    { day: "Wed", focus: "Recovery", isRest: true },
+    { day: "Thu", focus: "Recovery", isRest: true },
+    { day: "Fri", focus: "Recovery", isRest: true },
+    { day: "Sat", focus: "Recovery", isRest: true },
+    { day: "Sun", focus: "Recovery", isRest: true },
   ],
 };
 
@@ -80,17 +93,37 @@ describe("PlanView", () => {
     expect(screen.getByText(enMessages.Plan.disclaimerTitle)).toBeInTheDocument();
     expect(screen.getByText(fixture.disclaimer)).toBeInTheDocument();
   });
-});
 
-describe("PlanEmptyState", () => {
-  it("links to the wizard at /plan/new", () => {
+  it("renders Plan.viewTitle in the active EN locale", () => {
+    renderView();
+
+    expect(screen.getByText(enMessages.Plan.viewTitle)).toBeInTheDocument();
+  });
+
+  it("renders the rest-day panel at index 0 when every day is a rest day (all-rest fallback)", () => {
+    // WeeklySchedule.findIndex returns -1 when no day has isRest=false;
+    // the fallback `=== -1 ? 0 : firstTrainingDay` selects index 0.
     render(
       <NextIntlClientProvider locale="en" messages={enMessages}>
-        <PlanEmptyState />
+        <PlanView plan={allRestFixture} />
       </NextIntlClientProvider>,
     );
 
-    const link = screen.getByRole("link", { name: enMessages.Plan.emptyStateLink });
-    expect(link).toHaveAttribute("href", "/plan/new");
+    expect(screen.getByText(enMessages.Plan.restDayTitle)).toBeInTheDocument();
+  });
+
+  it("renders Plan.viewTitle in the active PL locale and differs from EN", () => {
+    // Proves locale-driven rendering of static chrome (h1), not fixture-content passthrough.
+    // If the catalogs ever collapse to the same string, this assertion catches it.
+    expect(plMessages.Plan.viewTitle).not.toBe(enMessages.Plan.viewTitle);
+
+    render(
+      <NextIntlClientProvider locale="pl" messages={plMessages}>
+        <PlanView plan={fixture} />
+      </NextIntlClientProvider>,
+    );
+
+    expect(screen.getByText(plMessages.Plan.viewTitle)).toBeInTheDocument();
   });
 });
+

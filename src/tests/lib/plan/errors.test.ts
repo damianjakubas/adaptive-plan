@@ -13,6 +13,7 @@ describe("mapPlanError", () => {
     ["plain Error → generation_failed", new Error("unexpected server error"), "generation_failed"],
     ["string input → generation_failed", "something went wrong", "generation_failed"],
     ["plain object → generation_failed", { message: "oops" }, "generation_failed"],
+    ["null input → generation_failed", null, "generation_failed"],
   ];
 
   it.each(cases)("%s", (_label, input, expected) => {
