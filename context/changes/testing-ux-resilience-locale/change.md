@@ -1,7 +1,7 @@
 ---
 change_id: testing-ux-resilience-locale
 title: Testing UX resilience and locale output correctness
-status: implementing
+status: implemented
 created: 2026-06-08
 updated: 2026-06-09
 archived_at: null

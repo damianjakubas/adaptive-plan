@@ -529,14 +529,14 @@ extended. No production code changes in any phase.
 
 #### Automated
 
-- [x] 5.1 build-prompt test passes and no longer contains the verbatim instruction: `npm test src/tests/lib/plan/build-prompt.test.ts`
-- [x] 5.2 Full suite passes: `npm test`
-- [x] 5.3 Type checking passes: `npx tsc --noEmit`
-- [x] 5.4 Linting passes: `npm run lint`
+- [x] 5.1 build-prompt test passes and no longer contains the verbatim instruction: `npm test src/tests/lib/plan/build-prompt.test.ts` — f1bd692
+- [x] 5.2 Full suite passes: `npm test` — f1bd692
+- [x] 5.3 Type checking passes: `npx tsc --noEmit` — f1bd692
+- [x] 5.4 Linting passes: `npm run lint` — f1bd692
 
 #### Manual
 
-- [x] 5.5 Threading test comment makes clear it proves threading, not output language
-- [x] 5.6 §6.5 no longer "TBD"; §6.6 has a Phase 3 entry with both residual risks
-- [x] 5.7 `github-issues.md` carries the Phase 3 stub and hung-stream follow-up
-- [x] 5.8 test-plan §3 Phase 3 Status matches the Progress section
+- [x] 5.5 Threading test comment makes clear it proves threading, not output language — f1bd692
+- [x] 5.6 §6.5 no longer "TBD"; §6.6 has a Phase 3 entry with both residual risks — f1bd692
+- [x] 5.7 `github-issues.md` carries the Phase 3 stub and hung-stream follow-up — f1bd692
+- [x] 5.8 test-plan §3 Phase 3 Status matches the Progress section — f1bd692
