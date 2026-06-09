@@ -476,27 +476,27 @@ extended. No production code changes in any phase.
 
 #### Automated
 
-- [x] 1.1 New test passes: `npm test src/tests/components/plan/plan-generator.test.tsx`
-- [x] 1.2 Type checking passes: `npx tsc --noEmit`
-- [x] 1.3 Linting passes: `npm run lint`
+- [x] 1.1 New test passes: `npm test src/tests/components/plan/plan-generator.test.tsx` — 0bb70e5
+- [x] 1.2 Type checking passes: `npx tsc --noEmit` — 0bb70e5
+- [x] 1.3 Linting passes: `npm run lint` — 0bb70e5
 
 #### Manual
 
-- [x] 1.4 Test comment makes clear it pins a gap, not a recovery path
-- [x] 1.5 Breaking the loader precedence makes the test fail
+- [x] 1.4 Test comment makes clear it pins a gap, not a recovery path — 0bb70e5
+- [x] 1.5 Breaking the loader precedence makes the test fail — 0bb70e5
 
 ### Phase 2: Risk #5 — Catalog pl/en Deep Parity
 
 #### Automated
 
-- [ ] 2.1 New test passes: `npm test src/tests/i18n/catalog-parity.test.ts`
-- [ ] 2.2 Type checking passes: `npx tsc --noEmit`
-- [ ] 2.3 Linting passes: `npm run lint`
+- [x] 2.1 New test passes: `npm test src/tests/i18n/catalog-parity.test.ts`
+- [x] 2.2 Type checking passes: `npx tsc --noEmit`
+- [x] 2.3 Linting passes: `npm run lint`
 
 #### Manual
 
-- [ ] 2.4 Deleting/renaming a key in one catalog makes the test fail
-- [ ] 2.5 Shortening `Plan.loaderStatuses` in one catalog fails the test
+- [x] 2.4 Deleting/renaming a key in one catalog makes the test fail
+- [x] 2.5 Shortening `Plan.loaderStatuses` in one catalog fails the test
 
 ### Phase 3: Risk #5 — UI-String Locale Render
 
