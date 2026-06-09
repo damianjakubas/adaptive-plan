@@ -109,13 +109,20 @@ describe.skipIf(!hasDb)("workout-session data access", () => {
 
     try {
       const id = await createSession({ ...buildInput(), userId });
+      const otherId = await createSession({
+        ...buildInput({ sessionName: "Theirs" }),
+        userId: otherUserId,
+      });
 
       expect(await getSessionById(otherUserId, id)).toBeNull();
       expect(await updateSession(otherUserId, id, buildInput({ sessionName: "Hijacked" }))).toBe(
         false
       );
       expect(await deleteSession(otherUserId, id)).toBe(false);
-      expect(await listSessions(otherUserId)).toHaveLength(0);
+
+      // Bidirectional: each user's list shows only their own session, never the other's.
+      expect((await listSessions(userId)).map((item) => item.id)).toEqual([id]);
+      expect((await listSessions(otherUserId)).map((item) => item.id)).toEqual([otherId]);
 
       // A's session is untouched by B's failed update/delete.
       const stillMine = await getSessionById(userId, id);
@@ -142,6 +149,25 @@ describe.skipIf(!hasDb)("workout-session data access", () => {
     expect(list.map((item) => item.id)).toEqual([newerId, olderId]);
     // Distinct, non-null muscle groups in exercise (position) order.
     expect(list[0].muscleGroups).toEqual(["chest", "back"]);
+  });
+
+  it("listSessions derives muscleGroups as distinct, non-null values (dedup + null filtering)", async () => {
+    const { createSession, listSessions } = await import("@/db/workout-sessions");
+
+    // chest / null / chest → the dedup and null-filter branches must collapse this to ["chest"].
+    await createSession({
+      ...buildInput({
+        exercises: [
+          { muscleGroup: "chest", name: "Bench Press", sets: [{ reps: "5" }] },
+          { name: "Plank", sets: [{ reps: "30s" }] },
+          { muscleGroup: "chest", name: "Incline Press", sets: [{ reps: "8" }] },
+        ],
+      }),
+      userId,
+    });
+
+    const list = await listSessions(userId);
+    expect(list[0].muscleGroups).toEqual(["chest"]);
   });
 
   it("updateSession replace-all: re-fetched tree reflects the new children only", async () => {
