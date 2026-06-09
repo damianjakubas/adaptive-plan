@@ -392,9 +392,9 @@ tables without touching plan/account data.
 
 #### Automated
 
-- [x] 2.1 Type-check passes: `npx tsc --noEmit`
-- [x] 2.2 Lint passes: `npm run lint`
-- [x] 2.3 Schema unit tests pass: valid parses; missing `sessionName` / negative duration / set without `reps` / empty `exercises` / empty `sets` rejected
+- [x] 2.1 Type-check passes: `npx tsc --noEmit` — bbfa952
+- [x] 2.2 Lint passes: `npm run lint` — bbfa952
+- [x] 2.3 Schema unit tests pass: valid parses; missing `sessionName` / negative duration / set without `reps` / empty `exercises` / empty `sets` rejected — bbfa952
 
 ### Phase 3: Data-Access CRUD
 

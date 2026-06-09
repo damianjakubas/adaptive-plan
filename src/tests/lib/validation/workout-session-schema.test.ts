@@ -47,6 +47,10 @@ describe("workoutSessionInputSchema", () => {
     expect(workoutSessionInputSchema.safeParse(rest).success).toBe(true);
   });
 
+  it("accepts an explicit null sourcePlanId (the .nullish() branch — e.g. cleared provenance)", () => {
+    expect(workoutSessionInputSchema.safeParse({ ...validSession, sourcePlanId: null }).success).toBe(true);
+  });
+
   it("accepts optional metadata being absent (sessionType, note, exercise/set notes)", () => {
     const minimal = {
       durationMinutes: 0,
@@ -62,6 +66,7 @@ describe("workoutSessionInputSchema", () => {
     ["empty sessionName", { ...validSession, sessionName: "" }],
     ["negative durationMinutes", { ...validSession, durationMinutes: -1 }],
     ["non-integer durationMinutes", { ...validSession, durationMinutes: 45.5 }],
+    ["an uncoercible performedAt", { ...validSession, performedAt: "not-a-date" }],
     [
       "a set without reps",
       {
