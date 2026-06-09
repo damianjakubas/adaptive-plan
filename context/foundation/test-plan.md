@@ -79,7 +79,7 @@ orchestrator updates Status as artifacts appear on disk.
 |---|------------|-----------------|----------------|------------|--------|----------------|
 | 1 | Generation-flow integrity | Audit and re-oracle the untrusted generation tests; prove every corrupted-output face fails safe | #1 | hermetic stub + unit | complete | context/changes/testing-generation-flow-integrity/ |
 | 2 | Safety & access-control contracts | Prove the disclaimer reaches the user and another user's data is denied (IDOR + unauth) | #2, #3 | component + integration | complete | context/changes/testing-safety-access-control-contracts/ |
-| 3 | UX resilience & locale | Prove stuck/error states are handled and output renders in the selected locale | #4, #5 | component + eval/contract | not started | — |
+| 3 | UX resilience & locale | Prove stuck/error states are handled and output renders in the selected locale | #4, #5 | component + eval/contract | change opened | context/changes/testing-ux-resilience-locale/ |
 
 **Status vocabulary** (fixed — parser literals):
 

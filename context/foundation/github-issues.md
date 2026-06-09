@@ -50,14 +50,37 @@ repo: damianjakubas/adaptive-plan
 
 - **URL:** https://github.com/damianjakubas/adaptive-plan/issues/9
 - **Labels:** `test`, `ready`, `bug`
+- **Status:** Closed (delivered)
 - **PRD refs:** FR-004, FR-005, FR-006 (Risk #1)
 - **Prerequisites:** Builds on #4 (plan-generation, delivered)
 - **Plan:** context/changes/testing-generation-flow-integrity/
 - **Linear mirror:** ADA-8
+
+### #11 — [T-02] Safety & access-control contracts (Risk #2 + Risk #3)
+
+- **URL:** https://github.com/damianjakubas/adaptive-plan/issues/11
+- **Labels:** `test`, `ready`
+- **Status:** Closed (delivered)
+- **PRD refs:** FR-003 (safety contract / disclaimer), FR-007 (access control) — Risk #2 + Risk #3
+- **Prerequisites:** Builds on #9 (T-01, delivered)
+- **Plan:** context/changes/testing-safety-access-control-contracts/
+- **Linear mirror:** ADA-9
+
+### #13 — [T-03] UX resilience & locale output correctness (Risk #4 + Risk #5)
+
+- **URL:** https://github.com/damianjakubas/adaptive-plan/issues/13
+- **Labels:** `test`, `ready`
+- **Status:** Open
+- **PRD refs:** FR-008 (locale) — Risk #4 (UX resilience / dropped-stream) + Risk #5 (locale output correctness)
+- **Prerequisites:** Builds on #11 (T-02, delivered)
+- **Plan:** context/changes/testing-ux-resilience-locale/
+- **Linear mirror:** ADA-10
 
 ## Dependency Chain
 
 ```
 #3 (auth-flow) → #4 (plan-generation) → #5 (locale-support)
                       └─ #9 (T-01 generation-flow integrity tests)
+                               └─ #11 (T-02 safety & access-control contracts)
+                                        └─ #13 (T-03 UX resilience & locale output correctness)
 ```

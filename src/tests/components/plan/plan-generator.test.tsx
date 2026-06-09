@@ -127,4 +127,37 @@ describe("PlanGenerator", () => {
     expect(screen.getByText(enMessages.Plan.next)).toBeInTheDocument();
     expect(toastError).toHaveBeenCalledWith(enMessages.PlanErrors.generation_failed);
   });
+
+  /*
+   * GAP PIN — unhandled hung-stream face.
+   *
+   * A 200-OK stream that opens but never delivers bytes and never closes leaves
+   * isLoading stuck true indefinitely. experimental_useObject only flips isLoading
+   * false in its stream close() callback or catch; a hung-but-open stream reaches
+   * neither. The client has no AbortController, no stop() call, and no timer —
+   * there is no exit path from this state.
+   *
+   * This test pins CURRENT (gap) behavior: loader visible, wizard absent, no toast.
+   * Do NOT read this as a passing recovery path — the hung-stream face is unhandled.
+   * A future fix (client-side timeout / abort wiring) must make this test fail
+   * before replacing it with a recovery assertion.
+   *
+   * Contrast with the terminal-error test above (isLoading=false + synchronous error):
+   * that test covers a stream that ended with a network error; this test covers a
+   * stream that is still nominally open and will never resolve.
+   *
+   * Cross-reference: residual-risk register — test-plan §6.6 Phase 3, Risk #4.
+   */
+  it("leaves the loader indefinitely with no toast when the stream is open but never completes (hung-stream gap pin)", () => {
+    useObjectCtrl.isLoading = true;
+    useObjectCtrl.error = undefined;
+    useObjectCtrl.object = undefined;
+    // capturedOnFinish is never invoked — stream hangs open.
+    renderGenerator();
+
+    expect(screen.getByText(enMessages.Plan.loaderTitle)).toBeInTheDocument();
+    expect(screen.queryByText(enMessages.Plan.next)).not.toBeInTheDocument();
+    // Silent gap: no toast is shown, the user sees a spinner forever.
+    expect(toastError).not.toHaveBeenCalled();
+  });
 });

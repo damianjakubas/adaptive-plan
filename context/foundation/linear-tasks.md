@@ -54,7 +54,7 @@ team: Adaptive-plan
 ### ADA-8 — [T-01] Generation-flow integrity: corrupted-output tests (Risk #1)
 
 - **URL:** https://linear.app/adaptive-plan/issue/ADA-8/t-01-generation-flow-integrity-corrupted-output-tests-risk-1
-- **Status:** Backlog
+- **Status:** Done (delivered; GitHub #9 closed)
 - **Priority:** High
 - **Labels:** Test, Bug, Feature
 - **PRD refs:** FR-004, FR-005, FR-006 (Risk #1)
@@ -62,9 +62,33 @@ team: Adaptive-plan
 - **Plan:** context/changes/testing-generation-flow-integrity/
 - **GitHub mirror:** #9
 
+### ADA-9 — [T-02] Safety & access-control contracts (Risk #2 + Risk #3)
+
+- **URL:** https://linear.app/adaptive-plan/issue/ADA-9/t-02-safety-and-access-control-contracts-risk-2-risk-3
+- **Status:** Done (delivered; GitHub #11 closed)
+- **Priority:** High
+- **Labels:** Test, Feature
+- **PRD refs:** FR-003 (safety contract / disclaimer), FR-007 (access control) — Risk #2 + Risk #3
+- **Blocked by:** ADA-8 (delivered)
+- **Plan:** context/changes/testing-safety-access-control-contracts/
+- **GitHub mirror:** #11
+
+### ADA-10 — [T-03] UX resilience & locale output correctness (Risk #4 + Risk #5)
+
+- **URL:** https://linear.app/adaptive-plan/issue/ADA-10/t-03-ux-resilience-and-locale-output-correctness-risk-4-risk-5
+- **Status:** Todo
+- **Priority:** High
+- **Labels:** Test, Feature
+- **PRD refs:** FR-008 (locale) — Risk #4 (UX resilience / dropped-stream) + Risk #5 (locale output correctness)
+- **Blocked by:** ADA-9 (delivered)
+- **Plan:** context/changes/testing-ux-resilience-locale/
+- **GitHub mirror:** #13
+
 ## Dependency Chain
 
 ```
 ADA-5 (auth-flow) → ADA-6 (plan-generation) → ADA-7 (locale-support)
                         └─ ADA-8 (T-01 generation-flow integrity tests)
+                                 └─ ADA-9 (T-02 safety & access-control contracts)
+                                          └─ ADA-10 (T-03 UX resilience & locale output correctness)
 ```
