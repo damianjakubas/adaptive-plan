@@ -69,6 +69,13 @@ describe("proxy", () => {
       expect(res.status).toBe(200);
       expect(res.headers.get("location")).toBeNull();
     });
+
+    it("passes through sub-paths of public routes — /login/callback is public", async () => {
+      const res = await proxy(makeRequest("/login/callback"));
+
+      expect(res.status).toBe(200);
+      expect(res.headers.get("location")).toBeNull();
+    });
   });
 
   describe("authenticated", () => {

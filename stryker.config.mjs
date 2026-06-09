@@ -2,7 +2,10 @@
 const config = {
   coverageAnalysis: "perTest",
   ignorePatterns: [".gemini"],
-  mutate: ["src/lib/plan/errors.ts"],
+  mutate: [
+    "src/app/api/plan/generate/route.ts",
+    "src/components/plan/plan-generator.tsx",
+  ],
   reporters: ["html", "clear-text"],
   testRunner: "vitest",
 };

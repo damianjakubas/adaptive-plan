@@ -7,6 +7,7 @@ import type { GeneratedPlan } from "@/lib/validation/plan-schema";
 
 // Hoisted so the vi.mock factory below can reference it before imports resolve.
 const useObjectCtrl = vi.hoisted((): UseObjectController => ({
+  capturedApi: undefined,
   capturedOnFinish: undefined,
   error: undefined,
   isLoading: false,
@@ -55,6 +56,7 @@ function renderGenerator() {
 }
 
 beforeEach(() => {
+  useObjectCtrl.capturedApi = undefined;
   useObjectCtrl.capturedOnFinish = undefined;
   useObjectCtrl.error = undefined;
   useObjectCtrl.isLoading = false;
@@ -160,4 +162,46 @@ describe("PlanGenerator", () => {
     // Silent gap: no toast is shown, the user sees a spinner forever.
     expect(toastError).not.toHaveBeenCalled();
   });
+
+  it("fires a toast when error arrives after initial render (late transport failure)", () => {
+    const { rerender } = renderGenerator();
+    expect(toastError).not.toHaveBeenCalled();
+
+    useObjectCtrl.error = new Error("late transport failure");
+    rerender(
+      <NextIntlClientProvider locale="en" messages={enMessages}>
+        <PlanGenerator />
+      </NextIntlClientProvider>,
+    );
+
+    expect(toastError).toHaveBeenCalledWith(enMessages.PlanErrors.generation_failed);
+    expect(toastError).toHaveBeenCalledTimes(1);
+  });
+
+  it("shows the loader AND fires a toast when isLoading and error are both set simultaneously", () => {
+    // The render switch checks isLoading before the form fallback, so the loader wins.
+    // The error useEffect fires unconditionally regardless of isLoading.
+    // This pins current composite behavior so a future early-return-on-error refactor is visible.
+    useObjectCtrl.isLoading = true;
+    useObjectCtrl.error = new Error("mid-stream transport failure");
+    renderGenerator();
+
+    expect(screen.getByText(enMessages.Plan.loaderTitle)).toBeInTheDocument();
+    expect(toastError).toHaveBeenCalledWith(enMessages.PlanErrors.generation_failed);
+  });
+
+  // Oracle: US-01 generation flow — the hook must POST to the server-side generation
+  // route. A wrong or empty api string routes all generation requests to the wrong URL,
+  // causing every plan generation to fail silently for every user.
+  it("wires useObject to the plan generation endpoint", () => {
+    renderGenerator();
+
+    expect(useObjectCtrl.capturedApi).toBe("/api/plan/generate");
+  });
+
+  // Stryker NoCoverage (consciously ignored): the onGenerate callback body
+  // (setSubmittedValues + submit) has no coverage because the ParameterForm is a
+  // deep child requiring full form-submission simulation — out of scope for this
+  // mutation phase. The submit call is covered by integration/e2e layers.
 });
+

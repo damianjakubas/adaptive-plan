@@ -42,6 +42,17 @@ describe("buildPlanPrompt", () => {
     expect(prompt).toContain("none reported");
   });
 
+  it("renders 'none reported' for whitespace-only healthIssues", () => {
+    const prompt = buildPlanPrompt({ ...baseInput, healthIssues: "   " });
+    expect(prompt).toContain("none reported");
+  });
+
+  it("trims surrounding whitespace from healthIssues before injecting into prompt", () => {
+    const prompt = buildPlanPrompt({ ...baseInput, healthIssues: "  knee injury  " });
+    expect(prompt).toContain("knee injury");
+    expect(prompt).not.toContain("  knee injury  ");
+  });
+
   // Deterministic half of Risk #2's health-respect contract: the prompt must carry
   // an instruction to honor the stated constraints. (Whether the generated plan
   // actually honors them is eval-shaped and deferred — see test-plan §6.6.)
@@ -59,5 +70,8 @@ describe("buildPlanPrompt", () => {
     const defaultPrompt = buildPlanPrompt(baseInput);
     expect(plPrompt).not.toBe(enPrompt);
     expect(defaultPrompt).toBe(enPrompt);
+    // Assert the resolved language word — proves correct threading, not the verbatim instruction sentence.
+    expect(plPrompt).toContain("Polish");
+    expect(enPrompt).toContain("English");
   });
 });

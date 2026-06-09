@@ -76,7 +76,7 @@ team: Adaptive-plan
 ### ADA-10 — [T-03] UX resilience & locale output correctness (Risk #4 + Risk #5)
 
 - **URL:** https://linear.app/adaptive-plan/issue/ADA-10/t-03-ux-resilience-and-locale-output-correctness-risk-4-risk-5
-- **Status:** Todo
+- **Status:** Done
 - **Priority:** High
 - **Labels:** Test, Feature
 - **PRD refs:** FR-008 (locale) — Risk #4 (UX resilience / dropped-stream) + Risk #5 (locale output correctness)

@@ -5,6 +5,10 @@ import plMessages from "@/i18n/messages/pl.json";
 
 type Catalog = Record<string, unknown>;
 
+// Arrays are stored as leaf nodes (not recursed into). All current catalog arrays are
+// string[] so this is sufficient. If a future array-of-objects key is added, extend
+// this walker to recurse into array elements — otherwise internal key divergence would
+// be invisible to the parity tests below.
 function collectPaths(obj: unknown, prefix = ""): Map<string, unknown> {
   const result = new Map<string, unknown>();
   if (typeof obj !== "object" || obj === null) {

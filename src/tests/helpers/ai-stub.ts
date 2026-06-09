@@ -7,7 +7,12 @@ import type { GeneratedPlan } from "@/lib/validation/plan-schema";
 // ctrl properties lazily (at call time), not at factory-call time.
 export function createStreamTextMock(ctrl: StreamTextController) {
   return {
-    Output: { object: vi.fn(() => ({})) },
+    Output: {
+      object: vi.fn((opts: { schema?: unknown }) => {
+        ctrl.capturedOutputObjectSchema = opts?.schema ?? null;
+        return {};
+      }),
+    },
     streamText: (opts: {
       onError?: (event: { error: unknown }) => void;
       onFinish: () => Promise<void>;
@@ -26,7 +31,14 @@ export function createStreamTextMock(ctrl: StreamTextController) {
 // Returns the stubbed `@ai-sdk/react` module. Same lazy-read pattern.
 export function createUseObjectMock(ctrl: UseObjectController) {
   return {
-    experimental_useObject: ({ onFinish }: { onFinish: (event: FinishEvent) => void }) => {
+    experimental_useObject: ({
+      api,
+      onFinish,
+    }: {
+      api: string;
+      onFinish: (event: FinishEvent) => void;
+    }) => {
+      ctrl.capturedApi = api;
       ctrl.capturedOnFinish = onFinish;
       return {
         error: ctrl.error,
@@ -66,6 +78,7 @@ export const schemaViolatingPlan = { summary: "incomplete" };
 export type StreamTextController = {
   capturedOnError: ((event: { error: unknown }) => void) | null;
   capturedOnFinish: null | (() => Promise<void>);
+  capturedOutputObjectSchema: unknown;
   outputPromise: Promise<unknown>;
   streamText: ReturnType<typeof vi.fn>;
 };
@@ -73,6 +86,7 @@ export type StreamTextController = {
 type FinishEvent = { error: Error | undefined; object: GeneratedPlan | undefined };
 
 export type UseObjectController = {
+  capturedApi: string | undefined;
   capturedOnFinish: ((event: FinishEvent) => void) | undefined;
   error: Error | undefined;
   isLoading: boolean;
