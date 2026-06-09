@@ -400,8 +400,8 @@ tables without touching plan/account data.
 
 #### Automated
 
-- [ ] 3.1 Type-check passes: `npx tsc --noEmit`
-- [ ] 3.2 Lint passes: `npm run lint`
+- [x] 3.1 Type-check passes: `npx tsc --noEmit`
+- [x] 3.2 Lint passes: `npm run lint`
 
 ### Phase 4: Integration Tests
 
