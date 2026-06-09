@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Adaptive Plan - Twoja forma, zoptymalizowana przez AI.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed-variant": "#324a54",
+                        "tertiary-container": "#cde7f3",
+                        "surface-container": "#201f1f",
+                        "secondary-container": "#464747",
+                        "surface-container-high": "#2a2a2a",
+                        "on-error": "#690005",
+                        "secondary": "#c7c6c6",
+                        "on-background": "#e5e2e1",
+                        "inverse-surface": "#e5e2e1",
+                        "on-surface-variant": "#c5c9ac",
+                        "tertiary": "#ffffff",
+                        "surface-dim": "#131313",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "surface-variant": "#353534",
+                        "on-secondary-container": "#b6b5b5",
+                        "on-tertiary-container": "#506873",
+                        "on-surface": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#b0d500",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#1b343d",
+                        "on-secondary": "#303031",
+                        "on-primary-container": "#596c00",
+                        "tertiary-fixed": "#cde7f3",
+                        "on-primary-fixed": "#171e00",
+                        "outline-variant": "#444932",
+                        "on-secondary-fixed-variant": "#464747",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-fixed": "#041e28",
+                        "background": "#131313",
+                        "secondary-fixed": "#e4e2e2",
+                        "primary-fixed": "#caf300",
+                        "surface-container-low": "#1c1b1b",
+                        "primary-container": "#caf300",
+                        "primary": "#ffffff",
+                        "primary-fixed-dim": "#b0d500",
+                        "outline": "#8f9378",
+                        "on-primary-fixed-variant": "#3e4c00",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#b1cad7",
+                        "surface-container-highest": "#353534",
+                        "surface": "#131313",
+                        "on-primary": "#2a3400",
+                        "surface-bright": "#3a3939",
+                        "inverse-primary": "#536600",
+                        "on-secondary-fixed": "#1b1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "container-margin": "24px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "stats-display": ["Montserrat"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "stats-display": ["40px", {"lineHeight": "40px", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-effect {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(202, 243, 0, 0.2);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased pt-16 selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-margin h-16 bg-surface/80 backdrop-blur-xl border-b border-secondary-container dark:border-secondary-container">
+<div class="flex items-center">
+<img alt="Adaptive Plan Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida/AP1WRLuq9L7YxnGyKMo3RKPQ85Vq-KPMBeU4cEucBaZNVfoicOeccTtDbAR4R3bZChXGR4Rf-rLyfBlA_OdjAe9O-r2n-jUVndt0VUMdCNAUuNDjezYIaUsZHobYtmutOgAIr_EKDFiaAnOtxG1lPD2hWPOAXq6a9cSMCTLzd_eHpotv5Z-V4Mxjs7BZQMaxTp5HvDOtS0iLE21MGnAR8lu9IAygBThCAf8iWYEZZRtuBaSLXDlfHKTALXaLjVI"/>
+</div>
+<div class="flex items-center gap-gutter text-primary dark:text-primary">
+<button aria-label="language" class="hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors duration-200 p-2 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+</button>
+<button aria-label="account_circle" class="hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors duration-200 p-2 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-container-margin py-stack-lg md:py-[64px] flex flex-col gap-stack-lg md:gap-[64px]">
+<!-- Hero Section -->
+<section class="flex flex-col md:flex-row items-center gap-stack-lg relative rounded-xl overflow-hidden glass-effect border border-secondary-container">
+<div class="absolute inset-0 z-0 bg-cover bg-center opacity-30" data-alt="A high-contrast cinematic shot of a modern, elite training facility with dark grey textured walls and intense, localized neon lime lighting illuminating a sleek metal weight rack. The atmosphere is professional, aggressive, and highly focused, capturing the high-performance fitness mood. The deep black shadows contrast sharply with the glowing lime accents, creating a 'command center' aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwEUKX4kYrfINov69TLTH0FcqFVTqoqr2qvLfaRjNkH3WIwVL_JNY19wlAihz1TY32ALELt4AIK2fIrGJzlDxUqCOpVHoqWCqcmw7C-LrA0_zJKGPRMLT_TAWqApyIOhusKley-Qb44ZkmIHvdh-9sdHiDh44lVxnwbbC9nNpu-__mCtR_f2QRlyPXz0a7NAl9NB7SA18VwYjKm2mO7NwcZpilMvaq2Hn2qlWuMNf6FLypqC7ZngAxZCx5Y_8yM2jn0bBUqbJ5SFHg');"></div>
+<div class="relative z-10 flex-1 p-container-margin md:p-[48px] flex flex-col gap-stack-md">
+<span class="text-label-md font-label-md text-primary-container uppercase tracking-widest">Wydajność napędzana danymi</span>
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile md:text-headline-xl md:font-headline-xl text-primary">Twoja forma, zoptymalizowana przez AI.</h1>
+<p class="text-body-lg font-body-lg text-secondary max-w-xl">Nasz algorytm analizuje Twoje dane biometryczne i cele, tworząc plan idealnie dopasowany do Twojego potencjału. Przejmij kontrolę nad swoim treningiem.</p>
+<div class="mt-stack-md">
+<button class="bg-primary-container text-on-primary-container px-8 py-4 rounded-md text-label-md font-label-md uppercase hover:bg-surface-tint transition-colors neon-glow active:scale-95">Wygeneruj swój plan</button>
+</div>
+</div>
+</section>
+<!-- Bento Grid Features -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Precision -->
+<div class="glass-effect rounded-lg p-container-margin border border-secondary-container flex flex-col gap-stack-sm hover:bg-surface-container-high transition-colors">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-stack-sm">
+<span class="material-symbols-outlined text-primary-container" data-icon="tune" style="font-variation-settings: 'FILL' 1;">tune</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary">Precyzja</h3>
+<p class="text-body-md font-body-md text-secondary">Algorytmy uczenia maszynowego dostosowują objętość i intensywność do Twojej aktualnej regeneracji, minimalizując ryzyko przetrenowania.</p>
+</div>
+<!-- Adaptation -->
+<div class="glass-effect rounded-lg p-container-margin border border-secondary-container flex flex-col gap-stack-sm hover:bg-surface-container-high transition-colors">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-stack-sm">
+<span class="material-symbols-outlined text-primary-container" data-icon="model_training" style="font-variation-settings: 'FILL' 1;">model_training</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary">Adaptacja</h3>
+<p class="text-body-md font-body-md text-secondary">Plan ewoluuje z każdym Twoim treningiem. Śledzimy Twoje postępy i w czasie rzeczywistym wprowadzamy korekty do kolejnych mikrocykli.</p>
+</div>
+<!-- Tracking -->
+<div class="glass-effect rounded-lg p-container-margin border border-secondary-container flex flex-col gap-stack-sm hover:bg-surface-container-high transition-colors">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-stack-sm">
+<span class="material-symbols-outlined text-primary-container" data-icon="monitoring" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary">Śledzenie</h3>
+<p class="text-body-md font-body-md text-secondary">Wizualizuj swój progres za pomocą zaawansowanych paneli analitycznych. Dane z urządzeń ubieralnych integrują się w jednym, potężnym widoku.</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-container-margin flex flex-col md:flex-row justify-between items-center gap-stack-md bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-secondary-container dark:border-secondary-container text-body-md font-body-md text-secondary dark:text-secondary mt-stack-lg">
+<div class="text-label-md font-headline-md text-on-surface">© 2024 Adaptive Plan. All rights reserved.</div>
+<nav class="flex gap-gutter text-label-md font-label-md">
+<a class="text-secondary dark:text-secondary hover:text-primary dark:hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-secondary dark:text-secondary hover:text-primary dark:hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-secondary dark:text-secondary hover:text-primary dark:hover:text-primary transition-colors" href="#">Instagram</a>
+<a class="text-secondary dark:text-secondary hover:text-primary dark:hover:text-primary transition-colors" href="#">Twitter</a>
+</nav>
+</footer>
+</body></html>

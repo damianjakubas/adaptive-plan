@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Twoja Historia Treningów - Adaptive Plan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed-variant": "#324a54",
+                        "tertiary-container": "#cde7f3",
+                        "surface-container": "#201f1f",
+                        "secondary-container": "#464747",
+                        "surface-container-high": "#2a2a2a",
+                        "on-error": "#690005",
+                        "secondary": "#c7c6c6",
+                        "on-background": "#e5e2e1",
+                        "inverse-surface": "#e5e2e1",
+                        "on-surface-variant": "#c5c9ac",
+                        "tertiary": "#ffffff",
+                        "surface-dim": "#131313",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "surface-variant": "#353534",
+                        "on-secondary-container": "#b6b5b5",
+                        "on-tertiary-container": "#506873",
+                        "on-surface": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#b0d500",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#1b343d",
+                        "on-secondary": "#303031",
+                        "on-primary-container": "#596c00",
+                        "tertiary-fixed": "#cde7f3",
+                        "on-primary-fixed": "#171e00",
+                        "outline-variant": "#444932",
+                        "on-secondary-fixed-variant": "#464747",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-fixed": "#041e28",
+                        "background": "#131313",
+                        "secondary-fixed": "#e4e2e2",
+                        "primary-fixed": "#caf300",
+                        "surface-container-low": "#1c1b1b",
+                        "primary-container": "#caf300",
+                        "primary": "#ffffff",
+                        "primary-fixed-dim": "#b0d500",
+                        "outline": "#8f9378",
+                        "on-primary-fixed-variant": "#3e4c00",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#b1cad7",
+                        "surface-container-highest": "#353534",
+                        "surface": "#131313",
+                        "on-primary": "#2a3400",
+                        "surface-bright": "#3a3939",
+                        "inverse-primary": "#536600",
+                        "on-secondary-fixed": "#1b1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "container-margin": "24px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "stats-display": ["Montserrat"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "stats-display": ["40px", { "lineHeight": "40px", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid #333333;
+        }
+        .neon-glow:focus-within {
+            box-shadow: 0 0 15px rgba(202, 243, 0, 0.2);
+            border-bottom-color: #caf300;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-margin h-16 bg-surface/80 backdrop-blur-xl border-b border-secondary-container dark:border-secondary-container">
+<div class="flex items-center gap-4">
+<img alt="Adaptive Plan Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida/AP1WRLuq9L7YxnGyKMo3RKPQ85Vq-KPMBeU4cEucBaZNVfoicOeccTtDbAR4R3bZChXGR4Rf-rLyfBlA_OdjAe9O-r2n-jUVndt0VUMdCNAUuNDjezYIaUsZHobYtmutOgAIr_EKDFiaAnOtxG1lPD2hWPOAXq6a9cSMCTLzd_eHpotv5Z-V4Mxjs7BZQMaxTp5HvDOtS0iLE21MGnAR8lu9IAygBThCAf8iWYEZZRtuBaSLXDlfHKTALXaLjVI"/>
+<span class="text-headline-md font-headline-md font-extrabold text-primary dark:text-primary tracking-tight hidden md:inline-block">Adaptive Plan</span>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="Language" class="p-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors duration-200 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined">language</span>
+</button>
+<button aria-label="Account" class="p-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors duration-200 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-[104px] pb-stack-lg px-container-margin md:px-[max(24px,calc((100vw-1280px)/2))]">
+<!-- Header Section -->
+<div class="mb-stack-lg">
+<div class="flex items-center gap-2 mb-2 text-primary-container">
+<span class="material-symbols-outlined">history</span>
+<span class="text-label-md font-label-md uppercase tracking-wider">Archiwum</span>
+</div>
+<h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg-mobile md:font-headline-lg text-primary mb-4">Twoja Historia Treningów</h1>
+<p class="text-on-surface-variant max-w-2xl text-body-md font-body-md">Przeglądaj, edytuj lub usuwaj swoje poprzednie sesje treningowe. Utrzymuj swój dziennik w czystości, aby zapewnić dokładną analizę postępów.</p>
+</div>
+<!-- Filters / Search (Simulated Input Field) -->
+<div class="mb-stack-lg flex flex-col sm:flex-row gap-4">
+<div class="flex-grow bg-[#262626] rounded-t-DEFAULT border-b-2 border-secondary-container neon-glow transition-all flex items-center px-4 py-2">
+<span class="material-symbols-outlined text-on-surface-variant mr-3">search</span>
+<input class="bg-transparent border-none outline-none text-on-surface w-full placeholder:text-on-surface-variant/50 font-body-md focus:ring-0" placeholder="Szukaj po nazwie lub dacie..." type="text"/>
+</div>
+<button class="flex items-center justify-center gap-2 bg-surface-container px-6 py-2 rounded-DEFAULT border border-[#333333] hover:bg-surface-container-high transition-colors text-label-md font-label-md uppercase text-on-surface">
+<span class="material-symbols-outlined">filter_list</span>
+                Filtruj
+            </button>
+</div>
+<!-- Training History List -->
+<div class="glass-panel rounded-lg overflow-hidden">
+<!-- List Header (Desktop Only) -->
+<div class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-surface-container-low border-b border-[#333333] text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">
+<div class="col-span-3">Data</div>
+<div class="col-span-5">Sesja</div>
+<div class="col-span-2 text-right">Czas trwania</div>
+<div class="col-span-2 text-right">Akcje</div>
+</div>
+<!-- List Items -->
+<div class="flex flex-col">
+<!-- Item 1 -->
+<div class="group relative flex flex-col md:grid md:grid-cols-12 gap-4 px-6 py-5 border-b border-[#333333] last:border-b-0 hover:bg-[#222222] transition-colors items-start md:items-center">
+<div class="col-span-3 flex items-center gap-3 w-full md:w-auto text-on-surface">
+<div class="w-10 h-10 rounded-full bg-surface flex items-center justify-center border border-[#333333]">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">calendar_today</span>
+</div>
+<div>
+<div class="text-body-md font-body-md font-semibold">Dziś</div>
+<div class="text-label-md font-label-md text-on-surface-variant">10 Paź 2023</div>
+</div>
+</div>
+<div class="col-span-5 w-full md:w-auto">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-body-md font-body-md text-primary font-semibold">Siła GÓRA</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant text-[10px] font-label-md uppercase border border-[#333333]">STRENGTH</span>
+</div>
+<div class="text-label-md font-label-md text-on-surface-variant line-clamp-1">Klatka, Plecy, Barki - Zestaw A</div>
+</div>
+<div class="col-span-2 flex items-center justify-between md:justify-end w-full md:w-auto text-on-surface-variant">
+<span class="md:hidden text-label-md font-label-md">Czas:</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">timer</span>
+<span class="font-body-md text-body-md">1h 15m</span>
+</div>
+</div>
+<div class="col-span-2 flex items-center justify-end gap-2 w-full md:w-auto mt-4 md:mt-0 pt-4 md:pt-0 border-t border-[#333333] md:border-t-0">
+<button aria-label="Edytuj" class="p-2 rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button aria-label="Usuń" class="p-2 rounded-full text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors focus:outline-none focus:ring-2 focus:ring-error">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="group relative flex flex-col md:grid md:grid-cols-12 gap-4 px-6 py-5 border-b border-[#333333] last:border-b-0 hover:bg-[#222222] transition-colors items-start md:items-center">
+<div class="col-span-3 flex items-center gap-3 w-full md:w-auto text-on-surface">
+<div class="w-10 h-10 rounded-full bg-surface flex items-center justify-center border border-[#333333]">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">calendar_today</span>
+</div>
+<div>
+<div class="text-body-md font-body-md font-semibold">Wczoraj</div>
+<div class="text-label-md font-label-md text-on-surface-variant">09 Paź 2023</div>
+</div>
+</div>
+<div class="col-span-5 w-full md:w-auto">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-body-md font-body-md text-primary font-semibold">Interwały</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant text-[10px] font-label-md uppercase border border-[#333333]">CARDIO</span>
+</div>
+<div class="text-label-md font-label-md text-on-surface-variant line-clamp-1">Bieżnia - Sprinty 30/30</div>
+</div>
+<div class="col-span-2 flex items-center justify-between md:justify-end w-full md:w-auto text-on-surface-variant">
+<span class="md:hidden text-label-md font-label-md">Czas:</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">timer</span>
+<span class="font-body-md text-body-md">45m</span>
+</div>
+</div>
+<div class="col-span-2 flex items-center justify-end gap-2 w-full md:w-auto mt-4 md:mt-0 pt-4 md:pt-0 border-t border-[#333333] md:border-t-0">
+<button aria-label="Edytuj" class="p-2 rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button aria-label="Usuń" class="p-2 rounded-full text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors focus:outline-none focus:ring-2 focus:ring-error">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="group relative flex flex-col md:grid md:grid-cols-12 gap-4 px-6 py-5 border-b border-[#333333] last:border-b-0 hover:bg-[#222222] transition-colors items-start md:items-center">
+<div class="col-span-3 flex items-center gap-3 w-full md:w-auto text-on-surface">
+<div class="w-10 h-10 rounded-full bg-surface flex items-center justify-center border border-[#333333]">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">calendar_today</span>
+</div>
+<div>
+<div class="text-body-md font-body-md font-semibold">Poniedziałek</div>
+<div class="text-label-md font-label-md text-on-surface-variant">07 Paź 2023</div>
+</div>
+</div>
+<div class="col-span-5 w-full md:w-auto">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-body-md font-body-md text-primary font-semibold">Siła DÓŁ</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant text-[10px] font-label-md uppercase border border-[#333333]">STRENGTH</span>
+</div>
+<div class="text-label-md font-label-md text-on-surface-variant line-clamp-1">Nogi, Brzuch - Zestaw B</div>
+</div>
+<div class="col-span-2 flex items-center justify-between md:justify-end w-full md:w-auto text-on-surface-variant">
+<span class="md:hidden text-label-md font-label-md">Czas:</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">timer</span>
+<span class="font-body-md text-body-md">1h 30m</span>
+</div>
+</div>
+<div class="col-span-2 flex items-center justify-end gap-2 w-full md:w-auto mt-4 md:mt-0 pt-4 md:pt-0 border-t border-[#333333] md:border-t-0">
+<button aria-label="Edytuj" class="p-2 rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button aria-label="Usuń" class="p-2 rounded-full text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors focus:outline-none focus:ring-2 focus:ring-error">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Load More -->
+<div class="p-4 border-t border-[#333333] flex justify-center bg-surface-container-low">
+<button class="text-label-md font-label-md uppercase text-primary-container hover:text-primary transition-colors flex items-center gap-2">
+                    Wczytaj więcej
+                    <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Footer from JSON -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-stack-lg px-container-margin flex flex-col md:flex-row justify-between items-center gap-stack-md border-t border-secondary-container dark:border-secondary-container mt-auto">
+<div class="text-label-md font-headline-md text-on-surface flex items-center gap-2">
+<img alt="Adaptive Plan Logo" class="h-6 w-auto opacity-80 grayscale" src="https://lh3.googleusercontent.com/aida/AP1WRLuq9L7YxnGyKMo3RKPQ85Vq-KPMBeU4cEucBaZNVfoicOeccTtDbAR4R3bZChXGR4Rf-rLyfBlA_OdjAe9O-r2n-jUVndt0VUMdCNAUuNDjezYIaUsZHobYtmutOgAIr_EKDFiaAnOtxG1lPD2hWPOAXq6a9cSMCTLzd_eHpotv5Z-V4Mxjs7BZQMaxTp5HvDOtS0iLE21MGnAR8lu9IAygBThCAf8iWYEZZRtuBaSLXDlfHKTALXaLjVI"/>
+<span class="text-body-md font-body-md text-secondary dark:text-secondary">© 2024 Adaptive Plan. All rights reserved.</span>
+</div>
+<div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+<a class="text-secondary dark:text-secondary hover:text-primary dark:hover:text-primary transition-colors text-label-md font-label-md" href="#">Terms of Service</a>
+<a class="text-secondary dark:text-secondary hover:text-primary dark:hover:text-primary transition-colors text-label-md font-label-md" href="#">Privacy Policy</a>
+<a class="text-secondary dark:text-secondary hover:text-primary dark:hover:text-primary transition-colors text-label-md font-label-md" href="#">Instagram</a>
+<a class="text-secondary dark:text-secondary hover:text-primary dark:hover:text-primary transition-colors text-label-md font-label-md" href="#">Twitter</a>
+</div>
+</footer>
+</body></html>
