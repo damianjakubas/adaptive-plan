@@ -408,10 +408,10 @@ tables without touching plan/account data.
 
 #### Automated
 
-- [x] 4.1 `npm test` passes (green with DB env, skips cleanly without it)
-- [x] 4.2 Type-check passes: `npx tsc --noEmit`
-- [x] 4.3 Lint passes: `npm run lint`
+- [x] 4.1 `npm test` passes (green with DB env, skips cleanly without it) — d971916
+- [x] 4.2 Type-check passes: `npx tsc --noEmit` — d971916
+- [x] 4.3 Lint passes: `npm run lint` — d971916
 
 #### Manual
 
-- [x] 4.4 Suite run locally against the real dev DB; all assertions pass
+- [x] 4.4 Suite run locally against the real dev DB; all assertions pass — d971916
