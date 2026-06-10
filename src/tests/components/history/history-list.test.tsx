@@ -65,7 +65,7 @@ function makeSessions(): SessionListItem[] {
 
 function renderList(locale: "en" | "pl", messages: typeof enMessages) {
   return render(
-    <NextIntlClientProvider locale={locale} messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
       <HistoryList now={NOW} sessions={makeSessions()} />
     </NextIntlClientProvider>,
   );
@@ -97,31 +97,27 @@ describe.each([
     renderList(locale, messages);
     const rows = screen.getAllByRole("listitem");
 
-    const formatAbsolute = (date: Date) =>
-      new Intl.DateTimeFormat(locale, { day: "numeric", month: "short", year: "numeric" }).format(date);
-    const formatWeekday = (date: Date) =>
-      new Intl.DateTimeFormat(locale, { weekday: "long" }).format(date);
+    // Hardcoded spec strings — verified output of { day:"numeric", month:"short", year:"numeric" }
+    // and { weekday:"long" } for each locale. Hardcoding pins the oracle so that changing the
+    // format options in the component would fail this test.
+    const todayAbsolute = locale === "en" ? "Jun 10, 2026" : "10 cze 2026";
+    const weekdayLabel = locale === "en" ? "Sunday" : "niedziela";
 
     // Today: translated label + absolute date as secondary.
     expect(within(rows[0]).getByText(t.today)).toBeInTheDocument();
-    expect(within(rows[0]).getByText(formatAbsolute(new Date(2026, 5, 10, 9, 0, 0)))).toBeInTheDocument();
+    expect(within(rows[0]).getByText(todayAbsolute)).toBeInTheDocument();
     // Yesterday: translated label.
     expect(within(rows[1]).getByText(t.yesterday)).toBeInTheDocument();
     // Weekday (3 days back): locale weekday name as the primary line.
-    expect(
-      within(rows[2]).getByText(formatWeekday(new Date(2026, 5, 7, 10, 0, 0))),
-    ).toBeInTheDocument();
+    expect(within(rows[2]).getByText(weekdayLabel)).toBeInTheDocument();
   });
 
   it("renders the absolute date as the only date line for sessions 7+ days back", () => {
     renderList(locale, messages);
     const rows = screen.getAllByRole("listitem");
 
-    const absolute = new Intl.DateTimeFormat(locale, {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(2026, 5, 1, 10, 0, 0));
+    // Hardcoded spec string — pins the { day:"numeric", month:"short", year:"numeric" } oracle.
+    const absolute = locale === "en" ? "Jun 1, 2026" : "1 cze 2026";
     // Primary line is the date and there is no secondary date line (single match).
     expect(within(rows[3]).getAllByText(absolute)).toHaveLength(1);
   });
@@ -142,6 +138,15 @@ describe.each([
     expect(within(rows[0]).getByTestId("muscle-groups")).toHaveTextContent("Chest, Back");
     // s2 has empty muscleGroups → no groups line.
     expect(within(rows[1]).queryByTestId("muscle-groups")).not.toBeInTheDocument();
+  });
+
+  it("renders no rows when sessions is empty", () => {
+    render(
+      <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
+        <HistoryList now={NOW} sessions={[]} />
+      </NextIntlClientProvider>,
+    );
+    expect(screen.queryAllByRole("listitem")).toHaveLength(0);
   });
 
   it("renders each duration in the compact 'h/m' notation (locale-independent)", () => {

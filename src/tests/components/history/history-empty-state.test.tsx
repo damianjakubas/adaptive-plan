@@ -12,7 +12,7 @@ function renderEmptyState(
   hasActivePlan: boolean,
 ) {
   return render(
-    <NextIntlClientProvider locale={locale} messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
       <HistoryEmptyState hasActivePlan={hasActivePlan} />
     </NextIntlClientProvider>,
   );
