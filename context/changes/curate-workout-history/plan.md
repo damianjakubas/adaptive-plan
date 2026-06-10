@@ -497,9 +497,9 @@ transaction handles the row rewrites; no backfill.
 
 #### Automated
 
-- [x] 2.1 Type checking passes: `npx tsc --noEmit`
-- [x] 2.2 Linting passes: `npm run lint`
-- [x] 2.3 Action tests pass: `npm test -- actions`
+- [x] 2.1 Type checking passes: `npx tsc --noEmit` — 631916e
+- [x] 2.2 Linting passes: `npm run lint` — 631916e
+- [x] 2.3 Action tests pass: `npm test -- actions` — 631916e
 
 #### Manual
 
@@ -509,10 +509,10 @@ transaction handles the row rewrites; no backfill.
 
 #### Automated
 
-- [ ] 3.1 Type checking passes: `npx tsc --noEmit`
-- [ ] 3.2 Linting passes: `npm run lint`
-- [ ] 3.3 Component tests pass: `npm test -- history`
-- [ ] 3.4 Existing `history-list.test.tsx` repaired with `vi.mock("next/navigation")`; prior assertions still pass
+- [x] 3.1 Type checking passes: `npx tsc --noEmit`
+- [x] 3.2 Linting passes: `npm run lint`
+- [x] 3.3 Component tests pass: `npm test -- history`
+- [x] 3.4 Existing `history-list.test.tsx` repaired with `vi.mock("next/navigation")`; prior assertions still pass
 
 #### Manual
 

@@ -4,12 +4,15 @@ import { useFormatter, useTranslations } from "next-intl";
 import type { SessionListItem } from "@/db/workout-sessions";
 import formatDuration from "@/lib/history/format-duration";
 import getRelativeDay from "@/lib/history/relative-day";
+import HistoryRowActions from "./history-row-actions";
 
 /**
  * Presentational, sync server component rendering the `historia_trening_w`
  * mockup's history panel minus its out-of-scope controls (search, filter,
- * edit/delete actions, load-more). One row per session, in the order given —
- * the component never re-sorts; newest-first ordering is `listSessions`'
+ * load-more). Each row carries an Edit link + Delete trigger via the
+ * `HistoryRowActions` client leaf — the list itself stays a sync server
+ * component (the leaf is the only client JS). One row per session, in the order
+ * given — the component never re-sorts; newest-first ordering is `listSessions`'
  * contract.
  *
  * Uses next-intl shared-component hooks (`useTranslations`/`useFormatter`)
@@ -26,8 +29,9 @@ function HistoryList({ now, sessions }: Props) {
     <div className="overflow-hidden rounded-lg border border-surface-container-highest">
       <div className="hidden grid-cols-12 gap-4 border-b border-surface-container-highest bg-surface-container-low px-6 py-4 font-label-md text-label-md uppercase tracking-wider text-on-surface-variant md:grid">
         <div className="col-span-3">{t("columnDate")}</div>
-        <div className="col-span-6">{t("columnSession")}</div>
-        <div className="col-span-3 text-right">{t("columnDuration")}</div>
+        <div className="col-span-5">{t("columnSession")}</div>
+        <div className="col-span-2 text-right">{t("columnDuration")}</div>
+        <div className="col-span-2" aria-hidden="true" />
       </div>
       <ul className="flex flex-col">
         {sessions.map((session) => {
@@ -65,7 +69,7 @@ function HistoryList({ now, sessions }: Props) {
                 </div>
               </div>
 
-              <div className="col-span-6">
+              <div className="col-span-5">
                 <div className="mb-1 flex items-center gap-2">
                   <span className="font-body-md text-body-md font-semibold text-on-surface">
                     {session.sessionName}
@@ -89,7 +93,7 @@ function HistoryList({ now, sessions }: Props) {
                 )}
               </div>
 
-              <div className="col-span-3 flex items-center justify-between text-on-surface-variant md:justify-end">
+              <div className="col-span-2 flex items-center justify-between text-on-surface-variant md:justify-end">
                 <span className="font-label-md text-label-md md:hidden">
                   {t("durationMobileLabel")}
                 </span>
@@ -99,6 +103,10 @@ function HistoryList({ now, sessions }: Props) {
                     {formatDuration(session.durationMinutes)}
                   </span>
                 </span>
+              </div>
+
+              <div className="col-span-2 flex md:justify-end">
+                <HistoryRowActions sessionId={session.id} />
               </div>
             </li>
           );

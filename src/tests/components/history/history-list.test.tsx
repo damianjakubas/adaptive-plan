@@ -1,6 +1,19 @@
 import { NextIntlClientProvider } from "next-intl";
 import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+// Each row now wires in the `HistoryRowActions` client leaf, which calls
+// `useRouter()` at the top level — without a `next/navigation` mock React throws
+// "invariant expected app router to be mounted" (there is no global mock in
+// setup.ts). Stub it so the list renders; the action is stubbed too in case the
+// leaf pulls it in at module load. Goal here is render-survival, not new coverage.
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
+}));
+
+vi.mock("@/lib/workout/actions", () => ({
+  deleteWorkoutSession: vi.fn(),
+}));
 
 import HistoryList from "@/components/history/history-list";
 import type { SessionListItem } from "@/db/workout-sessions";
