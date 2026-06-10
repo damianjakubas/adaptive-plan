@@ -485,13 +485,13 @@ transaction handles the row rewrites; no backfill.
 
 #### Automated
 
-- [x] 1.1 Type checking passes: `npx tsc --noEmit`
-- [x] 1.2 Linting passes: `npm run lint`
-- [x] 1.3 Mapper unit tests pass: `npm test -- map-session-to-form-values`
+- [x] 1.1 Type checking passes: `npx tsc --noEmit` — 2063600
+- [x] 1.2 Linting passes: `npm run lint` — 2063600
+- [x] 1.3 Mapper unit tests pass: `npm test -- map-session-to-form-values` — 2063600
 
 #### Manual
 
-- [ ] 1.4 Every new key exists in both `en.json` and `pl.json` with no placeholder text
+- [x] 1.4 Every new key exists in both `en.json` and `pl.json` with no placeholder text
 
 ### Phase 2: Update & delete server actions
 
