@@ -11,13 +11,7 @@ export async function generateMetadata() {
   return { title: t("history") };
 }
 
-/**
- * Authenticated `/history` page (US-02, FR-018): server gate + data load, minimal
- * JSX. With no logged sessions it renders the plan-state-aware empty state
- * (`hasActivePlan` queried only on this branch); otherwise the page header plus
- * the presentational `HistoryList` (newest-first ordering is `listSessions`'
- * contract — the component never re-sorts).
- */
+/** Authenticated `/history` page (US-02, FR-018): server gate + data load, minimal JSX. */
 export default async function HistoryPage() {
   const user = await getUser();
 
