@@ -32,7 +32,7 @@ The shipped MVP generates a personalized training plan and then stops — there 
 | F-01 | workout-session-snapshot-store | (foundation) plan-decoupled, per-account snapshot store exists   | —             | FR-024                                         | done     |
 | S-01 | log-workout-from-plan         | log a workout pre-filled from the active plan, then save it      | F-01          | US-01, FR-011, FR-012, FR-014, FR-015, FR-016, FR-017, FR-025 | done     |
 | S-02 | view-workout-history          | view past logged sessions, newest first                          | F-01, S-01    | US-02, FR-018, FR-025                          | done     |
-| S-03 | curate-workout-history        | edit or delete a logged session from history                     | S-01, S-02    | US-02, FR-020, FR-021                          | proposed |
+| S-03 | curate-workout-history        | edit or delete a logged session from history                     | S-01, S-02    | US-02, FR-020, FR-021                          | done     |
 | S-04 | welcome-dashboard             | land on a state-aware home with the right primary call-to-action | S-01          | FR-010, FR-025                                 | proposed |
 | S-05 | dashboard-post-auth-landing   | be taken to the dashboard after login/registration               | S-04          | FR-009, FR-023                                 | proposed |
 
@@ -111,7 +111,7 @@ Routes present: `/plan` (view), `/plan/new` (generate). Routes absent: dashboard
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Reuses the S-01 editor loaded by snapshot id rather than from the plan — the reason S-01 must settle that load path. Delete is permanent (no recovery), so the confirmation step is the only safeguard against destroying real history; getting that guard right is the slice's main concern.
-- **Status:** proposed
+- **Status:** done
 
 ### S-04: Welcome dashboard
 
@@ -167,3 +167,4 @@ None. The PRD closed with zero Open Questions (`quality_check_status: accepted`)
 - **F-01: (foundation) a per-account-isolated, plan-decoupled persistence store for logged workout sessions exists — schema, migration, and `user_id`-scoped data access — ready for logging to write and history to read. No user-visible surface on its own.** — Archived 2026-06-09 → `context/archive/2026-06-09-workout-session-snapshot-store/`. Lesson: —.
 - **S-01: user can open the logging page pre-filled from their active plan (picking which day/session they performed), edit actual reps/weight, add or remove sets and exercises, enter a duration and a free-text note, and save it as a snapshot — or discard without a partial write. The logging entry point is disabled when no active plan exists.** — Archived 2026-06-10 → `context/archive/2026-06-09-log-workout-from-plan/`. Lesson: —.
 - **S-02: view past logged sessions, newest first** — Archived 2026-06-10 → `context/archive/2026-06-10-view-workout-history/`. Lesson: —.
+- **S-03: edit or delete a logged session from history** — Archived 2026-06-10 → `context/archive/2026-06-10-curate-workout-history/`. Lesson: —.
