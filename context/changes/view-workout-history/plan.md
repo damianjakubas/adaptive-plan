@@ -436,9 +436,9 @@ the route, components, helpers, and strings, and restores the navbar placeholder
 
 #### Automated
 
-- [ ] 2.1 Type-check passes: `npx tsc --noEmit`
-- [ ] 2.2 Lint passes: `npm run lint`
-- [ ] 2.3 Component test suites pass (HistoryList + HistoryEmptyState): `npm test`
+- [x] 2.1 Type-check passes: `npx tsc --noEmit`
+- [x] 2.2 Lint passes: `npm run lint`
+- [x] 2.3 Component test suites pass (HistoryList + HistoryEmptyState): `npm test`
 
 ### Phase 3: Route & Navbar Wiring
 
