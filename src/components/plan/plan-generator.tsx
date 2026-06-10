@@ -1,8 +1,9 @@
 "use client";
 
 import { experimental_useObject as useObject } from "@ai-sdk/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import GenerationLoader from "@/components/plan/generation-loader";
@@ -26,9 +27,16 @@ import { planOutputSchema, type GeneratedPlan, type PlanInput } from "@/lib/vali
  * The form unmounts while loading / on success (no `reset()`, sidesteps RHF #13110).
  * On error we map to a `PlanErrorCode`, toast it, and fall back to the form with the
  * submitted values preserved.
+ *
+ * On success we also `router.refresh()` (locale-toggle pattern): the `(app)` layout
+ * computes the navbar's plan-state and the App Router preserves layouts across soft
+ * navigations — without the refresh, a fresh user's "Log Workout" entry would stay
+ * stale-disabled until a hard reload.
  */
 function PlanGenerator() {
   const tErrors = useTranslations("PlanErrors");
+  const router = useRouter();
+  const [, startTransition] = useTransition();
   const [finalPlan, setFinalPlan] = useState<GeneratedPlan | null>(null);
   const [submittedValues, setSubmittedValues] = useState<PlanInput | undefined>(undefined);
 
@@ -37,6 +45,7 @@ function PlanGenerator() {
     onFinish: ({ error: finishError, object }) => {
       if (object) {
         setFinalPlan(object);
+        startTransition(() => router.refresh());
       } else {
         toast.error(tErrors(mapPlanError(finishError)));
       }

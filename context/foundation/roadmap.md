@@ -3,7 +3,7 @@ project: "AdaptivePlan"
 version: 1
 status: draft
 created: 2026-06-09
-updated: 2026-06-09
+updated: 2026-06-10
 prd_version: 1
 main_goal: low-complexity
 top_blocker: none
@@ -30,7 +30,7 @@ The shipped MVP generates a personalized training plan and then stops — there 
 | ID   | Change ID                     | Outcome (user can …)                                              | Prerequisites | PRD refs                                       | Status   |
 | ---- | ----------------------------- | ---------------------------------------------------------------- | ------------- | ---------------------------------------------- | -------- |
 | F-01 | workout-session-snapshot-store | (foundation) plan-decoupled, per-account snapshot store exists   | —             | FR-024                                         | done     |
-| S-01 | log-workout-from-plan         | log a workout pre-filled from the active plan, then save it      | F-01          | US-01, FR-011, FR-012, FR-014, FR-015, FR-016, FR-017, FR-025 | proposed |
+| S-01 | log-workout-from-plan         | log a workout pre-filled from the active plan, then save it      | F-01          | US-01, FR-011, FR-012, FR-014, FR-015, FR-016, FR-017, FR-025 | done     |
 | S-02 | view-workout-history          | view past logged sessions, newest first                          | F-01, S-01    | US-02, FR-018, FR-025                          | proposed |
 | S-03 | curate-workout-history        | edit or delete a logged session from history                     | S-01, S-02    | US-02, FR-020, FR-021                          | proposed |
 | S-04 | welcome-dashboard             | land on a state-aware home with the right primary call-to-action | S-01          | FR-010, FR-025                                 | proposed |
@@ -87,7 +87,7 @@ Routes present: `/plan` (view), `/plan/new` (generate). Routes absent: dashboard
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** This is the north star and the heaviest UI in the change — the logging editor. It is reused by S-03 (edit from history), so the editor's contract (load-from-plan vs load-from-snapshot) must be settled here. Adds the "Log Workout" entry to the shared navbar; must not disturb existing navbar/locale/sign-out controls.
-- **Status:** proposed
+- **Status:** done
 
 ### S-02: View workout history
 
@@ -165,3 +165,4 @@ None. The PRD closed with zero Open Questions (`quality_check_status: accepted`)
 ## Done
 
 - **F-01: (foundation) a per-account-isolated, plan-decoupled persistence store for logged workout sessions exists — schema, migration, and `user_id`-scoped data access — ready for logging to write and history to read. No user-visible surface on its own.** — Archived 2026-06-09 → `context/archive/2026-06-09-workout-session-snapshot-store/`. Lesson: —.
+- **S-01: user can open the logging page pre-filled from their active plan (picking which day/session they performed), edit actual reps/weight, add or remove sets and exercises, enter a duration and a free-text note, and save it as a snapshot — or discard without a partial write. The logging entry point is disabled when no active plan exists.** — Archived 2026-06-10 → `context/archive/2026-06-09-log-workout-from-plan/`. Lesson: —.

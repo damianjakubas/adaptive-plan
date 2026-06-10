@@ -18,21 +18,26 @@
     "signUpSuccess": "Account created. Welcome!"
   },
   "Validation": {
-    "invalid_email": "Enter a valid email address.",
-    "password_required": "Password is required.",
-    "password_too_short": "Password must be at least 6 characters.",
     "invalid_age": "Enter age (13-100).",
     "invalid_daily_steps": "Enter daily steps (0-60000).",
+    "invalid_duration": "Enter the duration in minutes.",
+    "invalid_email": "Enter a valid email address.",
     "invalid_equipment": "Select equipment.",
+    "invalid_exercise_name": "Enter an exercise name.",
     "invalid_experience": "Select experience level.",
     "invalid_frequency": "Enter frequency (1-7 days).",
     "invalid_goal": "Select a goal.",
     "invalid_health_issues": "Description is too long.",
     "invalid_height": "Enter height (100-250 cm).",
+    "invalid_reps": "Enter reps.",
     "invalid_sex": "Select sex.",
     "invalid_time_per_session": "Enter time (10-240 min).",
     "invalid_weight": "Enter weight (30-300 kg).",
-    "invalid_work_mode": "Select work mode."
+    "invalid_work_mode": "Select work mode.",
+    "min_one_exercise": "Add at least one exercise.",
+    "min_one_set": "Each exercise needs at least one set.",
+    "password_required": "Password is required.",
+    "password_too_short": "Password must be at least 6 characters."
   },
   "AuthErrors": {
     "invalid_credentials": "Invalid email or password.",
@@ -126,8 +131,46 @@
   },
   "Nav": {
     "logout": "Sign out",
+    "logWorkout": "Log Workout",
     "newPlan": "New plan",
     "plan": "Training Plan",
     "progress": "Progress"
+  },
+  "LogWorkout": {
+    "title": "Log your workout",
+    "subtitle": "Track your progress and build your form. Enter today's session data.",
+    "dayPickerHeading": "Which workout did you do?",
+    "exerciseCount": "{count, plural, one {# exercise} other {# exercises}}",
+    "setHeader": "Set",
+    "repsHeader": "Reps",
+    "weightHeader": "Weight (kg)",
+    "actionHeader": "Action",
+    "addSet": "Add set",
+    "addExercise": "Add another exercise",
+    "removeSet": "Remove set",
+    "removeExercise": "Remove exercise",
+    "exerciseNameLabel": "Exercise name",
+    "exerciseNamePlaceholder": "E.g. dumbbell press",
+    "durationLabel": "Duration (minutes)",
+    "durationPlaceholder": "E.g. 60",
+    "notesLabel": "Workout notes",
+    "notesPlaceholder": "How did you feel today? Any equipment setup changes?",
+    "save": "Save workout and finish",
+    "discard": "Discard changes",
+    "discardDialogTitle": "Discard changes?",
+    "discardDialogBody": "You have unsaved changes. If you discard, this session will not be saved.",
+    "discardDialogConfirm": "Discard",
+    "discardDialogCancel": "Keep editing",
+    "noPlanTitle": "No active plan",
+    "noPlanBody": "To log a workout, generate a training plan first.",
+    "noPlanCta": "Create plan",
+    "noLoggableDays": "Your plan has no training days with exercises to log.",
+    "saveSuccess": "Workout saved."
+  },
+  "WorkoutErrors": {
+    "unauthenticated": "Your session expired. Please sign in again.",
+    "no_active_plan": "You don't have an active training plan.",
+    "invalid_input": "Some session data is invalid. Please review and try again.",
+    "save_failed": "We couldn't save your workout. Please try again."
   }
 }

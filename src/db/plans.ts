@@ -19,6 +19,21 @@ async function getActivePlan(userId: string): Promise<Plan | null> {
 }
 
 /**
+ * Cheap existence check for the navbar's plan-state gating: selects `id` only
+ * (hits `plans_user_active_idx`), never the jsonb plan column — `getActivePlan`
+ * is too heavy to run on every page render.
+ */
+async function hasActivePlan(userId: string): Promise<boolean> {
+  const rows = await db
+    .select({ id: plans.id })
+    .from(plans)
+    .where(and(eq(plans.userId, userId), eq(plans.isActive, true)))
+    .limit(1);
+
+  return rows.length > 0;
+}
+
+/**
  * Replace the user's active plan in a single transaction: deactivate any existing
  * active rows for the user, then insert the new active row. Returning the inserted
  * row. Scoped by `userId` (RLS is off) so the deactivate never touches other users.
@@ -52,4 +67,4 @@ interface SaveActivePlanInput {
   userId: string;
 }
 
-export { getActivePlan, saveActivePlan, type SaveActivePlanInput };
+export { getActivePlan, hasActivePlan, saveActivePlan, type SaveActivePlanInput };

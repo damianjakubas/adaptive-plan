@@ -19,7 +19,7 @@ import { z } from "zod";
 const setInputSchema = z.object({
   note: z.string().optional(),
   reps: z.string().min(1),
-  weight: z.number().optional(),
+  weight: z.number().min(0).optional(),
 });
 
 /** One logged exercise: ordered, with at least one set. */
@@ -39,7 +39,7 @@ const exerciseInputSchema = z.object({
  * coerced from an ISO string or `Date` so callers can pass either.
  */
 export const workoutSessionInputSchema = z.object({
-  durationMinutes: z.number().int().min(0),
+  durationMinutes: z.number().int().min(0).max(1440),
   exercises: z.array(exerciseInputSchema).min(1),
   note: z.string().optional(),
   performedAt: z.coerce.date(),
