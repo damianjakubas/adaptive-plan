@@ -389,9 +389,9 @@ None — additive route + component + strings only. Fully withdrawable with no d
 
 #### Automated
 
-- [x] 3.1 Type-checking passes: `npx tsc --noEmit`
-- [x] 3.2 Linting passes: `npm run lint`
-- [x] 3.3 App builds: `npm run build`
+- [x] 3.1 Type-checking passes: `npx tsc --noEmit` — 1d66411
+- [x] 3.2 Linting passes: `npm run lint` — 1d66411
+- [x] 3.3 App builds: `npm run build` — 1d66411
 
 #### Manual
 
@@ -402,10 +402,10 @@ None — additive route + component + strings only. Fully withdrawable with no d
 
 #### Automated
 
-- [ ] 4.1 New tests pass: `npm run test`
-- [ ] 4.2 Full suite still green: `npm run test`
-- [ ] 4.3 Type-checking passes: `npx tsc --noEmit`
-- [ ] 4.4 Linting passes: `npm run lint`
+- [x] 4.1 New tests pass: `npm run test`
+- [x] 4.2 Full suite still green: `npm run test`
+- [x] 4.3 Type-checking passes: `npx tsc --noEmit`
+- [x] 4.4 Linting passes: `npm run lint`
 
 #### Manual
 
