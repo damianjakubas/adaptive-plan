@@ -32,7 +32,7 @@ export default async function DashboardPage() {
 
   const [activePlan, sessions] = await Promise.all([
     getActivePlan(user.id),
-    listSessions(user.id),
+    listSessions(user.id, 3),
   ]);
 
   const plan = activePlan ? (activePlan.plan as GeneratedPlan) : null;
