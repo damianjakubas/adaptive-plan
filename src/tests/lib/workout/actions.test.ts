@@ -246,6 +246,17 @@ describe("updateWorkoutSession", () => {
     expect(result).toEqual({ ok: false, code: "save_failed" });
     expect(mocks.logWorkoutError).toHaveBeenCalledTimes(1);
   });
+
+  it("returns save_failed and logs the error when loading the session rejects", async () => {
+    authenticatedUser();
+    mocks.getSessionById.mockRejectedValue(new Error("db down"));
+
+    const result = await updateWorkoutSession(SESSION_ID, validValues);
+
+    expect(result).toEqual({ ok: false, code: "save_failed" });
+    expect(mocks.logWorkoutError).toHaveBeenCalledTimes(1);
+    expect(mocks.updateSession).not.toHaveBeenCalled();
+  });
 });
 
 /**
