@@ -402,10 +402,10 @@ None — additive route + component + strings only. Fully withdrawable with no d
 
 #### Automated
 
-- [x] 4.1 New tests pass: `npm run test`
-- [x] 4.2 Full suite still green: `npm run test`
-- [x] 4.3 Type-checking passes: `npx tsc --noEmit`
-- [x] 4.4 Linting passes: `npm run lint`
+- [x] 4.1 New tests pass: `npm run test` — 2d3032c
+- [x] 4.2 Full suite still green: `npm run test` — 2d3032c
+- [x] 4.3 Type-checking passes: `npx tsc --noEmit` — 2d3032c
+- [x] 4.4 Linting passes: `npm run lint` — 2d3032c
 
 #### Manual
 
