@@ -1,7 +1,8 @@
 ---
 change_id: view-workout-history
 title: "View workout history"
-status: impl_reviewed
+status: archived
+archived_at: 2026-06-10T08:13:52Z
 created: 2026-06-10
 updated: 2026-06-10
 ---
