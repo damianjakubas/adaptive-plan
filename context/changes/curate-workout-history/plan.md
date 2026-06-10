@@ -509,16 +509,16 @@ transaction handles the row rewrites; no backfill.
 
 #### Automated
 
-- [x] 3.1 Type checking passes: `npx tsc --noEmit`
-- [x] 3.2 Linting passes: `npm run lint`
-- [x] 3.3 Component tests pass: `npm test -- history`
-- [x] 3.4 Existing `history-list.test.tsx` repaired with `vi.mock("next/navigation")`; prior assertions still pass
+- [x] 3.1 Type checking passes: `npx tsc --noEmit` — 1a425f1
+- [x] 3.2 Linting passes: `npm run lint` — 1a425f1
+- [x] 3.3 Component tests pass: `npm test -- history` — 1a425f1
+- [x] 3.4 Existing `history-list.test.tsx` repaired with `vi.mock("next/navigation")`; prior assertions still pass — 1a425f1
 
 #### Manual
 
 - [ ] 3.5 Each row shows Edit + Delete; Delete confirms, removes row on confirm, no-op on cancel
 - [ ] 3.6 PL and EN render translated controls and dialog copy
-- [ ] 3.7 `HistoryList` still server-rendered (client JS only in the leaf actions cell)
+- [x] 3.7 `HistoryList` still server-rendered (client JS only in the leaf actions cell) — statically confirmed (no `"use client"` in history-list.tsx) during impl-review
 
 ### Phase 4: Edit route & flow
 
