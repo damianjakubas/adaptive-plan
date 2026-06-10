@@ -38,9 +38,6 @@ export default async function EditWorkoutPage({ params }: Props) {
   return (
     <div className="container mx-auto max-w-3xl px-container-margin py-12">
       <div className="mb-8 space-y-2 text-center">
-        <p className="font-label-md text-label-md uppercase tracking-wider text-primary-container">
-          {t("eyebrow")}
-        </p>
         <h1 className="text-3xl font-bold tracking-tight">{t("editPageTitle")}</h1>
       </div>
       <EditWorkoutFlow defaultValues={mapSessionToFormValues(session)} sessionId={session.id} />
