@@ -112,6 +112,11 @@ namespace holding the page's user-facing strings (heading/greeting, the per-stat
 plan-glance labels, and the recent-sessions section heading + its empty line). Both locales
 must carry identical key sets (FR-025).
 
+> Note: top-level namespaces in these JSON catalogs are **feature-grouped, not alphabetical**
+> (Common, Auth, …, Nav, History, LogWorkout, WorkoutErrors), and ESLint `sort-keys-fix`
+> does **not** lint JSON. Place `Dashboard` with the feature namespaces (after `Nav`) and sort
+> keys *within* the namespace asc by convention; parity is enforced by `catalog-parity.test.ts`.
+
 **Contract**: New `Nav.dashboard` key in both files. New `Dashboard` namespace with keys for:
 page heading, no-plan CTA label, has-plan primary (log) CTA label, has-plan secondary (view
 plan) CTA label, plan-glance label (e.g. an "Your plan" / goal eyebrow), recent-sessions
@@ -361,9 +366,9 @@ None — additive route + component + strings only. Fully withdrawable with no d
 
 #### Automated
 
-- [ ] 1.1 Type-checking passes: `npx tsc --noEmit`
-- [ ] 1.2 Linting passes (key/import sort): `npm run lint`
-- [ ] 1.3 Both message files parse and share identical key sets
+- [x] 1.1 Type-checking passes: `npx tsc --noEmit`
+- [x] 1.2 Linting passes (key/import sort): `npm run lint`
+- [x] 1.3 Both message files parse and share identical key sets
 
 #### Manual
 

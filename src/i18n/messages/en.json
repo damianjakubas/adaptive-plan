@@ -130,11 +130,21 @@
     "generic": "Something went wrong. Please try again."
   },
   "Nav": {
+    "dashboard": "Dashboard",
     "history": "History",
     "logout": "Sign out",
     "logWorkout": "Log Workout",
     "newPlan": "New plan",
     "plan": "Training Plan"
+  },
+  "Dashboard": {
+    "ctaGenerate": "Generate a plan",
+    "ctaLog": "Log a workout",
+    "ctaViewPlan": "View plan",
+    "heading": "Welcome back",
+    "noSessions": "No sessions logged yet.",
+    "planEyebrow": "Your plan",
+    "recentSessionsTitle": "Recent sessions"
   },
   "History": {
     "eyebrow": "Archive",
