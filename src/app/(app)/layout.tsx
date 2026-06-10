@@ -6,7 +6,8 @@ import { LocaleToggle } from "@/components/locale-toggle";
 import { Button } from "@/components/ui/button";
 import { hasActivePlan } from "@/db/plans";
 import { signOut } from "@/lib/auth/actions";
-import { createClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/supabase/get-user";
+import { logWorkoutError } from "@/lib/workout/log-workout-error";
 
 /**
  * Authenticated shell for the `(app)` route group. Mounts the brand mark, the app
@@ -18,11 +19,16 @@ import { createClient } from "@/lib/supabase/server";
  */
 export default async function AppLayout({ children }: { children: ReactNode }) {
   const t = await getTranslations("Nav");
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const canLogWorkout = user ? await hasActivePlan(user.id) : false;
+  const user = await getUser();
+  // A transient DB failure must degrade to a disabled entry, not crash the shell.
+  let canLogWorkout = false;
+  if (user) {
+    try {
+      canLogWorkout = await hasActivePlan(user.id);
+    } catch (error) {
+      logWorkoutError({ error, stage: "navbar-active-plan-check" });
+    }
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-on-surface">
@@ -52,11 +58,11 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
                 {t("logWorkout")}
               </Link>
             ) : (
-              <span className="font-label-md text-label-md text-on-surface-variant opacity-40">
+              <span aria-disabled="true" className="font-label-md text-label-md text-on-surface-variant opacity-40">
                 {t("logWorkout")}
               </span>
             )}
-            <span className="font-label-md text-label-md text-on-surface-variant opacity-40">
+            <span aria-disabled="true" className="font-label-md text-label-md text-on-surface-variant opacity-40">
               {t("progress")}
             </span>
           </nav>

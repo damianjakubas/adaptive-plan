@@ -3,12 +3,13 @@ import { redirect } from "next/navigation";
 
 import { LogWorkoutEmptyState, LogWorkoutFlow } from "@/components/workout";
 import { getActivePlan } from "@/db/plans";
-import { createClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/supabase/get-user";
 import type { GeneratedPlan } from "@/lib/validation/plan-schema";
 
-export const metadata = {
-  title: "Log Workout",
-};
+export async function generateMetadata() {
+  const t = await getTranslations("Nav");
+  return { title: t("logWorkout") };
+}
 
 /**
  * Authenticated `/log-workout` page (US-01): server gate + data load, minimal
@@ -16,10 +17,7 @@ export const metadata = {
  * client flow takes over (day picker → pre-filled editor → save action).
  */
 export default async function LogWorkoutPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     redirect("/login");
@@ -39,7 +37,7 @@ export default async function LogWorkoutPage() {
         <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
         <p className="font-body-lg text-body-lg text-on-surface-variant">{t("subtitle")}</p>
       </div>
-      <LogWorkoutFlow weeklySchedule={(activePlan.plan as GeneratedPlan).weeklySchedule} />
+      <LogWorkoutFlow weeklySchedule={(activePlan.plan as Partial<GeneratedPlan>).weeklySchedule ?? []} />
     </div>
   );
 }

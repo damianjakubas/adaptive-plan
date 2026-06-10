@@ -1,17 +1,15 @@
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { createClient } from "@/lib/supabase/server";
 import PlanGenerator from "@/components/plan/plan-generator";
+import { getUser } from "@/lib/supabase/get-user";
 
-export const metadata = {
-  title: "New Plan",
-};
+export async function generateMetadata() {
+  const t = await getTranslations("Nav");
+  return { title: t("newPlan") };
+}
 
 export default async function NewPlanPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     redirect("/login");
