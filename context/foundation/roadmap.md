@@ -33,7 +33,7 @@ The shipped MVP generates a personalized training plan and then stops — there 
 | S-01 | log-workout-from-plan         | log a workout pre-filled from the active plan, then save it      | F-01          | US-01, FR-011, FR-012, FR-014, FR-015, FR-016, FR-017, FR-025 | done     |
 | S-02 | view-workout-history          | view past logged sessions, newest first                          | F-01, S-01    | US-02, FR-018, FR-025                          | done     |
 | S-03 | curate-workout-history        | edit or delete a logged session from history                     | S-01, S-02    | US-02, FR-020, FR-021                          | done     |
-| S-04 | welcome-dashboard             | land on a state-aware home with the right primary call-to-action | S-01          | FR-010, FR-025                                 | proposed |
+| S-04 | welcome-dashboard             | land on a state-aware home with the right primary call-to-action | S-01          | FR-010, FR-025                                 | done     |
 | S-05 | dashboard-post-auth-landing   | be taken to the dashboard after login/registration               | S-04          | FR-009, FR-023                                 | proposed |
 
 ## Streams
@@ -123,7 +123,7 @@ Routes present: `/plan` (view), `/plan/new` (generate). Routes absent: dashboard
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Must handle the empty state (new user — no active plan, no logged history) cleanly, because S-05 flips the post-auth redirect onto it; a dashboard that breaks for new users would break the login experience once redirected. Depends on S-01 so the "log a workout" CTA has a live destination. Adds the "Dashboard" navbar entry.
-- **Status:** proposed
+- **Status:** done
 
 ### S-05: Dashboard as post-auth landing
 
@@ -168,3 +168,4 @@ None. The PRD closed with zero Open Questions (`quality_check_status: accepted`)
 - **S-01: user can open the logging page pre-filled from their active plan (picking which day/session they performed), edit actual reps/weight, add or remove sets and exercises, enter a duration and a free-text note, and save it as a snapshot — or discard without a partial write. The logging entry point is disabled when no active plan exists.** — Archived 2026-06-10 → `context/archive/2026-06-09-log-workout-from-plan/`. Lesson: —.
 - **S-02: view past logged sessions, newest first** — Archived 2026-06-10 → `context/archive/2026-06-10-view-workout-history/`. Lesson: —.
 - **S-03: edit or delete a logged session from history** — Archived 2026-06-10 → `context/archive/2026-06-10-curate-workout-history/`. Lesson: —.
+- **S-04: user lands on a welcome dashboard (reachable from the navbar) whose primary call-to-action adapts to their state — "generate a plan" when there is no active plan; "view plan" / "log a workout" when one exists — and which renders gracefully for a brand-new user with no plan and no history.** — Archived 2026-06-10 → `context/archive/2026-06-10-welcome-dashboard/`. Lesson: —.

@@ -95,10 +95,13 @@ async function createSession(input: CreateSessionInput): Promise<string> {
  * Sessions for `userId`, newest-first by `performed_at`, with derived
  * `muscleGroups` (distinct non-null muscle groups across the session's
  * exercises, in `position` order). Deliberately does **not** load sets — keeps
- * the history list query light against the ~1s p95 guardrail.
+ * the history list query light against the ~1s p95 guardrail. Pass `limit` to
+ * bound the row scan when only the most recent few are needed (e.g. the
+ * dashboard glance); omit it for the full history list.
  */
-async function listSessions(userId: string): Promise<SessionListItem[]> {
+async function listSessions(userId: string, limit?: number): Promise<SessionListItem[]> {
   const rows = await db.query.workoutSessions.findMany({
+    limit,
     orderBy: desc(workoutSessions.performedAt),
     where: eq(workoutSessions.userId, userId),
     with: {

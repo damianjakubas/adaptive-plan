@@ -130,11 +130,21 @@
     "generic": "Coś poszło nie tak. Spróbuj ponownie."
   },
   "Nav": {
+    "dashboard": "Pulpit",
     "history": "Historia",
     "logout": "Wyloguj się",
     "logWorkout": "Zarejestruj trening",
     "newPlan": "Nowy plan",
     "plan": "Plan Treningowy"
+  },
+  "Dashboard": {
+    "ctaGenerate": "Wygeneruj plan",
+    "ctaLog": "Zarejestruj trening",
+    "ctaViewPlan": "Zobacz plan",
+    "heading": "Witaj",
+    "noSessions": "Brak zapisanych sesji.",
+    "planEyebrow": "Twój plan",
+    "recentSessionsTitle": "Ostatnie sesje"
   },
   "History": {
     "eyebrow": "Archiwum",

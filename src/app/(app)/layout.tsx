@@ -39,6 +39,12 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
           </span>
           <nav className="hidden items-center gap-stack-md md:flex">
             <Link
+              href="/dashboard"
+              className="font-label-md text-label-md text-on-surface-variant transition-colors hover:text-primary-container"
+            >
+              {t("dashboard")}
+            </Link>
+            <Link
               href="/plan"
               className="font-label-md text-label-md text-on-surface-variant transition-colors hover:text-primary-container"
             >
