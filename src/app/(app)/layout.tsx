@@ -11,9 +11,9 @@ import { logWorkoutError } from "@/lib/workout/log-workout-error";
 
 /**
  * Authenticated shell for the `(app)` route group. Mounts the brand mark, the app
- * nav, the PL/EN locale toggle, and the sign-out control. Only routes that exist
- * this slice are linked; "Progress" is shown as a placeholder until its slice lands.
- * "Log Workout" is plan-state-aware (FR-017): a link when an active plan exists,
+ * nav, the PL/EN locale toggle, and the sign-out control. "History" is always
+ * enabled — it's meaningful regardless of plan state. "Log Workout" is
+ * plan-state-aware (FR-017): a link when an active plan exists,
  * otherwise a disabled span — `hasActivePlan` is an id-only, limit-1 query so the
  * per-render cost stays negligible.
  */
@@ -62,9 +62,12 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
                 {t("logWorkout")}
               </span>
             )}
-            <span aria-disabled="true" className="font-label-md text-label-md text-on-surface-variant opacity-40">
-              {t("progress")}
-            </span>
+            <Link
+              href="/history"
+              className="font-label-md text-label-md text-on-surface-variant transition-colors hover:text-primary-container"
+            >
+              {t("history")}
+            </Link>
           </nav>
         </div>
         <div className="flex items-center gap-stack-md">

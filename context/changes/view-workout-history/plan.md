@@ -444,21 +444,21 @@ the route, components, helpers, and strings, and restores the navbar placeholder
 
 #### Automated
 
-- [ ] 3.1 Type-check passes: `npx tsc --noEmit`
-- [ ] 3.2 Lint passes: `npm run lint`
-- [ ] 3.3 Full test suite green: `npm test`
-- [ ] 3.4 Production build succeeds: `npm run build`
-- [ ] 3.5 No remaining `Nav.progress` / `t("progress")` references in `src/`
+- [x] 3.1 Type-check passes: `npx tsc --noEmit`
+- [x] 3.2 Lint passes: `npm run lint`
+- [x] 3.3 Full test suite green: `npm test`
+- [x] 3.4 Production build succeeds: `npm run build`
+- [x] 3.5 No remaining `Nav.progress` / `t("progress")` references in `src/`
 
 #### Manual
 
-- [ ] 3.6 Sessions list renders newest-first with all FR-018 fields and compact duration
-- [ ] 3.7 Newly logged workout appears at the top of `/history`
-- [ ] 3.8 Empty state with active plan → CTA to `/log-workout`
-- [ ] 3.9 Empty state without plan → CTA to `/plan/new`
-- [ ] 3.10 PL ↔ EN parity on `/history` (strings, weekdays, dates)
-- [ ] 3.11 Navbar: History enabled everywhere, Progress gone, existing controls untouched
-- [ ] 3.12 Unauthenticated `/history` redirects to `/login`
-- [ ] 3.13 Mobile stacked layout / desktop column grid both legible
-- [ ] 3.14 History intact after plan regeneration (FR-024 UI spot-check)
-- [ ] 3.15 History list renders within ~1s perceived (PRD guardrail)
+- [x] 3.6 Sessions list renders newest-first with all FR-018 fields and compact duration
+- [x] 3.7 Newly logged workout appears at the top of `/history`
+- [x] 3.8 Empty state with active plan → CTA to `/log-workout`
+- [x] 3.9 Empty state without plan → CTA to `/plan/new`
+- [x] 3.10 PL ↔ EN parity on `/history` (strings, weekdays, dates)
+- [x] 3.11 Navbar: History enabled everywhere, Progress gone, existing controls untouched
+- [x] 3.12 Unauthenticated `/history` redirects to `/login`
+- [x] 3.13 Mobile stacked layout / desktop column grid both legible
+- [x] 3.14 History intact after plan regeneration (FR-024 UI spot-check)
+- [x] 3.15 History list renders within ~1s perceived (PRD guardrail)
