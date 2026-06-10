@@ -130,11 +130,27 @@
     "generic": "Something went wrong. Please try again."
   },
   "Nav": {
+    "history": "History",
     "logout": "Sign out",
     "logWorkout": "Log Workout",
     "newPlan": "New plan",
-    "plan": "Training Plan",
-    "progress": "Progress"
+    "plan": "Training Plan"
+  },
+  "History": {
+    "eyebrow": "Archive",
+    "title": "Your Workout History",
+    "subtitle": "Review your logged sessions, newest first.",
+    "columnDate": "Date",
+    "columnSession": "Session",
+    "columnDuration": "Duration",
+    "durationMobileLabel": "Duration:",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "emptyTitle": "No workouts logged yet",
+    "emptyBodyLog": "Once you log a workout, it'll show up here. Ready to record your first session?",
+    "emptyCtaLog": "Log a workout",
+    "emptyBodyPlan": "Generate a training plan to start logging your workouts and building your history.",
+    "emptyCtaPlan": "Create plan"
   },
   "LogWorkout": {
     "title": "Log your workout",
