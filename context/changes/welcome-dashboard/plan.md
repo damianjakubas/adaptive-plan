@@ -378,8 +378,8 @@ None — additive route + component + strings only. Fully withdrawable with no d
 
 #### Automated
 
-- [x] 2.1 Type-checking passes: `npx tsc --noEmit`
-- [x] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 Type-checking passes: `npx tsc --noEmit` — cfcfb85
+- [x] 2.2 Linting passes: `npm run lint` — cfcfb85
 
 #### Manual
 
@@ -389,9 +389,9 @@ None — additive route + component + strings only. Fully withdrawable with no d
 
 #### Automated
 
-- [ ] 3.1 Type-checking passes: `npx tsc --noEmit`
-- [ ] 3.2 Linting passes: `npm run lint`
-- [ ] 3.3 App builds: `npm run build`
+- [x] 3.1 Type-checking passes: `npx tsc --noEmit`
+- [x] 3.2 Linting passes: `npm run lint`
+- [x] 3.3 App builds: `npm run build`
 
 #### Manual
 
