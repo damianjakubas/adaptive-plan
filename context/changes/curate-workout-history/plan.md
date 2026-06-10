@@ -485,9 +485,9 @@ transaction handles the row rewrites; no backfill.
 
 #### Automated
 
-- [ ] 1.1 Type checking passes: `npx tsc --noEmit`
-- [ ] 1.2 Linting passes: `npm run lint`
-- [ ] 1.3 Mapper unit tests pass: `npm test -- map-session-to-form-values`
+- [x] 1.1 Type checking passes: `npx tsc --noEmit`
+- [x] 1.2 Linting passes: `npm run lint`
+- [x] 1.3 Mapper unit tests pass: `npm test -- map-session-to-form-values`
 
 #### Manual
 

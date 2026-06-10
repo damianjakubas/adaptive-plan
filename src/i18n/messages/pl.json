@@ -150,7 +150,16 @@
     "emptyBodyLog": "Gdy zarejestrujesz trening, pojawi się tutaj. Zapiszesz swoją pierwszą sesję?",
     "emptyCtaLog": "Zarejestruj trening",
     "emptyBodyPlan": "Wygeneruj plan treningowy, aby zacząć rejestrować treningi i budować historię.",
-    "emptyCtaPlan": "Stwórz plan"
+    "emptyCtaPlan": "Stwórz plan",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "editPageTitle": "Edytuj trening",
+    "deleteDialogTitle": "Usunąć tę sesję?",
+    "deleteDialogBody": "To trwale usunie sesję i wszystkie jej ćwiczenia. Tej operacji nie można cofnąć.",
+    "deleteDialogConfirm": "Usuń",
+    "deleteDialogCancel": "Anuluj",
+    "updateSuccess": "Trening zaktualizowany.",
+    "deleteSuccess": "Trening usunięty."
   },
   "LogWorkout": {
     "title": "Zarejestruj swój trening",
@@ -187,6 +196,8 @@
     "unauthenticated": "Twoja sesja wygasła. Zaloguj się ponownie.",
     "no_active_plan": "Nie masz aktywnego planu treningowego.",
     "invalid_input": "Niektóre dane sesji są nieprawidłowe. Sprawdź je i spróbuj ponownie.",
-    "save_failed": "Nie udało się zapisać treningu. Spróbuj ponownie."
+    "save_failed": "Nie udało się zapisać treningu. Spróbuj ponownie.",
+    "not_found": "Nie znaleziono tej sesji. Mogła zostać usunięta.",
+    "delete_failed": "Nie udało się usunąć treningu. Spróbuj ponownie."
   }
 }

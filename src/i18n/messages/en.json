@@ -150,7 +150,16 @@
     "emptyBodyLog": "Once you log a workout, it'll show up here. Ready to record your first session?",
     "emptyCtaLog": "Log a workout",
     "emptyBodyPlan": "Generate a training plan to start logging your workouts and building your history.",
-    "emptyCtaPlan": "Create plan"
+    "emptyCtaPlan": "Create plan",
+    "edit": "Edit",
+    "delete": "Delete",
+    "editPageTitle": "Edit workout",
+    "deleteDialogTitle": "Delete this session?",
+    "deleteDialogBody": "This permanently removes the session and all its exercises. This can't be undone.",
+    "deleteDialogConfirm": "Delete",
+    "deleteDialogCancel": "Cancel",
+    "updateSuccess": "Workout updated.",
+    "deleteSuccess": "Workout deleted."
   },
   "LogWorkout": {
     "title": "Log your workout",
@@ -187,6 +196,8 @@
     "unauthenticated": "Your session expired. Please sign in again.",
     "no_active_plan": "You don't have an active training plan.",
     "invalid_input": "Some session data is invalid. Please review and try again.",
-    "save_failed": "We couldn't save your workout. Please try again."
+    "save_failed": "We couldn't save your workout. Please try again.",
+    "not_found": "We couldn't find that session. It may have been deleted.",
+    "delete_failed": "We couldn't delete your workout. Please try again."
   }
 }
