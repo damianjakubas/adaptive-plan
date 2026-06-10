@@ -378,8 +378,8 @@ None — additive route + component + strings only. Fully withdrawable with no d
 
 #### Automated
 
-- [ ] 2.1 Type-checking passes: `npx tsc --noEmit`
-- [ ] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 Type-checking passes: `npx tsc --noEmit`
+- [x] 2.2 Linting passes: `npm run lint`
 
 #### Manual
 
