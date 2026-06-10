@@ -1,9 +1,10 @@
 ---
 change_id: welcome-dashboard
 roadmap_id: S-04
-status: implementing
+status: archived
 created: 2026-06-10
 updated: 2026-06-10
+archived_at: 2026-06-10T13:23:04Z
 prd_refs: [FR-010, FR-025]
 ---
 
