@@ -103,10 +103,10 @@ describe("mapPlanDayToFormValues", () => {
     expect(values.exercises).toEqual([]);
   });
 
-  it("leaves durationMinutes empty (NaN — the empty number-input face) and note blank for the user", () => {
+  it("leaves durationMinutes empty (\"\" — the empty number-input face) and note blank for the user", () => {
     const values = mapPlanDayToFormValues(trainingDay);
 
-    expect(Number.isNaN(values.durationMinutes)).toBe(true);
+    expect(values.durationMinutes).toBe("");
     expect(values.note).toBe("");
   });
 });

@@ -61,4 +61,11 @@ export const workoutSessionFormSchema = z.object({
   sessionType: z.string().optional(),
 });
 
+/**
+ * What RHF tracks while the user types (the three-generic form's first type
+ * parameter): preprocessed number fields are `unknown` because the DOM hands
+ * over raw strings. `defaultValues` and `useFormContext` must use this type —
+ * the parsed `WorkoutSessionFormValues` only exists after a successful submit.
+ */
+export type WorkoutSessionFormInput = z.input<typeof workoutSessionFormSchema>;
 export type WorkoutSessionFormValues = z.infer<typeof workoutSessionFormSchema>;

@@ -7,7 +7,8 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import type { WorkoutSessionFormValues } from "@/lib/validation/workout-session-form-schema";
+import type { WorkoutSessionFormInput } from "@/lib/validation/workout-session-form-schema";
+import asEmptyableNumericValue from "./as-emptyable-numeric-value";
 
 /**
  * One exercise's editable card: muscle-group badge, name input, per-set actuals
@@ -27,7 +28,7 @@ import type { WorkoutSessionFormValues } from "@/lib/validation/workout-session-
 function ExerciseCard({ exerciseIndex, onRemoveExercise }: Props) {
   const t = useTranslations("LogWorkout");
   const tValidation = useTranslations("Validation");
-  const { control, getValues } = useFormContext<WorkoutSessionFormValues>();
+  const { control, getValues } = useFormContext<WorkoutSessionFormInput>();
   const { append, fields, remove } = useFieldArray({
     control,
     name: `exercises.${exerciseIndex}.sets`,
@@ -127,7 +128,7 @@ function ExerciseCard({ exerciseIndex, onRemoveExercise }: Props) {
                           name={field.name}
                           ref={field.ref}
                           onBlur={field.onBlur}
-                          value={field.value ?? ""}
+                          value={asEmptyableNumericValue(field.value)}
                           onChange={(event) => field.onChange(event.target.value)}
                         />
                       </FormControl>

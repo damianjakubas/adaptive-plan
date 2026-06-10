@@ -5,7 +5,6 @@ import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import type { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
@@ -13,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   workoutSessionFormSchema,
+  type WorkoutSessionFormInput,
   type WorkoutSessionFormValues,
 } from "@/lib/validation/workout-session-form-schema";
 import asEmptyableNumericValue from "./as-emptyable-numeric-value";
@@ -56,7 +56,7 @@ function WorkoutSessionEditor({ defaultValues, onDiscard, onSave, saving = false
   // Destructured during render on purpose: RHF's formState is a lazy Proxy and
   // only tracks fields read in the render phase — reading isDirty solely inside
   // the discard click handler would never subscribe it and it would stay false.
-  const { errors, isDirty } = form.formState;
+  const { errors, isDirty, isSubmitting } = form.formState;
   const exercisesErrorKey = errors.exercises?.root?.message ?? errors.exercises?.message;
 
   return (
@@ -64,7 +64,16 @@ function WorkoutSessionEditor({ defaultValues, onDiscard, onSave, saving = false
       <form
         noValidate
         className="space-y-stack-lg"
-        onSubmit={form.handleSubmit((values) => onSave(values))}
+        onSubmit={form.handleSubmit(async (values) => {
+          // handleSubmit re-throws callback errors into a promise React never
+          // awaits — a rejecting onSave must not escape as an unhandledrejection.
+          try {
+            await onSave(values);
+          } catch {
+            // Error feedback is parent-owned (the editor has no toast access);
+            // the form simply stays editable.
+          }
+        })}
       >
         <div className="space-y-stack-md">
           {fields.map((exerciseField, exerciseIndex) => (
@@ -141,13 +150,13 @@ function WorkoutSessionEditor({ defaultValues, onDiscard, onSave, saving = false
         />
 
         <div className="flex flex-wrap gap-stack-sm">
-          <Button type="submit" disabled={saving}>
+          <Button type="submit" disabled={saving || isSubmitting}>
             {t("save")}
           </Button>
           <Button
             type="button"
             variant="outline"
-            disabled={saving}
+            disabled={saving || isSubmitting}
             onClick={() => (isDirty ? setDiscardDialogOpen(true) : onDiscard())}
           >
             {t("discard")}
@@ -156,7 +165,7 @@ function WorkoutSessionEditor({ defaultValues, onDiscard, onSave, saving = false
       </form>
       <DiscardDialog
         open={discardDialogOpen}
-        onCancel={() => setDiscardDialogOpen(false)}
+        onClose={() => setDiscardDialogOpen(false)}
         onConfirm={onDiscard}
       />
     </Form>
@@ -164,12 +173,11 @@ function WorkoutSessionEditor({ defaultValues, onDiscard, onSave, saving = false
 }
 
 interface Props {
-  defaultValues: WorkoutSessionFormValues;
+  defaultValues: WorkoutSessionFormInput;
   onDiscard: () => void;
+  /** May reject — the editor swallows rejections; error feedback is parent-owned. */
   onSave: (values: WorkoutSessionFormValues) => Promise<void> | void;
   saving?: boolean;
 }
-
-type WorkoutSessionFormInput = z.input<typeof workoutSessionFormSchema>;
 
 export default WorkoutSessionEditor;

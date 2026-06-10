@@ -5,19 +5,22 @@ import { describe, expect, it, vi } from "vitest";
 
 import WorkoutSessionEditor from "@/components/workout/workout-session-editor";
 import enMessages from "@/i18n/messages/en.json";
-import type { WorkoutSessionFormValues } from "@/lib/validation/workout-session-form-schema";
+import type {
+  WorkoutSessionFormInput,
+  WorkoutSessionFormValues,
+} from "@/lib/validation/workout-session-form-schema";
 
 const tLogWorkout = enMessages.LogWorkout;
 const tValidation = enMessages.Validation;
 
 /**
  * Plan-day-shaped defaults (what `mapPlanDayToFormValues` emits): per-set rows
- * seeded with the plan's reps string, empty weights, NaN duration (the "empty
- * number input" face), no rendered input for sessionName/sessionType.
+ * seeded with the plan's reps string, empty weights, "" duration (the empty
+ * number-input face), no rendered input for sessionName/sessionType.
  */
-function makeDefaultValues(): WorkoutSessionFormValues {
+function makeDefaultValues(): WorkoutSessionFormInput {
   return {
-    durationMinutes: Number.NaN,
+    durationMinutes: "",
     exercises: [
       {
         muscleGroup: "Chest",
@@ -40,7 +43,7 @@ function makeDefaultValues(): WorkoutSessionFormValues {
   };
 }
 
-function renderEditor(overrides?: { saving?: boolean }) {
+function renderEditor(overrides?: { onSave?: () => Promise<void>; saving?: boolean }) {
   const onDiscard = vi.fn();
   const onSave = vi.fn();
   // Radix AlertDialog toggles pointer-events on <body>, which jsdom does not
@@ -51,7 +54,7 @@ function renderEditor(overrides?: { saving?: boolean }) {
       <WorkoutSessionEditor
         defaultValues={makeDefaultValues()}
         onDiscard={onDiscard}
-        onSave={onSave}
+        onSave={overrides?.onSave ?? onSave}
         saving={overrides?.saving}
       />
     </NextIntlClientProvider>,
@@ -68,7 +71,7 @@ describe("WorkoutSessionEditor", () => {
     // FR-011 seeding: 3 set rows each carrying the plan's "8-12" reps string.
     expect(screen.getAllByDisplayValue("8-12")).toHaveLength(3);
     expect(screen.getByDisplayValue("5")).toBeInTheDocument();
-    // NaN duration renders as an empty input, not "NaN".
+    // The "" duration seed renders as an empty input.
     expect(screen.getByLabelText(tLogWorkout.durationLabel)).toHaveValue(null);
     expect(screen.getByText(tLogWorkout.save)).toBeInTheDocument();
   });
@@ -210,6 +213,42 @@ describe("WorkoutSessionEditor", () => {
     );
     expect(onDiscard).not.toHaveBeenCalled();
     expect(screen.getByDisplayValue("Bench PressX")).toBeInTheDocument();
+  });
+
+  it("fires onSave once on two rapid save clicks (isSubmitting guard)", async () => {
+    let resolveSave: () => void = () => undefined;
+    const onSave = vi.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveSave = resolve;
+        }),
+    );
+    const { user } = renderEditor({ onSave });
+
+    await user.type(screen.getByLabelText(tLogWorkout.durationLabel), "60");
+    const saveButton = screen.getByRole("button", { name: tLogWorkout.save });
+    await user.click(saveButton);
+    await user.click(saveButton);
+
+    expect(onSave).toHaveBeenCalledTimes(1);
+    expect(saveButton).toBeDisabled();
+
+    resolveSave();
+    await waitFor(() => expect(saveButton).toBeEnabled());
+  });
+
+  it("swallows a rejecting onSave and keeps the form editable", async () => {
+    const onSave = vi.fn().mockRejectedValue(new Error("network down"));
+    const { user } = renderEditor({ onSave });
+
+    await user.type(screen.getByLabelText(tLogWorkout.durationLabel), "60");
+    await user.click(screen.getByRole("button", { name: tLogWorkout.save }));
+
+    await waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
+    // The rejection must not escape as an unhandledrejection; the form stays
+    // interactive (error feedback is parent-owned).
+    expect(screen.getByRole("button", { name: tLogWorkout.save })).toBeEnabled();
+    expect(screen.getByDisplayValue("Bench Press")).toBeInTheDocument();
   });
 
   it("disables save and discard while saving", () => {

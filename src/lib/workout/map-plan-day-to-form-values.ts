@@ -1,5 +1,5 @@
 import type { GeneratedPlan } from "@/lib/validation/plan-schema";
-import type { WorkoutSessionFormValues } from "@/lib/validation/workout-session-form-schema";
+import type { WorkoutSessionFormInput } from "@/lib/validation/workout-session-form-schema";
 
 /**
  * The FR-011 pre-fill rule as a pure function: expand a plan day's template
@@ -13,14 +13,14 @@ import type { WorkoutSessionFormValues } from "@/lib/validation/workout-session-
  *   plan schema puts no `min(1)` on `focus`/`day`, the write schema requires a
  *   non-empty `sessionName`, and the form renders no input for it, so an empty
  *   value must not surface as an invisible validation failure.
- * - `durationMinutes` is left for the user: `NaN` is the form's "empty number
- *   input" face, normalized to a required-field error by the form schema.
+ * - `durationMinutes` is left for the user: `""` is the DOM's natural empty
+ *   number-input face, normalized to a required-field error by the form schema.
  * - A day without `exercises` maps to an empty list (callers filter unloggable
  *   days, but the mapper must not throw).
  */
-function mapPlanDayToFormValues(day: PlanDay): WorkoutSessionFormValues {
+function mapPlanDayToFormValues(day: PlanDay): WorkoutSessionFormInput {
   return {
-    durationMinutes: Number.NaN,
+    durationMinutes: "",
     exercises: (day.exercises ?? []).map((exercise) => ({
       muscleGroup: exercise.muscleGroup,
       name: exercise.name,

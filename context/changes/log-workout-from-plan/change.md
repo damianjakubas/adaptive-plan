@@ -3,7 +3,7 @@ change_id: log-workout-from-plan
 title: "Log a workout from the active plan"
 status: impl_reviewed
 created: 2026-06-09
-updated: 2026-06-09
+updated: 2026-06-10
 ---
 
 ## Notes
