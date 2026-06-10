@@ -33,8 +33,6 @@ function getRelativeDay(performedAt: Date, now: Date): RelativeDayKind {
   return "date";
 }
 
-const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
-
 function startOfDay(date: Date): number {
   return new Date(
     date.getFullYear(),
@@ -42,6 +40,8 @@ function startOfDay(date: Date): number {
     date.getDate(),
   ).getTime();
 }
+
+const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
 type RelativeDayKind = "today" | "yesterday" | "weekday" | "date";
 

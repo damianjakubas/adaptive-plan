@@ -32,4 +32,8 @@ describe("formatDuration", () => {
   it("degrades a negative duration (clock skew / bad data) to \"0m\"", () => {
     expect(formatDuration(-10)).toBe("0m");
   });
+
+  it("degrades NaN (null-coercion from DB) to \"0m\"", () => {
+    expect(formatDuration(NaN)).toBe("0m");
+  });
 });

@@ -13,7 +13,7 @@
  * surfacing as `NaN`.
  */
 function formatDuration(minutes: number): string {
-  const total = Math.max(Math.trunc(minutes), 0);
+  const total = Math.max(Math.trunc(minutes) || 0, 0);
   const hours = Math.floor(total / 60);
   const mins = total % 60;
 
