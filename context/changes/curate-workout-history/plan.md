@@ -503,7 +503,7 @@ transaction handles the row rewrites; no backfill.
 
 #### Manual
 
-- [ ] 2.4 (After Phase 4) editing a session does not move its date — verified in dev
+- [x] 2.4 (After Phase 4) editing a session does not move its date — verified in dev
 
 ### Phase 3: Delete-confirm dialog & history-row actions cell
 
@@ -516,23 +516,23 @@ transaction handles the row rewrites; no backfill.
 
 #### Manual
 
-- [ ] 3.5 Each row shows Edit + Delete; Delete confirms, removes row on confirm, no-op on cancel
-- [ ] 3.6 PL and EN render translated controls and dialog copy
+- [x] 3.5 Each row shows Edit + Delete; Delete confirms, removes row on confirm, no-op on cancel
+- [x] 3.6 PL and EN render translated controls and dialog copy
 - [x] 3.7 `HistoryList` still server-rendered (client JS only in the leaf actions cell) — statically confirmed (no `"use client"` in history-list.tsx) during impl-review
 
 ### Phase 4: Edit route & flow
 
 #### Automated
 
-- [x] 4.1 Type checking passes: `npx tsc --noEmit`
-- [x] 4.2 Linting passes: `npm run lint`
-- [x] 4.3 Full test suite passes: `npm test`
+- [x] 4.1 Type checking passes: `npx tsc --noEmit` — a6e2a3e
+- [x] 4.2 Linting passes: `npm run lint` — a6e2a3e
+- [x] 4.3 Full test suite passes: `npm test` — a6e2a3e
 
 #### Manual
 
-- [ ] 4.4 Edit opens the pre-filled editor; saving returns to `/history` with changes shown
-- [ ] 4.5 Editing an old session's reps does not move its date/position (preservation)
-- [ ] 4.6 Edit works with no active plan and after plan regeneration
-- [ ] 4.7 `/history/<random-uuid>/edit` redirects to `/history`
-- [ ] 4.8 Discard returns to `/history` (with dirty-confirm dialog when changed)
-- [ ] 4.9 PL and EN render the edit page/editor; auth gating still applies
+- [x] 4.4 Edit opens the pre-filled editor; saving returns to `/history` with changes shown
+- [x] 4.5 Editing an old session's reps does not move its date/position (preservation)
+- [x] 4.6 Edit works with no active plan and after plan regeneration
+- [x] 4.7 `/history/<random-uuid>/edit` redirects to `/history`
+- [x] 4.8 Discard returns to `/history` (with dirty-confirm dialog when changed)
+- [x] 4.9 PL and EN render the edit page/editor; auth gating still applies
