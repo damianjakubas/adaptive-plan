@@ -23,6 +23,13 @@ vi.mock("@ai-sdk/react", async () => {
 const toastError = vi.fn();
 vi.mock("sonner", () => ({ toast: { error: (...args: unknown[]) => toastError(...args) } }));
 
+// The component calls useRouter().refresh() on generation success (re-renders the
+// (app) layout so the navbar's plan-state updates); vitest mounts no app router.
+const mockRefresh = vi.hoisted(() => vi.fn());
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ refresh: mockRefresh }),
+}));
+
 import PlanGenerator from "@/components/plan/plan-generator";
 import enMessages from "@/i18n/messages/en.json";
 
@@ -63,6 +70,7 @@ beforeEach(() => {
   useObjectCtrl.object = undefined;
   useObjectCtrl.submit.mockClear();
   toastError.mockClear();
+  mockRefresh.mockClear();
 });
 
 afterEach(() => {
@@ -94,6 +102,8 @@ describe("PlanGenerator", () => {
     expect(screen.getByText("Bench Press")).toBeInTheDocument();
     // The wizard is replaced by the result view.
     expect(screen.queryByText(enMessages.Plan.next)).not.toBeInTheDocument();
+    // The (app) layout is refreshed so the navbar's "Log Workout" entry enables.
+    expect(mockRefresh).toHaveBeenCalledTimes(1);
   });
 
   it("maps a stream error to a localized toast while keeping the form", () => {

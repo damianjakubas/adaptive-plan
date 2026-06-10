@@ -62,6 +62,30 @@ describe.skipIf(!hasDb)("active-plan helpers", () => {
     expect(active?.plan).toEqual({ summary: "second" });
   });
 
+  it("hasActivePlan tracks existence and pins the isActive filter", async () => {
+    const { hasActivePlan, saveActivePlan } = await import("@/db/plans");
+    const { db } = await import("@/db");
+    const { plans } = await import("@/db/schema");
+    const { eq } = await import("drizzle-orm");
+
+    expect(await hasActivePlan(userId)).toBe(false);
+
+    await saveActivePlan({
+      model: "test-model",
+      parameters: {},
+      plan: { summary: "mine" },
+      userId,
+    });
+
+    expect(await hasActivePlan(userId)).toBe(true);
+    // A different user never sees this row (eq(userId) scoping).
+    expect(await hasActivePlan(crypto.randomUUID())).toBe(false);
+
+    // Deactivating the row must flip the check — pins eq(isActive), not mere row existence.
+    await db.update(plans).set({ isActive: false }).where(eq(plans.userId, userId));
+    expect(await hasActivePlan(userId)).toBe(false);
+  });
+
   it("isolates users — getActivePlan never returns another user's active plan", async () => {
     const { getActivePlan, saveActivePlan } = await import("@/db/plans");
     const { db } = await import("@/db");

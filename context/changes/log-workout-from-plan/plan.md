@@ -573,19 +573,19 @@ None — purely additive UI + one read-only query helper. No schema or data chan
 
 #### Automated
 
-- [ ] 4.1 Type check passes: `npx tsc --noEmit`
-- [ ] 4.2 Lint passes: `npm run lint`
-- [ ] 4.3 Full suite passes (incl. `hasActivePlan` test + catalog parity): `npx vitest run`
-- [ ] 4.4 Production build succeeds: `npm run build`
+- [x] 4.1 Type check passes: `npx tsc --noEmit`
+- [x] 4.2 Lint passes: `npm run lint`
+- [x] 4.3 Full suite passes (incl. `hasActivePlan` test + catalog parity): `npx vitest run`
+- [x] 4.4 Production build succeeds: `npm run build`
 
 #### Manual
 
-- [ ] 4.5 Picker → pre-filled editor flow correct (day filtering, seeded sets/reps)
-- [ ] 4.6 Edit/add/remove + save persists the full session tree with stamped
+- [x] 4.5 Picker → pre-filled editor flow correct (day filtering, seeded sets/reps)
+- [x] 4.6 Edit/add/remove + save persists the full session tree with stamped
       `source_plan_id`/`performed_at`; success toast + redirect to `/plan`
-- [ ] 4.7 Saved session survives plan regeneration (FR-024)
-- [ ] 4.8 Discard semantics: dirty → confirm dialog, pristine → direct navigation, no write
-- [ ] 4.9 No-plan gating: disabled navbar entry + blocked page state with CTA (FR-017)
-- [ ] 4.10 PL/EN parity on all new UI (FR-025)
-- [ ] 4.11 No regressions: existing pages, navbar controls, auth flow
-- [ ] 4.12 Navbar entry enables after first plan generation without a hard reload
+- [x] 4.7 Saved session survives plan regeneration (FR-024)
+- [x] 4.8 Discard semantics: dirty → confirm dialog, pristine → direct navigation, no write
+- [x] 4.9 No-plan gating: disabled navbar entry + blocked page state with CTA (FR-017)
+- [x] 4.10 PL/EN parity on all new UI (FR-025)
+- [x] 4.11 No regressions: existing pages, navbar controls, auth flow
+- [x] 4.12 Navbar entry enables after first plan generation without a hard reload
