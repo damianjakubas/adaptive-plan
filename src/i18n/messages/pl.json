@@ -130,11 +130,28 @@
     "generic": "Coś poszło nie tak. Spróbuj ponownie."
   },
   "Nav": {
+    "history": "Historia",
     "logout": "Wyloguj się",
     "logWorkout": "Zarejestruj trening",
     "newPlan": "Nowy plan",
     "plan": "Plan Treningowy",
     "progress": "Postępy"
+  },
+  "History": {
+    "eyebrow": "Archiwum",
+    "title": "Twoja Historia Treningów",
+    "subtitle": "Przeglądaj zapisane sesje, od najnowszej.",
+    "columnDate": "Data",
+    "columnSession": "Sesja",
+    "columnDuration": "Czas trwania",
+    "durationMobileLabel": "Czas:",
+    "today": "Dziś",
+    "yesterday": "Wczoraj",
+    "emptyTitle": "Brak zapisanych treningów",
+    "emptyBodyLog": "Gdy zarejestrujesz trening, pojawi się tutaj. Zapiszesz swoją pierwszą sesję?",
+    "emptyCtaLog": "Zarejestruj trening",
+    "emptyBodyPlan": "Wygeneruj plan treningowy, aby zacząć rejestrować treningi i budować historię.",
+    "emptyCtaPlan": "Stwórz plan"
   },
   "LogWorkout": {
     "title": "Zarejestruj swój trening",

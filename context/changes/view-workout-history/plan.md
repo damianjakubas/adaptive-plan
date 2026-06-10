@@ -428,9 +428,9 @@ the route, components, helpers, and strings, and restores the navbar placeholder
 
 #### Automated
 
-- [ ] 1.1 Type-check passes: `npx tsc --noEmit`
-- [ ] 1.2 Lint passes: `npm run lint`
-- [ ] 1.3 Helper unit tests pass (duration + relative-day boundary cases): `npm test`
+- [x] 1.1 Type-check passes: `npx tsc --noEmit`
+- [x] 1.2 Lint passes: `npm run lint`
+- [x] 1.3 Helper unit tests pass (duration + relative-day boundary cases): `npm test`
 
 ### Phase 2: History List & Empty-State Components
 
