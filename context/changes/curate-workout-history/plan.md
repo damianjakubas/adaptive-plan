@@ -497,9 +497,9 @@ transaction handles the row rewrites; no backfill.
 
 #### Automated
 
-- [ ] 2.1 Type checking passes: `npx tsc --noEmit`
-- [ ] 2.2 Linting passes: `npm run lint`
-- [ ] 2.3 Action tests pass: `npm test -- actions`
+- [x] 2.1 Type checking passes: `npx tsc --noEmit`
+- [x] 2.2 Linting passes: `npm run lint`
+- [x] 2.3 Action tests pass: `npm test -- actions`
 
 #### Manual
 
