@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { mapAuthError, type AuthResult } from "@/lib/auth/errors";
+import { AUTH_ROUTE, POST_AUTH_LANDING } from "@/lib/auth/routes";
 import {
   signInSchema,
   signUpSchema,
@@ -12,7 +13,7 @@ import {
 } from "@/lib/validation/auth";
 
 /**
- * Sign in with email + password. On success redirects to the active plan;
+ * Sign in with email + password. On success redirects to the welcome dashboard;
  * on failure returns a mapped error code the UI resolves to a localized message.
  */
 export async function signIn(values: SignInInput): Promise<AuthResult> {
@@ -31,12 +32,12 @@ export async function signIn(values: SignInInput): Promise<AuthResult> {
     return { ok: false, code: mapAuthError(error) };
   }
 
-  redirect("/plan");
+  redirect(POST_AUTH_LANDING);
 }
 
 /**
  * Register with email + password. Auto-confirm is enabled (no email step), so a
- * successful sign-up yields an immediate session and redirects to the active plan.
+ * successful sign-up yields an immediate session and redirects to the welcome dashboard.
  */
 export async function signUp(values: SignUpInput): Promise<AuthResult> {
   const parsed = signUpSchema.safeParse(values);
@@ -60,12 +61,12 @@ export async function signUp(values: SignUpInput): Promise<AuthResult> {
     return { ok: false, code: "email_exists" };
   }
 
-  redirect("/plan");
+  redirect(POST_AUTH_LANDING);
 }
 
 /** Sign out and return to the auth route. */
 export async function signOut(): Promise<void> {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  redirect("/login");
+  redirect(AUTH_ROUTE);
 }

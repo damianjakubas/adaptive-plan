@@ -141,10 +141,19 @@
     "ctaGenerate": "Generate a plan",
     "ctaLog": "Log a workout",
     "ctaViewPlan": "View plan",
+    "featureAdaptationBody": "Your plan evolves with your goals. Generate a fresh plan whenever your training, progress, or priorities change.",
+    "featureAdaptationTitle": "Adaptation",
+    "featurePrecisionBody": "AI tailors volume and intensity to your stats, goals, and health constraints — minimizing the guesswork.",
+    "featurePrecisionTitle": "Precision",
+    "featureTrackingBody": "Visualize your progress through your logged sessions and training history — every workout in one clear view.",
+    "featureTrackingTitle": "Tracking",
     "heading": "Welcome",
     "noSessions": "No sessions logged yet.",
     "planEyebrow": "Your plan",
-    "recentSessionsTitle": "Recent sessions"
+    "recentSessionsTitle": "Recent sessions",
+    "welcomeEyebrow": "Performance powered by data",
+    "welcomeHeadline": "Your fitness, optimized by AI.",
+    "welcomeSubtitle": "Our algorithm analyzes your biometric data and goals to build a plan tailored to your potential. Take control of your training."
   },
   "History": {
     "eyebrow": "Archive",
