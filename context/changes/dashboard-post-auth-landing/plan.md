@@ -226,16 +226,16 @@ None. No data, schema, or config migration. Pure behavioral change to redirect t
 
 #### Automated
 
-- [x] 1.1 Type checking passes: `npx tsc --noEmit`
-- [x] 1.2 Linting passes: `npm run lint`
-- [x] 1.3 Auth action tests pass with the new target: `npm run test -- src/tests/lib/auth/actions.test.ts`
-- [x] 1.4 Proxy tests pass with the new target: `npm run test -- src/tests/proxy.test.ts`
-- [x] 1.5 Full suite green: `npm run test`
+- [x] 1.1 Type checking passes: `npx tsc --noEmit` — ce5e16a
+- [x] 1.2 Linting passes: `npm run lint` — ce5e16a
+- [x] 1.3 Auth action tests pass with the new target: `npm run test -- src/tests/lib/auth/actions.test.ts` — ce5e16a
+- [x] 1.4 Proxy tests pass with the new target: `npm run test -- src/tests/proxy.test.ts` — ce5e16a
+- [x] 1.5 Full suite green: `npm run test` — ce5e16a
 
 #### Manual
 
-- [ ] 1.6 Logging in lands on `/dashboard`
-- [ ] 1.7 Registering a fresh account lands on `/dashboard`
-- [ ] 1.8 Authenticated user revisiting `/login` is bounced to `/dashboard`
-- [ ] 1.9 Logout → `/login`, gating, and auth error messages all still work (FR-023 no regression)
-- [ ] 1.10 Behavior identical in both locales
+- [x] 1.6 Logging in lands on `/dashboard`
+- [x] 1.7 Registering a fresh account lands on `/dashboard`
+- [x] 1.8 Authenticated user revisiting `/login` is bounced to `/dashboard`
+- [x] 1.9 Logout → `/login`, gating, and auth error messages all still work (FR-023 no regression)
+- [x] 1.10 Behavior identical in both locales

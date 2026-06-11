@@ -1,7 +1,7 @@
 ---
 change_id: dashboard-post-auth-landing
 roadmap_id: S-05
-status: implementing
+status: implemented
 created: 2026-06-11
 updated: 2026-06-11
 prd_refs: [FR-009, FR-023]
