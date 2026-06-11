@@ -1,9 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+import { AUTH_ROUTE, POST_AUTH_LANDING } from "@/lib/auth/routes";
 import { updateSession } from "@/lib/supabase/middleware";
-
-const AUTH_ROUTE = "/login";
-const DEFAULT_PROTECTED = "/plan";
 
 /** Routes that do NOT require authentication. Everything else is protected. */
 const PUBLIC_ROUTES = ["/", "/login"];
@@ -32,9 +30,9 @@ export async function proxy(request: NextRequest) {
     return redirectPreservingCookies(request, response, AUTH_ROUTE);
   }
 
-  // Authenticated request to the auth route → send to the active plan.
+  // Authenticated request to the auth route → send to the welcome dashboard.
   if (user && isAuthRoute) {
-    return redirectPreservingCookies(request, response, DEFAULT_PROTECTED);
+    return redirectPreservingCookies(request, response, POST_AUTH_LANDING);
   }
 
   return response;

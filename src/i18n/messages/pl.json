@@ -141,10 +141,19 @@
     "ctaGenerate": "Wygeneruj plan",
     "ctaLog": "Zarejestruj trening",
     "ctaViewPlan": "Zobacz plan",
+    "featureAdaptationBody": "Twój plan ewoluuje wraz z Twoimi celami. Wygeneruj nowy plan, gdy zmienia się Twój trening, postępy lub priorytety.",
+    "featureAdaptationTitle": "Adaptacja",
+    "featurePrecisionBody": "Algorytmy AI dopasowują objętość i intensywność do Twoich danych, celów i ograniczeń zdrowotnych — minimalizując zgadywanie.",
+    "featurePrecisionTitle": "Precyzja",
+    "featureTrackingBody": "Wizualizuj swoje postępy dzięki zapisanym sesjom i historii treningów — każdy trening w jednym, czytelnym widoku.",
+    "featureTrackingTitle": "Śledzenie",
     "heading": "Witaj",
     "noSessions": "Brak zapisanych sesji.",
     "planEyebrow": "Twój plan",
-    "recentSessionsTitle": "Ostatnie sesje"
+    "recentSessionsTitle": "Ostatnie sesje",
+    "welcomeEyebrow": "Wydajność napędzana danymi",
+    "welcomeHeadline": "Twoja forma, zoptymalizowana przez AI.",
+    "welcomeSubtitle": "Nasz algorytm analizuje Twoje dane biometryczne i cele, tworząc plan idealnie dopasowany do Twojego potencjału. Przejmij kontrolę nad swoim treningiem."
   },
   "History": {
     "eyebrow": "Archiwum",

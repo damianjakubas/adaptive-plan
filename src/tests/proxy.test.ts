@@ -83,11 +83,11 @@ describe("proxy", () => {
       updateSessionMock.mockResolvedValue(makeSession({ id: "user-1" }));
     });
 
-    it("redirects /login to /plan with 307", async () => {
+    it("redirects /login to /dashboard with 307", async () => {
       const res = await proxy(makeRequest("/login"));
 
       expect(res.status).toBe(307);
-      expect(new URL(res.headers.get("location")!).pathname).toBe("/plan");
+      expect(new URL(res.headers.get("location")!).pathname).toBe("/dashboard");
     });
 
     it("passes through /plan for an authenticated user", async () => {

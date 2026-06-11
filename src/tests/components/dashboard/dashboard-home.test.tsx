@@ -19,16 +19,17 @@ function renderHome(
   );
 }
 
-// Oracle: the brand-new-user view (no plan, no glance, no sessions) is the
-// guardrail S-05 depends on — it must render the heading + the generate CTA
-// only, never throw, and never surface the has-plan-only glance/sessions.
+// Oracle: the brand-new-user view (no plan) is the post-auth landing S-05 lands
+// on, so it must be the welcome onboarding view (hero + generate CTA + feature
+// grid), never the bare returning-user heading, never throw, and never surface
+// the has-plan-only glance/sessions.
 describe.each([
   { locale: "en" as const, messages: enMessages },
   { locale: "pl" as const, messages: plMessages },
 ])("DashboardHome ($locale)", ({ locale, messages }) => {
   const t = messages.Dashboard;
 
-  it("renders the heading and only the generate CTA for a brand-new user", () => {
+  it("renders the welcome onboarding view (hero + generate CTA + features) for a brand-new user", () => {
     renderHome(locale, messages, {
       hasActivePlan: false,
       planGoal: "",
@@ -36,12 +37,22 @@ describe.each([
       recentSessions: [],
     });
 
-    expect(screen.getByRole("heading", { name: t.heading })).toBeInTheDocument();
+    // Hero: data-driven eyebrow, value-prop headline (the page h1), subtitle.
+    expect(screen.getByText(t.welcomeEyebrow)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 1, name: t.welcomeHeadline }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(t.welcomeSubtitle)).toBeInTheDocument();
 
     const generate = screen.getByRole("link", { name: t.ctaGenerate });
     expect(generate).toHaveAttribute("href", "/plan/new");
 
-    // Plan glance + recent-sessions are gated behind hasActivePlan.
+    // Feature grid is mounted (one representative card; full coverage lives in
+    // dashboard-feature-grid.test.tsx).
+    expect(screen.getByRole("heading", { name: t.featurePrecisionTitle })).toBeInTheDocument();
+
+    // The returning-user heading and the has-plan-only glance/sessions stay out.
+    expect(screen.queryByText(t.heading)).not.toBeInTheDocument();
     expect(screen.queryByText(t.planEyebrow)).not.toBeInTheDocument();
     expect(screen.queryByText(t.recentSessionsTitle)).not.toBeInTheDocument();
     expect(screen.queryByText(t.noSessions)).not.toBeInTheDocument();
@@ -67,5 +78,9 @@ describe.each([
       "href",
       "/log-workout",
     );
+
+    // The no-plan welcome hero must not leak into the returning-user view.
+    expect(screen.queryByText(t.welcomeEyebrow)).not.toBeInTheDocument();
+    expect(screen.queryByText(t.featurePrecisionTitle)).not.toBeInTheDocument();
   });
 });
