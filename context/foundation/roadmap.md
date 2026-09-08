@@ -34,7 +34,7 @@ The shipped MVP generates a personalized training plan and then stops — there 
 | S-02 | view-workout-history          | view past logged sessions, newest first                          | F-01, S-01    | US-02, FR-018, FR-025                          | done     |
 | S-03 | curate-workout-history        | edit or delete a logged session from history                     | S-01, S-02    | US-02, FR-020, FR-021                          | done     |
 | S-04 | welcome-dashboard             | land on a state-aware home with the right primary call-to-action | S-01          | FR-010, FR-025                                 | done     |
-| S-05 | dashboard-post-auth-landing   | be taken to the dashboard after login/registration               | S-04          | FR-009, FR-023                                 | proposed |
+| S-05 | dashboard-post-auth-landing   | be taken to the dashboard after login/registration               | S-04          | FR-009, FR-023                                 | done     |
 
 ## Streams
 
@@ -135,7 +135,7 @@ Routes present: `/plan` (view), `/plan/new` (generate). Routes absent: dashboard
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** The single change that touches the shipped auth flow. Isolated as its own slice so the existing auth tests (register/login/logout/gating) gate it and a redirect regression can't hide inside a larger feature. Sequenced last and only after S-04 proves the dashboard is safe for new users (the PRD's explicit FR-009 sequencing constraint).
-- **Status:** proposed
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -169,3 +169,4 @@ None. The PRD closed with zero Open Questions (`quality_check_status: accepted`)
 - **S-02: view past logged sessions, newest first** — Archived 2026-06-10 → `context/archive/2026-06-10-view-workout-history/`. Lesson: —.
 - **S-03: edit or delete a logged session from history** — Archived 2026-06-10 → `context/archive/2026-06-10-curate-workout-history/`. Lesson: —.
 - **S-04: user lands on a welcome dashboard (reachable from the navbar) whose primary call-to-action adapts to their state — "generate a plan" when there is no active plan; "view plan" / "log a workout" when one exists — and which renders gracefully for a brand-new user with no plan and no history.** — Archived 2026-06-10 → `context/archive/2026-06-10-welcome-dashboard/`. Lesson: —.
+- **S-05: after logging in or registering, the user is taken to the welcome dashboard instead of the current `/plan` target.** — Archived 2026-06-11 → `context/archive/2026-06-11-dashboard-post-auth-landing/`. Lesson: —.
