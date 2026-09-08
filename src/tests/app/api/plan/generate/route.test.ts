@@ -126,7 +126,7 @@ describe("POST /api/plan/generate", () => {
 
     expect(serverMocks.saveActivePlan).toHaveBeenCalledTimes(1);
     expect(serverMocks.saveActivePlan).toHaveBeenCalledWith({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.5-flash",
       parameters: expect.objectContaining({ goal: "muscle" }),
       plan: validPlan,
       userId: "user-1",
