@@ -28,7 +28,7 @@ import { planInputSchema, planOutputSchema } from "@/lib/validation/plan-schema"
 // is met by the stream opening, not by completion, so allow a generous ceiling.
 export const maxDuration = 300;
 
-const MODEL_ID = "gemini-2.5-flash";
+const MODEL_ID = "gemini-3.5-flash";
 
 function errorResponse(code: PlanErrorCode, status: number): Response {
   return Response.json({ code }, { status });
